@@ -49,7 +49,7 @@
         '@': path.resolve(__dirname, './src'),
       },
     },
-  base: '/landing_estimator/',
+  base: '/',
   build: {
     target: 'esnext',
     outDir: 'dist',
