@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronRight, Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
@@ -6,6 +6,7 @@ import { Progress } from "./ui/progress";
 
 interface QuizSectionProps {
   onComplete: () => void;
+  key?: string;
 }
 
 const questions = [
@@ -68,7 +69,7 @@ const questions = [
 
 export default function QuizSection({ onComplete }: QuizSectionProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState<Record<number, string>>({});
+  const [answers, setAnswers] = useState({} as Record<number, string>);
   const [isProcessing, setIsProcessing] = useState(false);
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;

@@ -1,9 +1,11 @@
+import React from "react";
 import { motion } from "motion/react";
 import { Code2, Palette, BarChart3, TrendingUp, CheckCircle2, Sparkles } from "lucide-react";
 import { Button } from "./ui/button";
 
 interface ResultScreenProps {
   onContinue: () => void;
+  key?: string;
 }
 
 const aiAgents = [

@@ -1,3 +1,4 @@
+import React from "react";
 import { motion } from "motion/react";
 import { CheckCircle2, MessageCircle, Gift, ExternalLink } from "lucide-react";
 import { Button } from "./ui/button";

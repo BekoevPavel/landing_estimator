@@ -1,9 +1,11 @@
+import React from "react";
 import { motion } from "motion/react";
 import { Sparkles, Users, Zap } from "lucide-react";
 import { Button } from "./ui/button";
 
 interface HeroSectionProps {
   onStart: () => void;
+  key?: string;
 }
 
 export default function HeroSection({ onStart }: HeroSectionProps) {
