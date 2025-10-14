@@ -6,9 +6,9 @@
 // 🔧 ВРЕМЕННО: Хардкод ключей для тестирования
 // В будущем можно легко заменить на import.meta.env.VITE_STRIPE_*
 export const STRIPE_KEYS = {
-  publishableKey: "pk_test_51SHG8eHMmvX1TBOSAVtE7JP7Xjtzc7pEYFEXM0FUcZJjgBXV3Hm3kwYxyjLvJhCPTnb0qKiApoKNB8raNtVPoLr4009vDaQbei",
+  publishableKey: import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "",
   // Секретный ключ используется только в Netlify функциях
-  secretKey: "sk_test_51SHG8eHMmvX1TBOSHyi6dEj4kfMOFhR2EZjH4i5RJ106DVja65n5niY9XDhxMOsZJt9kh1MToG6F6MzqvueLVAzT00NoSw96lX",
+  // secretKey: import.meta.env.STRIPE_SECRET_KEY || "",
 } as const;
 
 /**

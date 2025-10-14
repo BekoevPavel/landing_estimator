@@ -4,8 +4,7 @@
  */
 
 // 🔧 ВРЕМЕННО: Хардкод ключа для тестирования
-const STRIPE_SECRET_KEY =
-  "sk_test_51SHG8eHMmvX1TBOSHyi6dEj4kfMOFhR2EZjH4i5RJ106DVja65n5niY9XDhxMOsZJt9kh1MToG6F6MzqvueLVAzT00NoSw96lX";
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY || "";
 
 // CORS headers
 const CORS_HEADERS = {

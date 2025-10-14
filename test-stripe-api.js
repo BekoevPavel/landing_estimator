@@ -68,7 +68,7 @@ async function testStripeDirectly() {
   
   // Пытаемся прочитать ключ из .env
   
-  let stripeKey = 'sk_test_51SHG8eHMmvX1TBOSHyi6dEj4kfMOFhR2EZjH4i5RJ106DVja65n5niY9XDhxMOsZJt9kh1MToG6F6MzqvueLVAzT00NoSw96lX';
+  let stripeKey = process.env.STRIPE_SECRET_KEY || "";
   
   try {
     const envPath = path.join(__dirname, '.env');
