@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { AnimatePresence } from "motion/react";
+import Header from "./components/Header";
+import LandingPage from "./components/LandingPage";
 import HeroSection from "./components/HeroSection";
 import QuizSection from "./components/QuizSection";
 import ResultScreen from "./components/ResultScreen";
@@ -9,14 +11,25 @@ import TestStripePayment from "./components/TestStripePayment";
 import { Button } from "./components/ui/button";
 import { FlaskConical } from "lucide-react";
 
-type Step = "hero" | "quiz" | "result" | "pricing" | "waitlist";
+type Step = "landing" | "hero" | "quiz" | "result" | "pricing" | "waitlist";
 
 export default function App() {
-  const [currentStep, setCurrentStep] = useState("hero" as Step);
+  const [currentStep, setCurrentStep] = useState("landing" as Step);
   const [showTestMode, setShowTestMode] = useState(false);
+
+  const handleLogoClick = () => {
+    setCurrentStep("landing");
+  };
+
+  const handleStartTest = () => {
+    setCurrentStep("hero");
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-hidden">
+      {/* Header - показываем на всех экранах кроме landing */}
+      {currentStep !== "landing" && <Header onLogoClick={handleLogoClick} />}
+      
       {/* Кнопка для открытия тестового режима */}
       {!showTestMode && (
         <Button
@@ -36,32 +49,33 @@ export default function App() {
       )}
 
       <AnimatePresence mode="wait">
+        {currentStep === "landing" && (
+          <LandingPage key="landing" onStartTest={handleStartTest} />
+        )}
         {currentStep === "hero" && (
-          <HeroSection
-            key="hero"
-            onStart={() => setCurrentStep("quiz")}
-          />
+          <div key="hero" className="pt-20">
+            <HeroSection onStart={() => setCurrentStep("quiz")} />
+          </div>
         )}
         {currentStep === "quiz" && (
-          <QuizSection
-            key="quiz"
-            onComplete={() => setCurrentStep("result")}
-          />
+          <div key="quiz" className="pt-20">
+            <QuizSection onComplete={() => setCurrentStep("result")} />
+          </div>
         )}
         {currentStep === "result" && (
-          <ResultScreen
-            key="result"
-            onContinue={() => setCurrentStep("pricing")}
-          />
+          <div key="result" className="pt-20">
+            <ResultScreen onContinue={() => setCurrentStep("pricing")} />
+          </div>
         )}
         {currentStep === "pricing" && (
-          <PricingSection
-            key="pricing"
-            onComplete={() => setCurrentStep("waitlist")}
-          />
+          <div key="pricing" className="pt-20">
+            <PricingSection onComplete={() => setCurrentStep("waitlist")} />
+          </div>
         )}
         {currentStep === "waitlist" && (
-          <WaitlistScreen key="waitlist" />
+          <div key="waitlist" className="pt-20">
+            <WaitlistScreen />
+          </div>
         )}
       </AnimatePresence>
     </div>
