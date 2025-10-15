@@ -5,6 +5,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "motion/react";
+import { useTranslation } from "react-i18next";
 import { PricingCard } from "./pricing/PricingCard";
 import { CheckoutForm } from "./pricing/CheckoutForm";
 import { PRICING_PLANS, getPlanByName } from "../config/pricing.config";
@@ -16,6 +17,7 @@ interface PricingSectionProps {
 }
 
 export default function PricingSection({ onComplete }: PricingSectionProps) {
+  const { t } = useTranslation();
   const [selectedPlanName, setSelectedPlanName] = useState(null as string | null);
   const [email, setEmail] = useState("");
 
@@ -34,6 +36,14 @@ export default function PricingSection({ onComplete }: PricingSectionProps) {
     }
   }, [selectedPlan?.id, email]);
 
+  // Получаем переведённые данные тарифных планов
+  const pricingPlans = t("pricing.plans", { returnObjects: true }) as Array<{
+    name: string;
+    period: string;
+    description: string;
+    features: string[];
+  }>;
+
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -49,24 +59,26 @@ export default function PricingSection({ onComplete }: PricingSectionProps) {
           transition={{ delay: 0.2 }}
           className="text-center mb-16"
         >
-          <h1 className="mb-4">Choose Your AI Team</h1>
+          <h1 className="mb-4">{t("landing.hero.cta")}</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Select the plan that matches your project complexity. All estimates
-            include detailed analysis and actionable insights.
+            {t("landing.cta.description")}
           </p>
         </motion.div>
 
         {/* Pricing Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {PRICING_PLANS.map((plan, index) => (
-            <PricingCard
-              key={plan.id}
-              plan={plan}
-              isSelected={selectedPlanName === plan.name}
-              onSelect={() => setSelectedPlanName(plan.name)}
-              animationDelay={0.3 + index * 0.1}
-            />
-          ))}
+          {PRICING_PLANS.map((plan, index) => {
+            const translatedPlan = pricingPlans[index];
+            return (
+              <PricingCard
+                key={plan.id}
+                plan={{ ...plan, ...translatedPlan }}
+                isSelected={selectedPlanName === plan.name}
+                onSelect={() => setSelectedPlanName(plan.name)}
+                animationDelay={0.3 + index * 0.1}
+              />
+            );
+          })}
         </div>
 
         {/* Checkout Form */}

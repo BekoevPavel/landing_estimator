@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { Sparkles, CheckCircle, Zap, ChevronDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "../../ui/button";
 import { GRADIENT_TEXT } from "../../../constants/gradients";
 import { fadeInUpWithDelay } from "../../../constants/animations";
@@ -9,6 +10,8 @@ interface LandingHeroSectionProps {
 }
 
 export function LandingHeroSection({ onStartTest }: LandingHeroSectionProps) {
+  const { t } = useTranslation();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Background */}
@@ -23,7 +26,7 @@ export function LandingHeroSection({ onStartTest }: LandingHeroSectionProps) {
         >
           <Sparkles className="w-4 h-4 text-primary" />
           <span className="text-sm text-muted-foreground">
-            First Multi-Agent Estimation Platform
+            {t("landing.hero.badge")}
           </span>
         </motion.div>
 
@@ -31,15 +34,14 @@ export function LandingHeroSection({ onStartTest }: LandingHeroSectionProps) {
           {...fadeInUpWithDelay(0.3)}
           className={`mb-6 text-5xl md:text-7xl tracking-tight max-w-5xl mx-auto ${GRADIENT_TEXT.primary}`}
         >
-          An AI Team Estimates Your Project More Accurately Than You — in 2 Minutes
+          {t("landing.hero.title")}
         </motion.h1>
 
         <motion.p
           {...fadeInUpWithDelay(0.4)}
           className="mb-12 max-w-3xl mx-auto text-xl text-muted-foreground"
         >
-          8 specialized agents work like a senior team: Engineer evaluates code, Designer evaluates UX, 
-          PM evaluates business logic, Analyst evaluates risks. No single model can provide such accuracy.
+          {t("landing.hero.description")}
         </motion.p>
 
         <motion.div
@@ -51,7 +53,7 @@ export function LandingHeroSection({ onStartTest }: LandingHeroSectionProps) {
             size="lg"
             className="px-8 py-6 rounded-2xl bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-primary/50 transition-all duration-300"
           >
-            Get Free Estimate
+            {t("landing.hero.cta")}
             <Zap className="ml-2 w-5 h-5" />
           </Button>
           <Button
@@ -62,7 +64,7 @@ export function LandingHeroSection({ onStartTest }: LandingHeroSectionProps) {
               document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" });
             }}
           >
-            See How It Works
+            {t("landing.hero.ctaSecondary")}
             <ChevronDown className="ml-2 w-5 h-5" />
           </Button>
         </motion.div>
@@ -74,15 +76,15 @@ export function LandingHeroSection({ onStartTest }: LandingHeroSectionProps) {
         >
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-primary" />
-            No registration needed
+            {t("landing.hero.badges.noRegistration")}
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-primary" />
-            Takes 60 seconds
+            {t("landing.hero.badges.fastTime")}
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-primary" />
-            ±15% accuracy
+            {t("landing.hero.badges.accuracy")}
           </div>
         </motion.div>
 
@@ -95,19 +97,19 @@ export function LandingHeroSection({ onStartTest }: LandingHeroSectionProps) {
             <div className={`text-3xl mb-2 ${GRADIENT_TEXT.accent}`}>
               2,847
             </div>
-            <div className="text-sm text-muted-foreground">Projects Estimated</div>
+            <div className="text-sm text-muted-foreground">{t("landing.hero.stats.projects")}</div>
           </div>
           <div className="bg-card/50 backdrop-blur-xl border border-border rounded-2xl p-6">
             <div className={`text-3xl mb-2 ${GRADIENT_TEXT.accent}`}>
               $5.2M
             </div>
-            <div className="text-sm text-muted-foreground">Average Accuracy</div>
+            <div className="text-sm text-muted-foreground">{t("landing.hero.stats.accuracy")}</div>
           </div>
           <div className="bg-card/50 backdrop-blur-xl border border-border rounded-2xl p-6">
             <div className={`text-3xl mb-2 ${GRADIENT_TEXT.accent}`}>
               4.9/5
             </div>
-            <div className="text-sm text-muted-foreground">Average Rating</div>
+            <div className="text-sm text-muted-foreground">{t("landing.hero.stats.rating")}</div>
           </div>
         </motion.div>
       </div>

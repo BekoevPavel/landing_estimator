@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "motion/react";
+import { useTranslation } from "react-i18next";
 import { Sparkles, Users, Zap } from "lucide-react";
 import { Button } from "./ui/button";
 
@@ -9,6 +10,8 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ onStart }: HeroSectionProps) {
+  const { t } = useTranslation();
+
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -30,7 +33,7 @@ export default function HeroSection({ onStart }: HeroSectionProps) {
           className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/50 backdrop-blur-sm"
         >
           <Sparkles className="w-4 h-4 text-primary" />
-          <span className="text-sm text-muted-foreground">AI-Powered Project Estimation</span>
+          <span className="text-sm text-muted-foreground">{t("heroSection.badge")}</span>
         </motion.div>
 
         <motion.h1
@@ -39,7 +42,7 @@ export default function HeroSection({ onStart }: HeroSectionProps) {
           transition={{ delay: 0.3 }}
           className="mb-6 text-5xl md:text-7xl tracking-tight bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-transparent"
         >
-          Get your project estimated by a full AI team — in 2 minutes
+          {t("heroSection.title")}
         </motion.h1>
 
         <motion.p
@@ -48,7 +51,7 @@ export default function HeroSection({ onStart }: HeroSectionProps) {
           transition={{ delay: 0.4 }}
           className="mb-12 max-w-2xl mx-auto text-muted-foreground"
         >
-          Discover how senior engineers, designers, and PMs would value your idea. Our AI team analyzes your project with near-human accuracy.
+          {t("heroSection.description")}
         </motion.p>
 
         <motion.div
@@ -62,7 +65,7 @@ export default function HeroSection({ onStart }: HeroSectionProps) {
             size="lg"
             className="px-8 py-6 rounded-2xl bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-primary/50 transition-all duration-300"
           >
-            Start the Test
+            {t("heroSection.button")}
             <Zap className="ml-2 w-5 h-5" />
           </Button>
         </motion.div>
@@ -76,15 +79,15 @@ export default function HeroSection({ onStart }: HeroSectionProps) {
         >
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-primary rounded-full" />
-            No signup needed
+            {t("heroSection.badges.noSignup")}
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-primary rounded-full" />
-            Takes 60 seconds
+            {t("heroSection.badges.fastTime")}
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-primary rounded-full" />
-            AI-powered accuracy
+            {t("heroSection.badges.accuracy")}
           </div>
         </motion.div>
 
@@ -114,10 +117,10 @@ export default function HeroSection({ onStart }: HeroSectionProps) {
           </div>
           <div className="ml-52 text-left">
             <p className="text-sm text-muted-foreground">
-              Meet your AI team
+              {t("heroSection.team.title")}
             </p>
             <p className="text-xs text-muted-foreground/60">
-              5 expert AI agents ready to estimate
+              {t("heroSection.team.subtitle")}
             </p>
           </div>
         </motion.div>

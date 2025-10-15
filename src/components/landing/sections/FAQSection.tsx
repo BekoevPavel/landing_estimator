@@ -1,13 +1,19 @@
+import { useTranslation } from "react-i18next";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../../ui/accordion";
-import { faqs } from "../data/faqs";
 
 export function FAQSection() {
+  const { t } = useTranslation();
+  const faqs = t("landing.faq.items", { returnObjects: true }) as Array<{
+    q: string;
+    a: string;
+  }>;
+
   return (
     <section className="py-24 px-6">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="mb-4 text-4xl md:text-5xl">Frequently Asked Questions</h2>
-          <p className="text-xl text-muted-foreground">Everything you need to know</p>
+          <h2 className="mb-4 text-4xl md:text-5xl">{t("landing.faq.title")}</h2>
+          <p className="text-xl text-muted-foreground">{t("landing.faq.description")}</p>
         </div>
 
         <Accordion type="single" collapsible className="space-y-4">

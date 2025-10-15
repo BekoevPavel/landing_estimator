@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { useTranslation } from "react-i18next";
 import { ChevronRight, Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Progress } from "./ui/progress";
@@ -9,74 +10,23 @@ interface QuizSectionProps {
   key?: string;
 }
 
-const questions = [
-  {
-    id: 1,
-    question: "How do you usually estimate project timelines?",
-    helper: "Understanding your current approach helps us calibrate the AI team",
-    options: [
-      { label: "Gut feeling & experience", value: "intuition" },
-      { label: "Historical data analysis", value: "data" },
-      { label: "Team consensus meetings", value: "consensus" },
-      { label: "Third-party tools", value: "tools" },
-    ],
-  },
-  {
-    id: 2,
-    question: "How confident are your current estimates?",
-    helper: "This helps us understand where you need the most support",
-    options: [
-      { label: "Very confident - rarely off", value: "high" },
-      { label: "Moderately confident", value: "medium" },
-      { label: "Not very confident", value: "low" },
-      { label: "I avoid giving estimates", value: "avoid" },
-    ],
-  },
-  {
-    id: 3,
-    question: "What causes overruns most often?",
-    helper: "The AI team will analyze these risk factors in your projects",
-    options: [
-      { label: "Unclear requirements", value: "requirements" },
-      { label: "Technical complexity", value: "technical" },
-      { label: "Scope creep", value: "scope" },
-      { label: "Team capacity issues", value: "capacity" },
-    ],
-  },
-  {
-    id: 4,
-    question: "Do you factor design or QA in estimates?",
-    helper: "Our AI team includes specialists for complete coverage",
-    options: [
-      { label: "Always - it's built in", value: "always" },
-      { label: "Sometimes", value: "sometimes" },
-      { label: "Rarely", value: "rarely" },
-      { label: "Never - just development", value: "never" },
-    ],
-  },
-  {
-    id: 5,
-    question: "What's your biggest estimation pain point?",
-    helper: "Your final answer - let's identify where AI can help most",
-    options: [
-      { label: "Taking too much time", value: "time" },
-      { label: "Lack of historical data", value: "data" },
-      { label: "Stakeholder pressure", value: "pressure" },
-      { label: "Unknown unknowns", value: "unknowns" },
-    ],
-  },
-];
-
 export default function QuizSection({ onComplete }: QuizSectionProps) {
+  const { t } = useTranslation();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({} as Record<number, string>);
   const [isProcessing, setIsProcessing] = useState(false);
+
+  const questions = t("quiz.questions", { returnObjects: true }) as Array<{
+    question: string;
+    helper: string;
+    options: Array<{ label: string; value: string }>;
+  }>;
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;
   const question = questions[currentQuestion];
 
   const handleAnswer = (value: string) => {
-    setAnswers({ ...answers, [question.id]: value });
+    setAnswers({ ...answers, [currentQuestion]: value });
     setIsProcessing(true);
 
     setTimeout(() => {
@@ -105,7 +55,7 @@ export default function QuizSection({ onComplete }: QuizSectionProps) {
         >
           <div className="flex items-center justify-between mb-3">
             <span className="text-sm text-muted-foreground">
-              Question {currentQuestion + 1} of {questions.length}
+              {t("quiz.progress", { current: currentQuestion + 1, total: questions.length })}
             </span>
             <span className="text-sm text-primary">{Math.round(progress)}%</span>
           </div>
@@ -153,7 +103,7 @@ export default function QuizSection({ onComplete }: QuizSectionProps) {
                 className="mt-6 flex items-center gap-2 text-sm text-primary"
               >
                 <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Got it — the AI team is analyzing your input…</span>
+                <span>{t("quiz.processing")}</span>
               </motion.div>
             )}
           </motion.div>

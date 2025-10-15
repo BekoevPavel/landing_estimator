@@ -1,0 +1,472 @@
+{
+  "header": {
+    "title": "EstimateFast",
+    "subtitle": "AI Team Estimation"
+  },
+  "landing": {
+    "hero": {
+      "badge": "First Multi-Agent Estimation Platform",
+      "title": "An AI Team Estimates Your Project More Accurately Than You — in 2 Minutes",
+      "description": "8 specialized agents work like a senior team: Engineer evaluates code, Designer evaluates UX, PM evaluates business logic, Analyst evaluates risks. No single model can provide such accuracy.",
+      "cta": "Get Free Estimate",
+      "ctaSecondary": "See How It Works",
+      "badges": {
+        "noRegistration": "No registration needed",
+        "fastTime": "Takes 60 seconds",
+        "accuracy": "±15% accuracy"
+      },
+      "stats": {
+        "projects": "Projects Estimated",
+        "accuracy": "Average Accuracy",
+        "rating": "Average Rating"
+      }
+    },
+    "problems": {
+      "title": "Why Project Estimation Is Painful",
+      "description": "You're not alone. Most developers and teams struggle with accurate project estimation.",
+      "items": [
+        {
+          "title": "Fear of Estimation",
+          "stat": "78%",
+          "description": "of freelancers fear giving estimates",
+          "quote": "I'm afraid to underestimate and lose money. Afraid to overestimate and lose the client."
+        },
+        {
+          "title": "Time Consuming",
+          "stat": "5 hours",
+          "description": "team time per single estimation",
+          "quote": "Every lead requires a meeting with 5 experts. We spend $1000+ just on estimation."
+        },
+        {
+          "title": "No Second Opinion",
+          "stat": "68%",
+          "description": "of projects miss deadlines",
+          "quote": "Even with experience, sometimes you need a fresh perspective on complex projects."
+        }
+      ]
+    },
+    "comparison": {
+      "title": "Why ChatGPT and Manual Estimates Don't Work",
+      "description": "Traditional methods fail because they lack specialization and depth",
+      "cta": "Try Multi-Agent Estimation",
+      "items": [
+        {
+          "method": "ChatGPT/Claude",
+          "problem": "Single model, no specialization",
+          "result": "Superficial estimate, ignores risks"
+        },
+        {
+          "method": "\"Gut feeling\" estimate",
+          "problem": "Subjective, depends on experience",
+          "result": "±50% error margin"
+        },
+        {
+          "method": "Manual team estimation",
+          "problem": "Expensive, slow, bottleneck on seniors",
+          "result": "$1000+, 5+ hours"
+        },
+        {
+          "method": "Simple calculators",
+          "problem": "Primitive math",
+          "result": "Doesn't account for UX, risks, integrations"
+        }
+      ],
+      "labels": {
+        "problem": "Problem:",
+        "result": "Result:"
+      }
+    },
+    "solution": {
+      "badge": "The Solution",
+      "title": "Multi-Agent AI Team Works Like Senior Professionals",
+      "description": "Why is a team better than a single model? Because each agent is an expert in their area. They discuss the project and find risks you might have missed.",
+      "agents": [
+        {
+          "name": "Product Manager AI",
+          "role": "Analyzes business logic, features, scope",
+          "detail": "Breaks down projects into epics and user stories"
+        },
+        {
+          "name": "Senior Engineer AI",
+          "role": "Evaluates technical complexity, architecture",
+          "detail": "Identifies potential bottlenecks and tech debt"
+        },
+        {
+          "name": "UX Designer AI",
+          "role": "Maps user flow impact, counts screens",
+          "detail": "Estimates UI components and animations"
+        },
+        {
+          "name": "Analyst AI",
+          "role": "Calculates risk & probability",
+          "detail": "Provides confidence intervals and alternatives"
+        }
+      ],
+      "process": {
+        "title": "How the AI Team Works",
+        "steps": [
+          {
+            "title": "You Submit Brief",
+            "description": "2-minute questionnaire"
+          },
+          {
+            "title": "AI Team Analyzes",
+            "description": "8 agents discuss project"
+          },
+          {
+            "title": "Report Generated",
+            "description": "Detailed breakdown ready"
+          },
+          {
+            "title": "You Send to Client",
+            "description": "Impress with detail"
+          }
+        ]
+      },
+      "deliverables": {
+        "title": "What You Receive",
+        "items": [
+          {
+            "title": "Smart Backlog",
+            "features": [
+              "200+ detailed tasks",
+              "Each with estimation",
+              "Critical dependencies",
+              "Fully editable"
+            ]
+          },
+          {
+            "title": "Timeline",
+            "features": [
+              "By sprints/phases",
+              "Parallel workflows",
+              "Critical path",
+              "Milestones & deadlines"
+            ]
+          },
+          {
+            "title": "Cost Breakdown",
+            "features": [
+              "By roles",
+              "By phases",
+              "Optimistic/pessimistic",
+              "Confidence interval"
+            ]
+          },
+          {
+            "title": "Risk Analysis",
+            "features": [
+              "Technical risks",
+              "Business risks",
+              "Mitigation for each",
+              "Alternative approaches"
+            ]
+          }
+        ]
+      },
+      "comparisonExample": {
+        "title": "Compare ChatGPT vs EstimateFast",
+        "description": "See the difference in depth and accuracy",
+        "chatgpt": {
+          "title": "ChatGPT",
+          "subtitle": "Single model response",
+          "userPrompt": "User:",
+          "userQuestion": "\"Estimate a food delivery mobile app\"",
+          "response": "ChatGPT:",
+          "responseText": "\"Such an app will take approximately 4-6 months with a team of 3-4 people. Cost: $80,000 - $120,000.\"",
+          "cons": [
+            "No backlog",
+            "No risk analysis",
+            "No detailed breakdown"
+          ]
+        },
+        "estimateFast": {
+          "title": "EstimateFast",
+          "subtitle": "Multi-agent analysis",
+          "features": [
+            {
+              "label": "Backlog:",
+              "value": "312 detailed tasks"
+            },
+            {
+              "label": "Timeline:",
+              "value": "5.5 months by sprints"
+            },
+            {
+              "label": "Cost:",
+              "value": "$95,000 - $115,000 with breakdown"
+            },
+            {
+              "label": "Risks:",
+              "value": "12 identified with mitigation"
+            },
+            {
+              "label": "Features:",
+              "value": "Auth, payments, tracking, admin panels"
+            },
+            {
+              "label": "Alternatives:",
+              "value": "Multiple approaches analyzed"
+            }
+          ],
+          "footer": "See the difference? Try EstimateFast for free"
+        }
+      }
+    },
+    "testimonials": {
+      "title": "What Users Say About EstimateFast",
+      "description": "Real stories from developers and teams",
+      "items": [
+        {
+          "name": "Alex K.",
+          "role": "Full-Stack Developer",
+          "location": "🇺🇸 USA, 4 years experience",
+          "text": "I used to spend 3-5 hours on each estimate and still worried if I calculated correctly. EstimateFast gives me confidence in 2 minutes. My income grew by 40%."
+        },
+        {
+          "name": "Dmitry S.",
+          "role": "CTO",
+          "location": "🇩🇪 Germany, 25-person team",
+          "text": "We're an outsource studio. We used to call a meeting for every lead. Now EstimateFast gives the initial estimate, team verifies in 15 minutes. Saving 40 hours per month."
+        },
+        {
+          "name": "Maria L.",
+          "role": "Frontend Developer",
+          "location": "🇧🇷 Brazil, 1.5 years experience",
+          "text": "As a junior developer, I was always afraid to give estimates. EstimateFast is like a mentor always by my side. I see how senior experts think and learn."
+        }
+      ]
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "description": "Everything you need to know",
+      "items": [
+        {
+          "q": "How accurate is the AI team estimation?",
+          "a": "EstimateFast delivers ±15% accuracy, which is better than most manual estimates (±50%). We analyze 10,000+ projects to calibrate our models."
+        },
+        {
+          "q": "Why is EstimateFast better than ChatGPT?",
+          "a": "ChatGPT is a single model without specialization. EstimateFast is a team of 8 agents where each is an expert in their area. Result: detailed backlog instead of a general number."
+        },
+        {
+          "q": "Can I edit the backlog?",
+          "a": "Yes! Every task is detailed and can be changed, deleted, or added. Export to Jira/Linear/Notion is fully supported."
+        },
+        {
+          "q": "How fast will I get my estimate?",
+          "a": "Basic: 24 hours, Pro: 12 hours, Enterprise: 6 hours. The brief itself takes just 2 minutes to complete."
+        },
+        {
+          "q": "Do I need to register?",
+          "a": "No! For the test (5 questions) registration is not required. For the full estimate, we only need your email."
+        },
+        {
+          "q": "What types of projects can be estimated?",
+          "a": "Any digital projects: web applications, mobile apps, SaaS platforms, e-commerce, CRM/ERP systems, and more."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Stop Losing Money on Inaccurate Estimates",
+      "description": "An AI team of experts will estimate your project more accurately than you — in 2 minutes.",
+      "button": "Get Free Estimate Now",
+      "badges": {
+        "noCard": "No card required",
+        "fastTime": "Takes 60 seconds",
+        "immediate": "Results immediately"
+      }
+    },
+    "footer": {
+      "description": "AI-powered project estimation platform",
+      "product": {
+        "title": "Product",
+        "links": [
+          { "label": "How It Works", "href": "#" },
+          { "label": "Pricing", "href": "#" },
+          { "label": "Examples", "href": "#" },
+          { "label": "API (soon)", "href": "#" }
+        ]
+      },
+      "resources": {
+        "title": "Resources",
+        "links": [
+          { "label": "Blog", "href": "#" },
+          { "label": "Case Studies", "href": "#" },
+          { "label": "Guides", "href": "#" },
+          { "label": "FAQ", "href": "#" }
+        ]
+      },
+      "company": {
+        "title": "Company",
+        "links": [
+          { "label": "About", "href": "#" },
+          { "label": "Contact", "href": "#" },
+          { "label": "Privacy Policy", "href": "#" },
+          { "label": "Terms of Service", "href": "#" }
+        ]
+      },
+      "copyright": "© 2025 EstimateFast. Made with AI ❤️ for humans"
+    }
+  },
+  "quiz": {
+    "progress": "Question {{current}} of {{total}}",
+    "processing": "Got it — the AI team is analyzing your input…",
+    "questions": [
+      {
+        "question": "How do you usually estimate project timelines?",
+        "helper": "Understanding your current approach helps us calibrate the AI team",
+        "options": [
+          { "label": "Gut feeling & experience", "value": "intuition" },
+          { "label": "Historical data analysis", "value": "data" },
+          { "label": "Team consensus meetings", "value": "consensus" },
+          { "label": "Third-party tools", "value": "tools" }
+        ]
+      },
+      {
+        "question": "How confident are your current estimates?",
+        "helper": "This helps us understand where you need the most support",
+        "options": [
+          { "label": "Very confident - rarely off", "value": "high" },
+          { "label": "Moderately confident", "value": "medium" },
+          { "label": "Not very confident", "value": "low" },
+          { "label": "I avoid giving estimates", "value": "avoid" }
+        ]
+      },
+      {
+        "question": "What causes overruns most often?",
+        "helper": "The AI team will analyze these risk factors in your projects",
+        "options": [
+          { "label": "Unclear requirements", "value": "requirements" },
+          { "label": "Technical complexity", "value": "technical" },
+          { "label": "Scope creep", "value": "scope" },
+          { "label": "Team capacity issues", "value": "capacity" }
+        ]
+      },
+      {
+        "question": "Do you factor design or QA in estimates?",
+        "helper": "Our AI team includes specialists for complete coverage",
+        "options": [
+          { "label": "Always - it's built in", "value": "always" },
+          { "label": "Sometimes", "value": "sometimes" },
+          { "label": "Rarely", "value": "rarely" },
+          { "label": "Never - just development", "value": "never" }
+        ]
+      },
+      {
+        "question": "What's your biggest estimation pain point?",
+        "helper": "Your final answer - let's identify where AI can help most",
+        "options": [
+          { "label": "Taking too much time", "value": "time" },
+          { "label": "Lack of historical data", "value": "data" },
+          { "label": "Stakeholder pressure", "value": "pressure" },
+          { "label": "Unknown unknowns", "value": "unknowns" }
+        ]
+      }
+    ]
+  },
+  "pricing": {
+    "plans": [
+      {
+        "name": "Basic",
+        "period": "/project",
+        "description": "Perfect for small projects",
+        "features": [
+          "3 AI experts (Engineer, Designer, PM)",
+          "Basic complexity analysis",
+          "Timeline estimation",
+          "Cost breakdown",
+          "24-hour delivery"
+        ]
+      },
+      {
+        "name": "Pro",
+        "period": "/project",
+        "description": "Most popular for complex projects",
+        "features": [
+          "6 AI agents including Analyst & QA",
+          "Advanced risk assessment",
+          "Resource allocation planning",
+          "Detailed technical specs",
+          "12-hour delivery",
+          "Revision included"
+        ]
+      },
+      {
+        "name": "Enterprise",
+        "period": "/project",
+        "description": "For mission-critical estimates",
+        "features": [
+          "Full virtual team (8+ AI agents)",
+          "Custom industry advisor",
+          "Multi-phase planning",
+          "Risk mitigation strategies",
+          "6-hour delivery",
+          "Unlimited revisions",
+          "Priority support"
+        ]
+      }
+    ]
+  },
+  "heroSection": {
+    "badge": "AI-Powered Project Estimation",
+    "title": "Get your project estimated by a full AI team — in 2 minutes",
+    "description": "Discover how senior engineers, designers, and PMs would value your idea. Our AI team analyzes your project with near-human accuracy.",
+    "button": "Start the Test",
+    "badges": {
+      "noSignup": "No signup needed",
+      "fastTime": "Takes 60 seconds",
+      "accuracy": "AI-powered accuracy"
+    },
+    "team": {
+      "title": "Meet your AI team",
+      "subtitle": "5 expert AI agents ready to estimate"
+    }
+  },
+  "resultScreen": {
+    "title": "Your Estimation Style — The Visionary",
+    "description": "You rely on intuition more than data. Our AI-team analyzed your approach and found optimization points. Your strength is seeing the big picture, but precision could be enhanced with AI-powered analysis.",
+    "sectionTitle": "AI Experts Who Analyzed Your Profile",
+    "agents": [
+      {
+        "name": "Engineer AI",
+        "role": "evaluates complexity"
+      },
+      {
+        "name": "UX Designer AI",
+        "role": "maps user flow impact"
+      },
+      {
+        "name": "Product Manager AI",
+        "role": "aligns with business goals"
+      },
+      {
+        "name": "Analyst AI",
+        "role": "calculates risk & probability"
+      }
+    ],
+    "button": "Get Full Project Estimate",
+    "footer": "See how our complete AI team would estimate your next project"
+  },
+  "waitlist": {
+    "title": "Your AI-team is preparing",
+    "description": "Thank you! Our AI-experts are finalizing your estimation. You're now on the early-access list. We'll notify you as soon as we launch.",
+    "telegram": {
+      "title": "Join Telegram Updates",
+      "description": "Get exclusive behind-the-scenes updates and early feature previews",
+      "button": "Join Community"
+    },
+    "discount": {
+      "title": "Get 30% Off at Launch",
+      "description": "Exclusive early-bird discount for waitlist members",
+      "button": "Claim Discount"
+    },
+    "feedback": {
+      "title": "Help us build the perfect AI estimation tool for you",
+      "placeholder": "What feature matters most to you?",
+      "button": "Submit Feedback"
+    },
+    "footer": "Check your email for confirmation and next steps"
+  }
+}
+

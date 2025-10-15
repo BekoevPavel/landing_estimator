@@ -1,14 +1,22 @@
 import { motion } from "motion/react";
-import { testimonials } from "../data/testimonials";
+import { useTranslation } from "react-i18next";
 import { VIEWPORT_ONCE } from "../../../constants/animations";
 
 export function TestimonialsSection() {
+  const { t } = useTranslation();
+  const testimonials = t("landing.testimonials.items", { returnObjects: true }) as Array<{
+    name: string;
+    role: string;
+    location: string;
+    text: string;
+  }>;
+
   return (
     <section className="py-24 px-6 bg-secondary/20">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="mb-4 text-4xl md:text-5xl">What Users Say About EstimateFast</h2>
-          <p className="text-xl text-muted-foreground">Real stories from developers and teams</p>
+          <h2 className="mb-4 text-4xl md:text-5xl">{t("landing.testimonials.title")}</h2>
+          <p className="text-xl text-muted-foreground">{t("landing.testimonials.description")}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -22,7 +30,7 @@ export function TestimonialsSection() {
               className="bg-card/50 backdrop-blur-xl border border-border rounded-2xl p-8"
             >
               <div className="flex items-center gap-1 mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => (
+                {[...Array(5)].map((_, i) => (
                   <span key={i} className="text-primary">⭐</span>
                 ))}
               </div>

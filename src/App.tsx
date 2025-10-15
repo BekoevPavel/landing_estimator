@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { AnimatePresence } from "motion/react";
 import Header from "./components/Header";
+import { LanguageSwitcher } from "./components/LanguageSwitcher";
 import LandingPage from "./components/LandingPage";
 import HeroSection from "./components/HeroSection";
 import QuizSection from "./components/QuizSection";
@@ -30,11 +31,29 @@ export default function App() {
       {/* Header - показываем на всех экранах кроме landing */}
       {currentStep !== "landing" && <Header onLogoClick={handleLogoClick} />}
       
+      {/* Language Switcher - Правый верхний угол (UX best practice) */}
+      <div 
+        style={{ 
+          position: 'fixed', 
+          top: '1.5rem',  // 24px - оптимально для всех экранов
+          right: '1.5rem', 
+          zIndex: 50 
+        }}
+      >
+        <LanguageSwitcher />
+      </div>
+      
       {/* Кнопка для открытия тестового режима */}
       {!showTestMode && (
         <Button
           onClick={() => setShowTestMode(true)}
-          className="fixed bottom-6 right-6 z-40 shadow-lg"
+          style={{ 
+            position: 'fixed', 
+            bottom: '1.5rem',  // 24px - оптимально для всех экранов
+            right: '1.5rem', 
+            zIndex: 40 
+          }}
+          className="shadow-lg"
           size="lg"
           variant="outline"
         >

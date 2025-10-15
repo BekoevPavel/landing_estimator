@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "motion/react";
+import { useTranslation } from "react-i18next";
 import { Code2, Palette, BarChart3, TrendingUp, CheckCircle2, Sparkles } from "lucide-react";
 import { Button } from "./ui/button";
 
@@ -8,34 +9,21 @@ interface ResultScreenProps {
   key?: string;
 }
 
-const aiAgents = [
-  {
-    icon: Code2,
-    name: "Engineer AI",
-    role: "evaluates complexity",
-    color: "from-blue-500 to-cyan-500",
-  },
-  {
-    icon: Palette,
-    name: "UX Designer AI",
-    role: "maps user flow impact",
-    color: "from-purple-500 to-pink-500",
-  },
-  {
-    icon: BarChart3,
-    name: "Product Manager AI",
-    role: "aligns with business goals",
-    color: "from-green-500 to-emerald-500",
-  },
-  {
-    icon: TrendingUp,
-    name: "Analyst AI",
-    role: "calculates risk & probability",
-    color: "from-orange-500 to-red-500",
-  },
+const AI_AGENT_ICONS = [Code2, Palette, BarChart3, TrendingUp];
+const AI_AGENT_COLORS = [
+  "from-blue-500 to-cyan-500",
+  "from-purple-500 to-pink-500",
+  "from-green-500 to-emerald-500",
+  "from-orange-500 to-red-500",
 ];
 
 export default function ResultScreen({ onContinue }: ResultScreenProps) {
+  const { t } = useTranslation();
+  const agents = t("resultScreen.agents", { returnObjects: true }) as Array<{
+    name: string;
+    role: string;
+  }>;
+
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -60,9 +48,9 @@ export default function ResultScreen({ onContinue }: ResultScreenProps) {
             <Sparkles className="w-10 h-10 text-white" />
           </motion.div>
 
-          <h1 className="mb-4">Your Estimation Style — The Visionary</h1>
+          <h1 className="mb-4">{t("resultScreen.title")}</h1>
           <p className="max-w-2xl mx-auto text-muted-foreground">
-            You rely on intuition more than data. Our AI-team analyzed your approach and found optimization points. Your strength is seeing the big picture, but precision could be enhanced with AI-powered analysis.
+            {t("resultScreen.description")}
           </p>
         </motion.div>
 
@@ -74,36 +62,40 @@ export default function ResultScreen({ onContinue }: ResultScreenProps) {
           className="mb-12"
         >
           <h3 className="mb-6 text-center text-muted-foreground">
-            AI Experts Who Analyzed Your Profile
+            {t("resultScreen.sectionTitle")}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {aiAgents.map((agent, index) => (
-              <motion.div
-                key={agent.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + index * 0.1 }}
-                className="relative group"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl blur-xl"
-                  style={{
-                    background: `linear-gradient(to bottom right, var(--primary), var(--accent))`,
-                  }}
-                />
-                <div className="relative bg-card/50 backdrop-blur-xl border border-border rounded-2xl p-6 hover:border-primary/50 transition-all duration-300">
-                  <div className="flex items-start gap-4">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${agent.color} flex items-center justify-center flex-shrink-0`}>
-                      <agent.icon className="w-6 h-6 text-white" />
+            {agents.map((agent, index) => {
+              const Icon = AI_AGENT_ICONS[index];
+              const color = AI_AGENT_COLORS[index];
+              return (
+                <motion.div
+                  key={agent.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + index * 0.1 }}
+                  className="relative group"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl blur-xl"
+                    style={{
+                      background: `linear-gradient(to bottom right, var(--primary), var(--accent))`,
+                    }}
+                  />
+                  <div className="relative bg-card/50 backdrop-blur-xl border border-border rounded-2xl p-6 hover:border-primary/50 transition-all duration-300">
+                    <div className="flex items-start gap-4">
+                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center flex-shrink-0`}>
+                        <Icon className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="mb-1">{agent.name}</h4>
+                        <p className="text-sm text-muted-foreground">{agent.role}</p>
+                      </div>
+                      <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
                     </div>
-                    <div className="flex-1">
-                      <h4 className="mb-1">{agent.name}</h4>
-                      <p className="text-sm text-muted-foreground">{agent.role}</p>
-                    </div>
-                    <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </motion.div>
 
@@ -119,10 +111,10 @@ export default function ResultScreen({ onContinue }: ResultScreenProps) {
             size="lg"
             className="px-8 py-6 rounded-2xl bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-primary/50 transition-all duration-300"
           >
-            Get Full Project Estimate
+            {t("resultScreen.button")}
           </Button>
           <p className="mt-4 text-sm text-muted-foreground">
-            See how our complete AI team would estimate your next project
+            {t("resultScreen.footer")}
           </p>
         </motion.div>
       </div>

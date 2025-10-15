@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { useTranslation } from "react-i18next";
 import { Zap } from "lucide-react";
 
 interface HeaderProps {
@@ -6,6 +7,8 @@ interface HeaderProps {
 }
 
 export default function Header({ onLogoClick }: HeaderProps) {
+  const { t } = useTranslation();
+
   return (
     <motion.header
       initial={{ y: -20, opacity: 0 }}
@@ -21,8 +24,8 @@ export default function Header({ onLogoClick }: HeaderProps) {
             <Zap className="w-6 h-6 text-white" />
           </div>
           <div className="text-left">
-            <div className="font-semibold">EstimateFast</div>
-            <div className="text-xs text-muted-foreground">AI Team Estimation</div>
+            <div className="font-semibold">{t("header.title")}</div>
+            <div className="text-xs text-muted-foreground">{t("header.subtitle")}</div>
           </div>
         </button>
       </div>
