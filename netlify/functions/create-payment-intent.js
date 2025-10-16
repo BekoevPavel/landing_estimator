@@ -62,6 +62,13 @@ function validateRequest(data) {
  */
 exports.handler = async (event) => {
   console.log("🔍 Netlify Function: create-payment-intent called");
+  
+  // 🐛 DEBUG: Проверяем переменные окружения
+  console.log("🔑 Environment check:", {
+    hasStripeKey: !!process.env.STRIPE_SECRET_KEY,
+    keyPrefix: process.env.STRIPE_SECRET_KEY ? process.env.STRIPE_SECRET_KEY.substring(0, 15) : "NOT_SET",
+    allEnvKeys: Object.keys(process.env).filter(k => k.includes('STRIPE'))
+  });
 
   // Handle preflight request
   if (event.httpMethod === "OPTIONS") {
