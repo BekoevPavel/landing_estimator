@@ -60,7 +60,11 @@
       "scripts": {
             "dev": "vite",
             "build": "vite build",
-            "preview": "vite preview"
+            "preview": "vite preview",
+            "netlify:dev": "netlify dev",
+            "netlify:deploy": "netlify deploy",
+            "netlify:deploy:prod": "netlify deploy --prod",
+            "check-env": "./check-netlify-env.sh"
       },
       "homepage": "http://estimatefast.ink"
 }

@@ -67,7 +67,14 @@ exports.handler = async (event) => {
   console.log("🔑 Environment check:", {
     hasStripeKey: !!process.env.STRIPE_SECRET_KEY,
     keyPrefix: process.env.STRIPE_SECRET_KEY ? process.env.STRIPE_SECRET_KEY.substring(0, 15) : "NOT_SET",
-    allEnvKeys: Object.keys(process.env).filter(k => k.includes('STRIPE'))
+    keyLength: process.env.STRIPE_SECRET_KEY ? process.env.STRIPE_SECRET_KEY.length : 0,
+    keyType: process.env.STRIPE_SECRET_KEY ? 
+      (process.env.STRIPE_SECRET_KEY.startsWith('sk_test_') ? 'TEST' : 
+       process.env.STRIPE_SECRET_KEY.startsWith('sk_live_') ? 'LIVE' : 'INVALID') 
+      : 'MISSING',
+    allEnvKeys: Object.keys(process.env).filter(k => k.includes('STRIPE')),
+    nodeVersion: process.version,
+    netlifyContext: process.env.CONTEXT || 'unknown'
   });
 
   // Handle preflight request
@@ -75,9 +82,34 @@ exports.handler = async (event) => {
     return successResponse({});
   }
 
-  // Only allow POST
+  // Handle GET for debugging (показываем статус конфигурации)
+  if (event.httpMethod === "GET") {
+    const debugInfo = {
+      message: "Payment Intent API - Ready",
+      method: "POST",
+      endpoint: "/.netlify/functions/create-payment-intent",
+      configuration: {
+        hasStripeKey: !!STRIPE_SECRET_KEY,
+        keyPrefix: STRIPE_SECRET_KEY ? STRIPE_SECRET_KEY.substring(0, 15) : "NOT_SET",
+        keyType: STRIPE_SECRET_KEY ? 
+          (STRIPE_SECRET_KEY.startsWith('sk_test_') ? 'TEST' : 
+           STRIPE_SECRET_KEY.startsWith('sk_live_') ? 'LIVE' : 'INVALID') 
+          : 'MISSING',
+        nodeVersion: process.version,
+        netlifyContext: process.env.CONTEXT || 'unknown'
+      },
+      requiredFields: ["amount", "planName"],
+      optionalFields: ["email"],
+      testWithCurl: `curl -X POST ${event.headers.host}/.netlify/functions/create-payment-intent -H "Content-Type: application/json" -d '{"amount": 10, "planName": "Test Plan"}'`
+    };
+    
+    console.log("📊 GET request - returning debug info");
+    return successResponse(debugInfo);
+  }
+
+  // Only allow POST for actual payment processing
   if (event.httpMethod !== "POST") {
-    return errorResponse(405, "Method not allowed", "Only POST requests are allowed");
+    return errorResponse(405, "Method not allowed", "Only POST requests are allowed for payment processing. Use GET to check configuration.");
   }
 
   // Проверка ключа
