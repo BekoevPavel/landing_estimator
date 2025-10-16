@@ -314,56 +314,138 @@
     "processing": "Got it — the AI team is analyzing your input…",
     "questions": [
       {
-        "question": "How do you usually estimate project timelines?",
-        "helper": "Understanding your current approach helps us calibrate the AI team",
+        "id": "q1",
+        "title": "How often do your project estimates turn out accurate?",
+        "helper": "Be honest — this helps us calibrate the AI team for your reality",
+        "type": "single_choice",
         "options": [
-          { "label": "Gut feeling & experience", "value": "intuition" },
-          { "label": "Historical data analysis", "value": "data" },
-          { "label": "Team consensus meetings", "value": "consensus" },
-          { "label": "Third-party tools", "value": "tools" }
+          { "id": "q1_o1", "label": "Usually nail it (80%+ accuracy)" },
+          { "id": "q1_o2", "label": "About half the time — coin flip" },
+          { "id": "q1_o3", "label": "Often off — usually underestimate" },
+          { "id": "q1_o4", "label": "Often off — usually overestimate" }
         ]
       },
       {
-        "question": "How confident are your current estimates?",
-        "helper": "This helps us understand where you need the most support",
+        "id": "q2",
+        "title": "Think of the last project where your estimate was way off. What went wrong?",
+        "helper": "Specific failures reveal patterns we can fix with AI",
+        "type": "single_choice",
         "options": [
-          { "label": "Very confident - rarely off", "value": "high" },
-          { "label": "Moderately confident", "value": "medium" },
-          { "label": "Not very confident", "value": "low" },
-          { "label": "I avoid giving estimates", "value": "avoid" }
+          { "id": "q2_o1", "label": "Client hid key requirements until later" },
+          { "id": "q2_o2", "label": "Tech turned out way more complex" },
+          { "id": "q2_o3", "label": "Team velocity was slower than expected" },
+          { "id": "q2_o4", "label": "I just didn't factor in enough unknowns" }
         ]
       },
       {
-        "question": "What causes overruns most often?",
-        "helper": "The AI team will analyze these risk factors in your projects",
+        "id": "q3",
+        "title": "When timelines start to slip, what do you feel first?",
+        "helper": "Emotional reactions reveal decision patterns under uncertainty",
+        "type": "single_choice",
         "options": [
-          { "label": "Unclear requirements", "value": "requirements" },
-          { "label": "Technical complexity", "value": "technical" },
-          { "label": "Scope creep", "value": "scope" },
-          { "label": "Team capacity issues", "value": "capacity" }
+          { "id": "q3_o1", "label": "Irritation — the plan should've worked" },
+          { "id": "q3_o2", "label": "Calm — we'll just recalc and move on" },
+          { "id": "q3_o3", "label": "Guilt — I underestimated risks" },
+          { "id": "q3_o4", "label": "Neutral — that's normal in projects" }
         ]
       },
       {
-        "question": "Do you factor design or QA in estimates?",
-        "helper": "Our AI team includes specialists for complete coverage",
+        "id": "q4",
+        "title": "What blocks accurate estimates most often?",
+        "helper": "Pinpoints your uncertainty hotspot",
+        "type": "single_choice",
         "options": [
-          { "label": "Always - it's built in", "value": "always" },
-          { "label": "Sometimes", "value": "sometimes" },
-          { "label": "Rarely", "value": "rarely" },
-          { "label": "Never - just development", "value": "never" }
+          { "id": "q4_o1", "label": "Unclear or changing requirements" },
+          { "id": "q4_o2", "label": "Technical complexity & unknowns" },
+          { "id": "q4_o3", "label": "Stakeholder pressure to lowball" },
+          { "id": "q4_o4", "label": "No reliable historical data" }
         ]
       },
       {
-        "question": "What's your biggest estimation pain point?",
-        "helper": "Your final answer - let's identify where AI can help most",
+        "id": "q5",
+        "title": "What happens when you deliver an estimate that turns out wrong?",
+        "helper": "Understanding consequences helps us prioritize the right AI safeguards",
+        "type": "single_choice",
         "options": [
-          { "label": "Taking too much time", "value": "time" },
-          { "label": "Lack of historical data", "value": "data" },
-          { "label": "Stakeholder pressure", "value": "pressure" },
-          { "label": "Unknown unknowns", "value": "unknowns" }
+          { "id": "q5_o1", "label": "Lose client trust / future deals" },
+          { "id": "q5_o2", "label": "Team burns out from crunch" },
+          { "id": "q5_o3", "label": "Have to cut scope / quality" },
+          { "id": "q5_o4", "label": "Look unprofessional to stakeholders" }
+        ]
+      },
+      {
+        "id": "q6",
+        "title": "What have you tried to improve estimation accuracy?",
+        "helper": "Knowing what hasn't worked helps us avoid repeating it",
+        "type": "multiple_choice",
+        "max_selections": 3,
+        "options": [
+          { "id": "q6_o1", "label": "Read books / took courses on estimation" },
+          { "id": "q6_o2", "label": "Built templates & processes" },
+          { "id": "q6_o3", "label": "Got more people involved in estimating" },
+          { "id": "q6_o4", "label": "Used third-party estimation tools" },
+          { "id": "q6_o5", "label": "Nothing formal — no time/resources" }
+        ]
+      },
+      {
+        "id": "q7",
+        "title": "What matters most in your ideal estimate?",
+        "helper": "Trade-off between speed, accuracy, persuasion, and protection",
+        "type": "single_choice",
+        "options": [
+          { "id": "q7_o1", "label": "Speed — give a solid ballpark fast" },
+          { "id": "q7_o2", "label": "Accuracy — I'd rather take longer and be precise" },
+          { "id": "q7_o3", "label": "Buy-in — persuade clients & stakeholders" },
+          { "id": "q7_o4", "label": "Safety — protect team from overcommitment" }
+        ]
+      },
+      {
+        "id": "q8",
+        "title": "With an AI expert team at your fingertips, what would you delegate first?",
+        "helper": "Reveals your highest-tension area and AI agent priority",
+        "type": "single_choice",
+        "options": [
+          { "id": "q8_o1", "label": "Validation & error-checking my numbers" },
+          { "id": "q8_o2", "label": "Objective benchmarks & comps" },
+          { "id": "q8_o3", "label": "Client-ready justification & presentation" },
+          { "id": "q8_o4", "label": "Just make it faster end-to-end" }
         ]
       }
-    ]
+    ],
+    "archetypes": {
+      "visionary": {
+        "title": "The Visionary",
+        "summary": "Fast, big-picture, intuition-driven. Great at momentum, weaker at risk granularity.",
+        "strengths": ["Speed", "Creativity", "Pattern recognition"],
+        "risks": ["Underestimating complexity", "Skipping validation"],
+        "ai_support": ["Risk Analyst AI", "Engineer AI"],
+        "pain_points": ["Clients complain estimates are too optimistic", "Teams struggle to deliver on time"]
+      },
+      "analyst": {
+        "title": "The Analyst",
+        "summary": "Data-driven, precise, and structured. May overanalyze and slow decisions.",
+        "strengths": ["Accuracy", "Repeatability", "Modeling"],
+        "risks": ["Analysis paralysis", "Low agility"],
+        "ai_support": ["Product Manager AI", "Benchmarking AI"],
+        "pain_points": ["Spend too much time on estimates", "Miss opportunities due to slow response"]
+      },
+      "negotiator": {
+        "title": "The Negotiator",
+        "summary": "Stakeholder-oriented, consensus builder. Needs stronger technical grounding.",
+        "strengths": ["Alignment", "Persuasion", "Expectation management"],
+        "risks": ["People-pleasing bias", "Soft estimates"],
+        "ai_support": ["Engineer AI", "Risk Analyst AI"],
+        "pain_points": ["Estimates get challenged by engineers", "Struggle to defend numbers under pressure"]
+      },
+      "protector": {
+        "title": "The Protector",
+        "summary": "Reliability and buffers first. Safeguards team, may over-pad and slow delivery.",
+        "strengths": ["Risk control", "Team safety", "Predictability"],
+        "risks": ["Over-buffering", "Conservatism"],
+        "ai_support": ["Designer AI", "Data Analyst AI"],
+        "pain_points": ["Lose deals to competitors with lower estimates", "Clients perceive as slow/expensive"]
+      }
+    }
   },
   "pricing": {
     "plans": [
@@ -424,29 +506,36 @@
     }
   },
   "resultScreen": {
-    "title": "Your Estimation Style — The Visionary",
-    "description": "You rely on intuition more than data. Our AI-team analyzed your approach and found optimization points. Your strength is seeing the big picture, but precision could be enhanced with AI-powered analysis.",
-    "sectionTitle": "AI Experts Who Analyzed Your Profile",
-    "agents": [
-      {
-        "name": "Engineer AI",
-        "role": "evaluates complexity"
-      },
-      {
-        "name": "UX Designer AI",
-        "role": "maps user flow impact"
-      },
-      {
-        "name": "Product Manager AI",
-        "role": "aligns with business goals"
-      },
-      {
-        "name": "Analyst AI",
-        "role": "calculates risk & probability"
-      }
-    ],
-    "button": "Get Full Project Estimate",
-    "footer": "See how our complete AI team would estimate your next project"
+    "titleTemplate": "Your Estimation Style — {{archetypeName}}",
+    "sectionTitle": "What Happens Next",
+    "sectionNote": "Based on your style, we'll assemble a custom AI team that complements your strengths and covers your blind spots. Once you describe your project, we'll match you with the right specialists.",
+    "strengthsLabel": "Your strengths:",
+    "risksLabel": "Watch out for:",
+    "painPointsLabel": "Common pain points we'll solve:",
+    "customTeam": {
+      "title": "Custom AI Team Matching",
+      "items": [
+        {
+          "title": "Style-Aware Selection",
+          "description": "We pick agents that balance your natural approach"
+        },
+        {
+          "title": "Project-Specific Experts",
+          "description": "Engineers, designers, analysts matched to your needs"
+        },
+        {
+          "title": "Blind Spot Coverage",
+          "description": "AI compensates for areas you typically underestimate"
+        },
+        {
+          "title": "Collaborative Analysis",
+          "description": "Agents work together like a real senior team"
+        }
+      ]
+    },
+    "button": "Get Your Custom AI Team + Full Project Estimate",
+    "footer": "Next: Tell us about your project and get matched with experts",
+    "socialProof": "Join 1,200+ {{archetypeName}}s who've cut estimation time by 73%"
   },
   "waitlist": {
     "title": "Your AI-team is preparing",
