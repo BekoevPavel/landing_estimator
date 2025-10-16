@@ -11,12 +11,14 @@ import WaitlistScreen from "./components/WaitlistScreen";
 import TestStripePayment from "./components/TestStripePayment";
 import { Button } from "./components/ui/button";
 import { FlaskConical } from "lucide-react";
+import { QuizResult } from "./types/quiz.types";
 
 type Step = "landing" | "hero" | "quiz" | "result" | "pricing" | "waitlist";
 
 export default function App() {
   const [currentStep, setCurrentStep] = useState("landing" as Step);
   const [showTestMode, setShowTestMode] = useState(false);
+  const [quizResult, setQuizResult] = useState<QuizResult | null>(null);
 
   const handleLogoClick = () => {
     setCurrentStep("landing");
@@ -78,12 +80,20 @@ export default function App() {
         )}
         {currentStep === "quiz" && (
           <div key="quiz" className="pt-20">
-            <QuizSection onComplete={() => setCurrentStep("result")} />
+            <QuizSection
+              onComplete={(result) => {
+                setQuizResult(result);
+                setCurrentStep("result");
+              }}
+            />
           </div>
         )}
-        {currentStep === "result" && (
+        {currentStep === "result" && quizResult && (
           <div key="result" className="pt-20">
-            <ResultScreen onContinue={() => setCurrentStep("pricing")} />
+            <ResultScreen
+              result={quizResult}
+              onContinue={() => setCurrentStep("pricing")}
+            />
           </div>
         )}
         {currentStep === "pricing" && (
