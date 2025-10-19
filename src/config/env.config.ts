@@ -20,26 +20,9 @@ export const isNetlifyDevMode = (): boolean => {
 };
 
 /**
- * Проверяет, работает ли приложение в production
- */
-export const isProductionMode = (): boolean => {
-  return !isDevelopmentMode() && !isNetlifyDevMode();
-};
-
-/**
  * API эндпоинты
  */
 export const API_ENDPOINTS = {
   createPaymentIntent: "/.netlify/functions/create-payment-intent",
 } as const;
-
-/**
- * Получить base URL для API запросов
- */
-export const getApiBaseUrl = (): string => {
-  if (isDevelopmentMode()) {
-    return ""; // В dev режиме API не доступен, используем моки
-  }
-  return ""; // В остальных случаях используем relative paths
-};
 

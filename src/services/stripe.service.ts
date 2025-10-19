@@ -81,30 +81,6 @@ class StripeService {
   validateEmail(email: string): boolean {
     return STRIPE_VALIDATION.emailRegex.test(email);
   }
-
-  /**
-   * Форматирует сумму для отображения
-   */
-  formatAmount(amount: number): string {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(amount);
-  }
-
-  /**
-   * Конвертирует доллары в центы для Stripe API
-   */
-  dollarsToCents(dollars: number): number {
-    return Math.round(dollars * 100);
-  }
-
-  /**
-   * Конвертирует центы в доллары
-   */
-  centsToDollars(cents: number): number {
-    return cents / 100;
-  }
 }
 
 // Экспортируем singleton instance
