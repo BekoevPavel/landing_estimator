@@ -3,6 +3,8 @@ import { motion } from "motion/react";
 import { useTranslation } from "react-i18next";
 import { Sparkles, Users, Zap } from "lucide-react";
 import { Button } from "./ui/button";
+import { GRADIENTS, GRADIENT_TEXT } from "../constants/gradients";
+import { fadeInUpWithDelay } from "../constants/animations";
 
 interface HeroSectionProps {
   onStart: () => void;
@@ -20,16 +22,14 @@ export default function HeroSection({ onStart }: HeroSectionProps) {
       className="min-h-screen flex items-center justify-center relative overflow-hidden"
     >
       {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-background to-background" />
+      <div className={`absolute inset-0 ${GRADIENTS.hero}`} />
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[120px]" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/20 rounded-full blur-[120px]" />
 
       {/* Content */}
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
         <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
+          {...fadeInUpWithDelay(0.2)}
           className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/50 backdrop-blur-sm"
         >
           <Sparkles className="w-4 h-4 text-primary" />
@@ -37,27 +37,34 @@ export default function HeroSection({ onStart }: HeroSectionProps) {
         </motion.div>
 
         <motion.h1
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mb-6 text-5xl md:text-7xl tracking-tight bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-transparent"
+          {...fadeInUpWithDelay(0.3)}
+          className={`mb-6 text-5xl md:text-7xl tracking-tight ${GRADIENT_TEXT.primary}`}
         >
           {t("heroSection.title")}
         </motion.h1>
 
         <motion.p
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="mb-12 max-w-2xl mx-auto text-muted-foreground"
+          {...fadeInUpWithDelay(0.4)}
+          className="mb-8 max-w-2xl mx-auto text-muted-foreground"
         >
           {t("heroSection.description")}
         </motion.p>
 
+        {/* Quiz Info Card */}
         <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5 }}
+          {...fadeInUpWithDelay(0.45)}
+          className="mb-12 max-w-2xl mx-auto bg-card/50 backdrop-blur-xl border border-primary/30 rounded-2xl p-6"
+        >
+          <p className="text-sm mb-3 text-primary font-medium">
+            {t("heroSection.quiz.title")}
+          </p>
+          <p className="text-sm text-muted-foreground">
+            {t("heroSection.quiz.description")}
+          </p>
+        </motion.div>
+
+        <motion.div
+          {...fadeInUpWithDelay(0.5)}
           className="mb-12"
         >
           <Button
@@ -70,32 +77,9 @@ export default function HeroSection({ onStart }: HeroSectionProps) {
           </Button>
         </motion.div>
 
-        {/* Trust Badges */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="flex flex-wrap items-center justify-center gap-8 text-sm text-muted-foreground"
-        >
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-primary rounded-full" />
-            {t("heroSection.badges.noSignup")}
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-primary rounded-full" />
-            {t("heroSection.badges.fastTime")}
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-primary rounded-full" />
-            {t("heroSection.badges.accuracy")}
-          </div>
-        </motion.div>
-
         {/* Visual Team Representation */}
         <motion.div
-          initial={{ y: 40, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.7 }}
+          {...fadeInUpWithDelay(0.6)}
           className="mt-24 flex items-center justify-center gap-4"
         >
           <div className="relative">

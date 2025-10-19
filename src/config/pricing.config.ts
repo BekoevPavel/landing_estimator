@@ -91,12 +91,3 @@ export function getPlanById(planId: string): PricingPlan | undefined {
   return PRICING_PLANS.find((plan) => plan.id === planId);
 }
 
-/**
- * Получить план по имени
- */
-export function getPlanByName(planName: string): PricingPlan | undefined {
-  return PRICING_PLANS.find(
-    (plan) => plan.name.toLowerCase() === planName.toLowerCase()
-  );
-}
-

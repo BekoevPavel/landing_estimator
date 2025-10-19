@@ -7,18 +7,21 @@
     "hero": {
       "badge": "First Multi-Agent Estimation Platform",
       "title": "An AI Team Estimates Your Project More Accurately Than You — in 2 Minutes",
-      "description": "8 specialized agents work like a senior team: Engineer evaluates code, Designer evaluates UX, PM evaluates business logic, Analyst evaluates risks. No single model can provide such accuracy.",
+      "description": "8 specialized agents work like a senior team: Engineer evaluates code, Designer evaluates UX, PM evaluates business logic, Analyst evaluates risks. Through interactive questioning, they build a comprehensive estimate in ~30 minutes.",
       "cta": "Get Free Estimate",
       "ctaSecondary": "See How It Works",
       "badges": {
         "noRegistration": "No registration needed",
-        "fastTime": "Takes 60 seconds",
-        "accuracy": "±15% accuracy"
+        "fastTime": "~30 min average",
+        "detailedOutput": "Detailed backlog output"
       },
       "stats": {
-        "projects": "Projects Estimated",
-        "accuracy": "Average Accuracy",
-        "rating": "Average Rating"
+        "agents": "AI Agents",
+        "agentsSubtitle": "Specialized Experts",
+        "duration": "~30 Min",
+        "durationSubtitle": "Interactive Session",
+        "access": "Early Access",
+        "accessSubtitle": "Limited Beta Spots"
       }
     },
     "problems": {
@@ -106,22 +109,27 @@
         "title": "How the AI Team Works",
         "steps": [
           {
-            "title": "You Submit Brief",
-            "description": "2-minute questionnaire"
+            "title": "Describe Project",
+            "description": "You provide initial project description"
           },
           {
-            "title": "AI Team Analyzes",
-            "description": "8 agents discuss project"
+            "title": "AI Asks Questions",
+            "description": "Team generates clarifying questions"
           },
           {
-            "title": "Report Generated",
-            "description": "Detailed breakdown ready"
+            "title": "You Answer",
+            "description": "Provide details as team asks"
           },
           {
-            "title": "You Send to Client",
-            "description": "Impress with detail"
+            "title": "Deep Dive",
+            "description": "Each agent drills into their domain"
+          },
+          {
+            "title": "Report Ready",
+            "description": "Review & send to client"
           }
-        ]
+        ],
+        "footer": "Average time: ~30 minutes (varies by project complexity)"
       },
       "deliverables": {
         "title": "What You Receive",
@@ -488,17 +496,28 @@
           "Priority support"
         ]
       }
-    ]
+    ],
+    "checkout": {
+      "title": "Complete Your Order",
+      "description": "You selected the {{planName}} plan for {{planPrice}}"
+    },
+    "redirecting": "Redirecting to Stripe Checkout...",
+    "pleaseWait": "Please wait...",
+    "testCardInfo": "Use test card: 4242 4242 4242 4242"
   },
   "heroSection": {
     "badge": "AI-Powered Project Estimation",
-    "title": "Get your project estimated by a full AI team — in 2 minutes",
-    "description": "Discover how senior engineers, designers, and PMs would value your idea. Our AI team analyzes your project with near-human accuracy.",
+    "title": "Get your project estimated by a full AI team",
+    "description": "Discover how senior engineers, designers, and PMs would value your idea. Through interactive questioning, our 8 AI agents build a detailed estimate in ~30 minutes.",
+    "quiz": {
+      "title": "⚡ But first, a quick 60-second quiz",
+      "description": "We'll ask you a few questions about your estimation process. This helps us understand your pain points and calibrate our AI team to your specific needs. Think of it as us getting to know you before diving in."
+    },
     "button": "Start the Test",
     "badges": {
       "noSignup": "No signup needed",
-      "fastTime": "Takes 60 seconds",
-      "accuracy": "AI-powered accuracy"
+      "fastTime": "~30 min session",
+      "detailedOutput": "Detailed backlog output"
     },
     "team": {
       "title": "Meet your AI team",
@@ -556,6 +575,51 @@
       "button": "Submit Feedback"
     },
     "footer": "Check your email for confirmation and next steps"
+  },
+  "founders": {
+    "title": "You're in the Founder's Circle! 🎉",
+    "reassurance": {
+      "noCharge": "No money was charged",
+      "earlyAdopter": "You're among the first early adopters"
+    },
+    "benefitsTitle": "What You're Getting:",
+    "benefits": {
+      "discount": {
+        "title": "Lifetime 50% discount",
+        "detail": "$149 → $74 per estimate"
+      },
+      "priority": {
+        "title": "Priority access at launch",
+        "detail": "First to use the platform"
+      },
+      "freeEstimates": {
+        "title": "3 free estimates as a gift",
+        "detail": "Worth $447 in value"
+      },
+      "founderAccess": {
+        "title": "Direct access to founder",
+        "detail": "Your feedback shapes the product"
+      }
+    },
+    "timeline": {
+      "title": "We're launching very soon",
+      "subtitle": "You'll be the first to know when we're ready"
+    },
+    "email": {
+      "label": "Confirm your email to receive updates:",
+      "placeholder": "your@email.com",
+      "note": "We'll send details to:"
+    },
+    "cta": {
+      "confirm": "Confirm Participation"
+    },
+    "confirmed": {
+      "title": "You're all set!",
+      "subtitle": "Check your email for next steps"
+    },
+    "footer": {
+      "text": "Questions? Email us at"
+    }
   }
 }
 

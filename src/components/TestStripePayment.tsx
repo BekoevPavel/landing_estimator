@@ -17,8 +17,9 @@ import { Alert, AlertDescription } from "./ui/alert";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Loader2, CreditCard, CheckCircle, XCircle, X } from "lucide-react";
+import { Loader2, CreditCard, XCircle, X } from "lucide-react";
 import StripeCheckoutForm from "./StripeCheckoutForm";
+import FoundersCircleScreen from "./FoundersCircleScreen";
 import { usePayment } from "../hooks/usePayment";
 import {
   STRIPE_KEYS,
@@ -160,21 +161,10 @@ export default function TestStripePayment({ onClose }: TestStripePaymentProps) {
             </Elements>
           )}
 
-          {/* Успешная оплата */}
+          {/* Успешная оплата - показываем Founder's Circle Screen */}
           {status === 'success' && (
-            <div className="flex flex-col items-center justify-center py-12 space-y-4">
-              <div className="p-4 rounded-full bg-green-100 dark:bg-green-900/20">
-                <CheckCircle className="h-16 w-16 text-green-600 dark:text-green-400" />
-              </div>
-              <h3 className="text-2xl font-bold text-green-600 dark:text-green-400">
-                Платёж успешен!
-              </h3>
-              <p className="text-muted-foreground text-center">
-                Тестовый платёж на сумму ${amount} был успешно обработан
-              </p>
-              <Button onClick={payment.reset} variant="outline" className="mt-4">
-                Провести ещё один тест
-              </Button>
+            <div className="fixed inset-0 z-50 bg-background">
+              <FoundersCircleScreen initialEmail={email} />
             </div>
           )}
 

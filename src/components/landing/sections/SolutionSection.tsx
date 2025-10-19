@@ -89,19 +89,24 @@ export function SolutionSection() {
             className="bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20 rounded-3xl p-8 md:p-12"
           >
             <h3 className="mb-8 text-center text-2xl">{t("landing.solution.process.title")}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="flex flex-wrap justify-center gap-4 md:gap-6">
               {processSteps.map((step, index) => {
-                const emojis = ["📝", "🤖", "📊", "✅"];
+                const emojis = ["📝", "❓", "💬", "🔍", "📊"];
                 return (
-                  <div key={step.title} className="text-center">
+                  <div key={step.title} className="text-center flex-1 min-w-[140px] max-w-[180px]">
                     <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-4">
                       <span className="text-2xl">{emojis[index]}</span>
                     </div>
-                    <h4 className="mb-2">{step.title}</h4>
-                    <p className="text-sm text-muted-foreground">{step.description}</p>
+                    <h4 className="mb-2 text-sm font-semibold">{step.title}</h4>
+                    <p className="text-xs text-muted-foreground">{step.description}</p>
                   </div>
                 );
               })}
+            </div>
+            <div className="mt-8 pt-6 border-t border-primary/20 text-center">
+              <p className="text-sm text-muted-foreground">
+                {t("landing.solution.process.footer")}
+              </p>
             </div>
           </motion.div>
 

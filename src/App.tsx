@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AnimatePresence } from "motion/react";
 import Header from "./components/Header";
 import { LanguageSwitcher } from "./components/LanguageSwitcher";
@@ -7,7 +7,7 @@ import HeroSection from "./components/HeroSection";
 import QuizSection from "./components/QuizSection";
 import ResultScreen from "./components/ResultScreen";
 import PricingSection from "./components/PricingSection";
-import WaitlistScreen from "./components/WaitlistScreen";
+import FoundersCircleScreen from "./components/FoundersCircleScreen";
 import TestStripePayment from "./components/TestStripePayment";
 import { Button } from "./components/ui/button";
 import { FlaskConical } from "lucide-react";
@@ -16,9 +16,30 @@ import { QuizResult } from "./types/quiz.types";
 type Step = "landing" | "hero" | "quiz" | "result" | "pricing" | "waitlist";
 
 export default function App() {
-  const [currentStep, setCurrentStep] = useState("landing" as Step);
+  // 🧪 TEMPORARY: Start directly at pricing for Stripe testing
+  // TODO: Change back to "landing" for production
+  const [currentStep, setCurrentStep] = useState("landing" as Step); // <-- PRODUCTION MODE
+  // const [currentStep, setCurrentStep] = useState("pricing" as Step); // <-- TESTING MODE
+  
   const [showTestMode, setShowTestMode] = useState(false);
   const [quizResult, setQuizResult] = useState<QuizResult | null>(null);
+
+  // Проверяем URL параметры при загрузке - возврат со Stripe
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const paymentStatus = params.get("payment");
+    
+    if (paymentStatus === "success" || paymentStatus === "canceled") {
+      console.log("🎉 Smoke test complete! User returned from Stripe:", paymentStatus);
+      console.log("📊 CONVERSION: User saw real Stripe checkout page");
+      
+      // Убираем параметры из URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+      
+      // Показываем Founder's Circle экран
+      setCurrentStep("waitlist");
+    }
+  }, []);
 
   const handleLogoClick = () => {
     setCurrentStep("landing");
@@ -30,23 +51,25 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-hidden">
-      {/* Header - показываем на всех экранах кроме landing */}
-      {currentStep !== "landing" && <Header onLogoClick={handleLogoClick} />}
+      {/* Header - показываем на всех экранах кроме landing и waitlist (founders screen) */}
+      {currentStep !== "landing" && currentStep !== "waitlist" && <Header onLogoClick={handleLogoClick} />}
       
       {/* Language Switcher - Правый верхний угол (UX best practice) */}
-      <div 
-        style={{ 
-          position: 'fixed', 
-          top: '1.5rem',  // 24px - оптимально для всех экранов
-          right: '1.5rem', 
-          zIndex: 50 
-        }}
-      >
-        <LanguageSwitcher />
-      </div>
+      {currentStep !== "waitlist" && (
+        <div 
+          style={{ 
+            position: 'fixed', 
+            top: '1.5rem',  // 24px - оптимально для всех экранов
+            right: '1.5rem', 
+            zIndex: 50 
+          }}
+        >
+          <LanguageSwitcher />
+        </div>
+      )}
       
       {/* Кнопка для открытия тестового режима */}
-      {!showTestMode && (
+      {!showTestMode && currentStep !== "waitlist" && (
         <Button
           onClick={() => setShowTestMode(true)}
           style={{ 
@@ -102,8 +125,8 @@ export default function App() {
           </div>
         )}
         {currentStep === "waitlist" && (
-          <div key="waitlist" className="pt-20">
-            <WaitlistScreen />
+          <div key="waitlist">
+            <FoundersCircleScreen />
           </div>
         )}
       </AnimatePresence>

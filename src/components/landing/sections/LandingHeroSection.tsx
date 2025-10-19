@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import { Sparkles, CheckCircle, Zap, ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Button } from "../../ui/button";
-import { GRADIENT_TEXT } from "../../../constants/gradients";
+import { GRADIENTS, GRADIENT_TEXT } from "../../../constants/gradients";
 import { fadeInUpWithDelay } from "../../../constants/animations";
 
 interface LandingHeroSectionProps {
@@ -15,7 +15,7 @@ export function LandingHeroSection({ onStartTest }: LandingHeroSectionProps) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-background to-background" />
+      <div className={`absolute inset-0 ${GRADIENTS.hero}`} />
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[120px]" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/20 rounded-full blur-[120px]" />
 
@@ -84,7 +84,7 @@ export function LandingHeroSection({ onStartTest }: LandingHeroSectionProps) {
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-primary" />
-            {t("landing.hero.badges.accuracy")}
+            {t("landing.hero.badges.detailedOutput")}
           </div>
         </motion.div>
 
@@ -94,22 +94,22 @@ export function LandingHeroSection({ onStartTest }: LandingHeroSectionProps) {
           className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
         >
           <div className="bg-card/50 backdrop-blur-xl border border-border rounded-2xl p-6">
-            <div className={`text-3xl mb-2 ${GRADIENT_TEXT.accent}`}>
-              2,847
+            <div className={`text-4xl font-bold mb-2 ${GRADIENT_TEXT.accent}`}>
+              8 {t("landing.hero.stats.agents")}
             </div>
-            <div className="text-sm text-muted-foreground">{t("landing.hero.stats.projects")}</div>
+            <div className="text-sm text-muted-foreground">{t("landing.hero.stats.agentsSubtitle")}</div>
           </div>
           <div className="bg-card/50 backdrop-blur-xl border border-border rounded-2xl p-6">
-            <div className={`text-3xl mb-2 ${GRADIENT_TEXT.accent}`}>
-              $5.2M
+            <div className={`text-4xl font-bold mb-2 ${GRADIENT_TEXT.accent}`}>
+              {t("landing.hero.stats.duration")}
             </div>
-            <div className="text-sm text-muted-foreground">{t("landing.hero.stats.accuracy")}</div>
+            <div className="text-sm text-muted-foreground">{t("landing.hero.stats.durationSubtitle")}</div>
           </div>
           <div className="bg-card/50 backdrop-blur-xl border border-border rounded-2xl p-6">
-            <div className={`text-3xl mb-2 ${GRADIENT_TEXT.accent}`}>
-              4.9/5
+            <div className={`text-4xl font-bold mb-2 ${GRADIENT_TEXT.accent}`}>
+              {t("landing.hero.stats.access")}
             </div>
-            <div className="text-sm text-muted-foreground">{t("landing.hero.stats.rating")}</div>
+            <div className="text-sm text-muted-foreground">{t("landing.hero.stats.accessSubtitle")}</div>
           </div>
         </motion.div>
       </div>

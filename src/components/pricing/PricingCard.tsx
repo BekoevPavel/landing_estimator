@@ -27,8 +27,7 @@ export function PricingCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: animationDelay }}
-      onClick={onSelect}
-      className={`relative cursor-pointer group ${
+      className={`relative group ${
         plan.popular ? "md:-mt-4" : ""
       }`}
     >
@@ -78,10 +77,7 @@ export function PricingCard({
           <Button
             variant={isSelected ? "default" : "outline"}
             className="w-full rounded-xl"
-            onClick={(e) => {
-              e.stopPropagation();
-              onSelect();
-            }}
+            onClick={onSelect}
           >
             {isSelected ? "Selected" : "Select Plan"}
           </Button>
