@@ -12,13 +12,16 @@ import { Button } from "../ui/button";
 import StripeCheckoutForm from "../StripeCheckoutForm";
 import { STRIPE_KEYS, STRIPE_APPEARANCE_DARK } from "../../config/stripe.config";
 import { isDevelopmentMode } from "../../config/env.config";
-import type { PricingPlan } from "../../config/pricing.config";
+import type { PricingPlan } from "../../config/pricing.ab-test";
+import { googleSheetsService } from "../../services/googleSheets";
 
 // Инициализация Stripe
 const stripePromise = loadStripe(STRIPE_KEYS.publishableKey);
 
 interface CheckoutFormProps {
   selectedPlan: PricingPlan;
+  actualPrice: number;
+  abTestVariant: string;
   clientSecret: string | null;
   isLoading: boolean;
   error: string | null;
@@ -29,6 +32,8 @@ interface CheckoutFormProps {
 
 export function CheckoutForm({
   selectedPlan,
+  actualPrice,
+  abTestVariant,
   clientSecret,
   isLoading,
   error,
@@ -99,7 +104,24 @@ export function CheckoutForm({
               </div>
             </div>
             <Button
-              onClick={onPaymentSuccess}
+              onClick={async () => {
+                // Send data to Google Sheets even in dev mode
+                if (email) {
+                  try {
+                    await googleSheetsService.appendRow({
+                      email,
+                      timestamp: new Date().toISOString(),
+                      amount: actualPrice,
+                      planType: selectedPlan.name,
+                      variant: abTestVariant,
+                    });
+                    console.log("✅ Dev mode: Data sent to Google Sheets");
+                  } catch (error) {
+                    console.error("Failed to save to Google Sheets:", error);
+                  }
+                }
+                onPaymentSuccess();
+              }}
               className="w-full rounded-xl bg-gradient-to-r from-green-500 to-emerald-500"
             >
               ✓ Simulate Payment Success (Dev Mode)
@@ -121,6 +143,10 @@ export function CheckoutForm({
             <StripeCheckoutForm
               onSuccess={onPaymentSuccess}
               onError={onPaymentError}
+              email={email}
+              planName={selectedPlan.name}
+              amount={actualPrice}
+              variant={abTestVariant}
             />
           </Elements>
         )}

@@ -6,7 +6,7 @@ import React from "react";
 import { motion } from "motion/react";
 import { Check } from "lucide-react";
 import { Button } from "../ui/button";
-import type { PricingPlan } from "../../config/pricing.config";
+import type { PricingPlan } from "../../config/pricing.ab-test";
 
 interface PricingCardProps {
   plan: PricingPlan;

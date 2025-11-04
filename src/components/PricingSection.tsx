@@ -8,8 +8,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { useTranslation } from "react-i18next";
 import { PricingCard } from "./pricing/PricingCard";
 import { CheckoutForm } from "./pricing/CheckoutForm";
-import { PRICING_PLANS, getPlanById } from "../config/pricing.config";
-import { getPricingPlans, getPricingVariant } from "../config/pricing.ab-test";
+import { getPricingPlans, getPricingVariant, getPlanById } from "../config/pricing.ab-test";
 import { 
   trackPricingViewed, 
   trackPlanSelected, 
@@ -179,19 +178,13 @@ export default function PricingSection({ onComplete }: PricingSectionProps) {
 
               {/* Pricing Cards */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {PRICING_PLANS.map((plan, index) => {
+                {abTestPlans.map((plan, index) => {
                   const translatedPlan = pricingPlans[index];
-                  // Берём ЦЕНУ из A/B теста!
-                  const abPlan = abTestPlans.find(p => p.id === plan.id);
-                  const priceOverride = abPlan ? {
-                    price: abPlan.price,
-                    displayPrice: `$${abPlan.price}`,
-                  } : {};
-                  
+
                   return (
                     <PricingCard
                       key={plan.id}
-                      plan={{ ...plan, ...translatedPlan, ...priceOverride }}
+                      plan={{ ...plan, ...translatedPlan }}
                       isSelected={selectedPlanId === plan.id}
                       onSelect={() => handlePlanSelect(plan.id)}
                       animationDelay={0.3 + index * 0.1}
@@ -238,19 +231,27 @@ export default function PricingSection({ onComplete }: PricingSectionProps) {
               </div>
 
               {/* Checkout Form */}
-              {selectedPlan && (
-                <div className="bg-card/50 backdrop-blur-xl border border-border rounded-3xl p-8">
-                  <CheckoutForm
-                    selectedPlan={selectedPlan}
-                    clientSecret={payment.clientSecret}
-                    isLoading={payment.isLoading}
-                    error={payment.error}
-                    onEmailChange={setEmail}
-                    onPaymentSuccess={payment.handlePaymentSuccess}
-                    onPaymentError={handlePaymentError}
-                  />
-                </div>
-              )}
+              {selectedPlan && (() => {
+                // Get the ACTUAL A/B test price
+                const abPlan = abTestPlans.find(p => p.id === selectedPlan.id);
+                const actualPrice = abPlan?.price || selectedPlan.price;
+
+                return (
+                  <div className="bg-card/50 backdrop-blur-xl border border-border rounded-3xl p-8">
+                    <CheckoutForm
+                      selectedPlan={selectedPlan}
+                      actualPrice={actualPrice}
+                      abTestVariant={variant}
+                      clientSecret={payment.clientSecret}
+                      isLoading={payment.isLoading}
+                      error={payment.error}
+                      onEmailChange={setEmail}
+                      onPaymentSuccess={payment.handlePaymentSuccess}
+                      onPaymentError={handlePaymentError}
+                    />
+                  </div>
+                );
+              })()}
             </motion.div>
           )}
         </AnimatePresence>
