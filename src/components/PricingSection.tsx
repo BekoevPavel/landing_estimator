@@ -3,12 +3,19 @@
  * Встроенная форма Stripe БЕЗ модалки - показываем прямо на странице
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useTranslation } from "react-i18next";
 import { PricingCard } from "./pricing/PricingCard";
 import { CheckoutForm } from "./pricing/CheckoutForm";
 import { PRICING_PLANS, getPlanById } from "../config/pricing.config";
+import { getPricingPlans, getPricingVariant } from "../config/pricing.ab-test";
+import { 
+  trackPricingViewed, 
+  trackPlanSelected, 
+  trackPaymentAttempt,
+  trackTimeOnPricing 
+} from "../analytics/events";
 import { usePayment } from "../hooks/usePayment";
 import { Alert, AlertDescription } from "./ui/alert";
 import { Button } from "./ui/button";
@@ -25,18 +32,54 @@ export default function PricingSection({ onComplete }: PricingSectionProps) {
   const [email, setEmail] = useState("");
   const [showCheckout, setShowCheckout] = useState(false);
 
+  // A/B Test: получаем вариант для этого пользователя
+  const variant = getPricingVariant();
+  const abTestPlans = getPricingPlans();
+  
+  // Таймер для отслеживания времени на странице
+  const startTimeRef = useRef<number>(Date.now());
+
   const selectedPlan = selectedPlanId ? getPlanById(selectedPlanId) : null;
 
   const payment = usePayment({
     onSuccess: () => {
       console.log("✅ Payment successful");
+      // Track успешную оплату
+      if (selectedPlan) {
+        const abPlan = abTestPlans.find(p => p.id === selectedPlan.id);
+        // Используем РЕАЛЬНУЮ цену из A/B теста!
+        const price = abPlan?.price || selectedPlan.price;
+        
+        // Импортируем trackPaymentSuccess из events
+        import("../analytics/events").then(({ trackPaymentSuccess }) => {
+          trackPaymentSuccess(variant, selectedPlan.id, price);
+        });
+      }
       onComplete();
     },
   });
+  
+  // Track просмотр страницы с ценами при монтировании
+  useEffect(() => {
+    trackPricingViewed(variant);
+    
+    // Track время на странице при размонтировании
+    return () => {
+      const timeSpent = Math.floor((Date.now() - startTimeRef.current) / 1000);
+      trackTimeOnPricing(timeSpent, variant);
+    };
+  }, [variant]);
 
   // Открываем форму checkout при выборе плана
   const handlePlanSelect = (planId: string) => {
     console.log("🎯 Smoke test: Plan selected:", planId);
+    
+    // Track выбор плана
+    const abPlan = abTestPlans.find(p => p.id === planId);
+    if (abPlan) {
+      trackPlanSelected(variant, planId, abPlan.price);
+    }
+    
     setSelectedPlanId(planId);
     setShowCheckout(true);
   };
@@ -63,7 +106,15 @@ export default function PricingSection({ onComplete }: PricingSectionProps) {
   useEffect(() => {
     if (selectedPlan && email && showCheckout) {
       console.log("💳 Creating payment intent for:", selectedPlan.name);
-      payment.createPayment(selectedPlan.price, selectedPlan.name, email);
+      
+      // ВАЖНО: Используем цену из A/B теста!
+      const abPlan = abTestPlans.find(p => p.id === selectedPlan.id);
+      const price = abPlan?.price || selectedPlan.price;
+      
+      // Track попытку оплаты
+      trackPaymentAttempt(variant, selectedPlan.id, price);
+      
+      payment.createPayment(price, selectedPlan.name, email);
     }
   }, [selectedPlan?.id, email, showCheckout]);
 
@@ -118,14 +169,29 @@ export default function PricingSection({ onComplete }: PricingSectionProps) {
                 </motion.div>
               )}
 
+              {/* A/B Test Debug (только в dev) */}
+              {import.meta.env.DEV && (
+                <div className="bg-yellow-100 dark:bg-yellow-900/20 border border-yellow-400 rounded-lg p-4 text-center mb-8">
+                  <strong>🧪 A/B Test Active:</strong> Showing Variant <strong>{variant}</strong>
+                  {variant === 'B' && ' (India Pricing)'}
+                </div>
+              )}
+
               {/* Pricing Cards */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {PRICING_PLANS.map((plan, index) => {
                   const translatedPlan = pricingPlans[index];
+                  // Берём ЦЕНУ из A/B теста!
+                  const abPlan = abTestPlans.find(p => p.id === plan.id);
+                  const priceOverride = abPlan ? {
+                    price: abPlan.price,
+                    displayPrice: `$${abPlan.price}`,
+                  } : {};
+                  
                   return (
                     <PricingCard
                       key={plan.id}
-                      plan={{ ...plan, ...translatedPlan }}
+                      plan={{ ...plan, ...translatedPlan, ...priceOverride }}
                       isSelected={selectedPlanId === plan.id}
                       onSelect={() => handlePlanSelect(plan.id)}
                       animationDelay={0.3 + index * 0.1}
@@ -159,11 +225,15 @@ export default function PricingSection({ onComplete }: PricingSectionProps) {
                   {t("pricing.checkout.title")}
                 </h2>
                 <p className="text-muted-foreground">
-                  {selectedPlan &&
-                    t("pricing.checkout.description", {
+                  {selectedPlan && (() => {
+                    // Get the correct A/B test price
+                    const abPlan = abTestPlans.find(p => p.id === selectedPlan.id);
+                    const displayPrice = abPlan ? `$${abPlan.price}` : selectedPlan.displayPrice;
+                    return t("pricing.checkout.description", {
                       planName: selectedPlan.name,
-                      planPrice: selectedPlan.displayPrice,
-                    })}
+                      planPrice: displayPrice,
+                    });
+                  })()}
                 </p>
               </div>
 

@@ -8,7 +8,7 @@
       "badge": "First Multi-Agent Estimation Platform",
       "title": "An AI Team Estimates Your Project More Accurately Than You — in 2 Minutes",
       "description": "8 specialized agents work like a senior team: Engineer evaluates code, Designer evaluates UX, PM evaluates business logic, Analyst evaluates risks. Through interactive questioning, they build a comprehensive estimate in ~30 minutes.",
-      "cta": "Get Free Estimate",
+      "cta": "Get Your Estimate",
       "ctaSecondary": "See How It Works",
       "badges": {
         "noRegistration": "No registration needed",
@@ -278,7 +278,7 @@
     "cta": {
       "title": "Stop Losing Money on Inaccurate Estimates",
       "description": "An AI team of experts will estimate your project more accurately than you — in 2 minutes.",
-      "button": "Get Free Estimate Now",
+      "button": "Get Your Estimate Now",
       "badges": {
         "noCard": "No card required",
         "fastTime": "Takes 60 seconds",
@@ -462,11 +462,12 @@
         "period": "/project",
         "description": "Perfect for small projects",
         "features": [
-          "3 AI experts (Engineer, Designer, PM)",
-          "Basic complexity analysis",
-          "Timeline estimation",
-          "Cost breakdown",
-          "24-hour delivery"
+          "Choose 3 agents from the pool",
+          "Projects up to 2 months",
+          "Detailed brief & backlog",
+          "Task breakdown with agent debate",
+          "Risk assessment & cost estimates",
+          "Cost optimization advice"
         ]
       },
       {
@@ -474,12 +475,12 @@
         "period": "/project",
         "description": "Most popular for complex projects",
         "features": [
-          "6 AI agents including Analyst & QA",
-          "Advanced risk assessment",
-          "Resource allocation planning",
-          "Detailed technical specs",
-          "12-hour delivery",
-          "Revision included"
+          "Choose 6 agents from the pool",
+          "Projects up to 5 months",
+          "Everything in Basic, plus:",
+          "Advanced risk & resource planning",
+          "Detailed technical specifications",
+          "Interactive dashboard"
         ]
       },
       {
@@ -487,12 +488,12 @@
         "period": "/project",
         "description": "For mission-critical estimates",
         "features": [
-          "Full virtual team (8+ AI agents)",
-          "Custom industry advisor",
-          "Multi-phase planning",
+          "Choose 8+ agents from the pool",
+          "Enterprise-scale projects (6+ months)",
+          "Everything in Pro, plus:",
+          "Multi-phase project planning",
           "Risk mitigation strategies",
-          "6-hour delivery",
-          "Unlimited revisions",
+          "Custom agent configuration",
           "Priority support"
         ]
       }
@@ -585,30 +586,29 @@
     "benefitsTitle": "What You're Getting:",
     "benefits": {
       "discount": {
-        "title": "Lifetime 50% discount",
-        "detail": "$149 → $74 per estimate"
+        "title": "Lifetime Founder Benefits",
+        "detail": "Lifetime insider perks and preferred pricing"
       },
       "priority": {
-        "title": "Priority access at launch",
-        "detail": "First to use the platform"
+        "title": "Priority Access",
+        "detail": "First in line when the platform opens — guaranteed spot in the early access group"
       },
-      "freeEstimates": {
-        "title": "3 free estimates as a gift",
-        "detail": "Worth $447 in value"
+      "bonusCredits": {
+        "title": "Bonus Credits",
+        "detail": "3 bonus estimates included — Worth $150 in value"
       },
       "founderAccess": {
-        "title": "Direct access to founder",
-        "detail": "Your feedback shapes the product"
+        "title": "Direct Input to the Product",
+        "detail": "Private founder feedback channel — your input shapes the product direction"
+      },
+      "closedBeta": {
+        "title": "Closed Beta Access",
+        "detail": "We are currently in closed beta — you will get early access as soon as we open the next group of testers"
       }
     },
     "timeline": {
       "title": "We're launching very soon",
       "subtitle": "You'll be the first to know when we're ready"
-    },
-    "email": {
-      "label": "Confirm your email to receive updates:",
-      "placeholder": "your@email.com",
-      "note": "We'll send details to:"
     },
     "cta": {
       "confirm": "Confirm Participation"

@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import { useTranslation } from "react-i18next";
-import { 
-  Sparkles, 
-  CheckCircle2, 
-  ArrowRight, 
-  Gift, 
-  Zap, 
+import {
+  Sparkles,
+  CheckCircle2,
+  ArrowRight,
+  Gift,
+  Zap,
   Star,
   Rocket,
-  Mail
+  MessageCircle,
+  Lock
 } from "lucide-react";
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
 
 interface FoundersCircleScreenProps {
   initialEmail?: string;
@@ -20,7 +20,6 @@ interface FoundersCircleScreenProps {
 
 export default function FoundersCircleScreen({ initialEmail = "" }: FoundersCircleScreenProps) {
   const { t } = useTranslation();
-  const [email, setEmail] = useState(initialEmail);
   const [isConfirmed, setIsConfirmed] = useState(false);
 
   const handleConfirm = () => {
@@ -30,7 +29,7 @@ export default function FoundersCircleScreen({ initialEmail = "" }: FoundersCirc
 
   const benefits = [
     {
-      icon: Gift,
+      icon: Sparkles,
       textKey: "founders.benefits.discount.title",
       detailKey: "founders.benefits.discount.detail",
       gradient: "from-purple-500 to-pink-500",
@@ -42,16 +41,22 @@ export default function FoundersCircleScreen({ initialEmail = "" }: FoundersCirc
       gradient: "from-blue-500 to-cyan-500",
     },
     {
-      icon: Star,
-      textKey: "founders.benefits.freeEstimates.title",
-      detailKey: "founders.benefits.freeEstimates.detail",
+      icon: Gift,
+      textKey: "founders.benefits.bonusCredits.title",
+      detailKey: "founders.benefits.bonusCredits.detail",
       gradient: "from-orange-500 to-red-500",
     },
     {
-      icon: Mail,
+      icon: MessageCircle,
       textKey: "founders.benefits.founderAccess.title",
       detailKey: "founders.benefits.founderAccess.detail",
       gradient: "from-green-500 to-emerald-500",
+    },
+    {
+      icon: Lock,
+      textKey: "founders.benefits.closedBeta.title",
+      detailKey: "founders.benefits.closedBeta.detail",
+      gradient: "from-indigo-500 to-purple-500",
     },
   ];
 
@@ -184,32 +189,11 @@ export default function FoundersCircleScreen({ initialEmail = "" }: FoundersCirc
             </p>
           </motion.div>
 
-          {/* Email Confirmation */}
-          {!isConfirmed && (
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 1.3 }}
-              className="mb-6"
-            >
-              <label className="text-sm mb-2 block text-muted-foreground">
-                {t("founders.email.label")}
-              </label>
-              <Input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="rounded-xl mb-4"
-                placeholder={t("founders.email.placeholder")}
-              />
-            </motion.div>
-          )}
-
           {/* CTA Button */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 1.4 }}
+            transition={{ delay: 1.3 }}
           >
             {!isConfirmed ? (
               <Button
@@ -230,18 +214,6 @@ export default function FoundersCircleScreen({ initialEmail = "" }: FoundersCirc
               </div>
             )}
           </motion.div>
-
-          {/* Email Note */}
-          {!isConfirmed && (
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.5 }}
-              className="text-center text-sm text-muted-foreground mt-4"
-            >
-              {t("founders.email.note")} <span className="text-primary">{email}</span>
-            </motion.p>
-          )}
         </motion.div>
 
         {/* Additional Info */}
@@ -253,8 +225,8 @@ export default function FoundersCircleScreen({ initialEmail = "" }: FoundersCirc
         >
           <p className="text-sm text-muted-foreground">
             {t("founders.footer.text")}{" "}
-            <a href="mailto:founders@estimatefast.ai" className="text-primary hover:underline">
-              founders@estimatefast.ai
+            <a href="mailto:estimatemyfast@gmail.com" className="text-primary hover:underline">
+              estimatemyfast@gmail.com
             </a>
           </p>
         </motion.div>

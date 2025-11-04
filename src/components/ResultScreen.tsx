@@ -218,9 +218,6 @@ export default function ResultScreen({
           <p className="mt-4 text-sm text-muted-foreground">
             {t("resultScreen.footer", { archetypeName })}
           </p>
-          <p className="mt-2 text-xs text-muted-foreground/70">
-            {t("resultScreen.socialProof", { archetypeName })}
-          </p>
         </motion.div>
       </div>
     </motion.section>

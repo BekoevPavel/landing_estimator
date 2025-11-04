@@ -9,6 +9,7 @@ import ResultScreen from "./components/ResultScreen";
 import PricingSection from "./components/PricingSection";
 import FoundersCircleScreen from "./components/FoundersCircleScreen";
 import TestStripePayment from "./components/TestStripePayment";
+import PostHogDebugPanel from "./components/PostHogDebugPanel";
 import { Button } from "./components/ui/button";
 import { FlaskConical } from "lucide-react";
 import { QuizResult } from "./types/quiz.types";
@@ -51,6 +52,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-hidden">
+      {/* PostHog Debug Panel - только в DEV режиме */}
+      {import.meta.env.DEV && <PostHogDebugPanel />}
+
       {/* Header - показываем на всех экранах кроме landing и waitlist (founders screen) */}
       {currentStep !== "landing" && currentStep !== "waitlist" && <Header onLogoClick={handleLogoClick} />}
       
