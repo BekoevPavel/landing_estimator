@@ -29,5 +29,12 @@ dist-ssr
 .env.production.local
 .env.development.local
 
+# Google Cloud credentials
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!vite.config.json
+
 # Netlify
 .netlify
