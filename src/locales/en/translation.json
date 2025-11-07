@@ -323,100 +323,88 @@
     "questions": [
       {
         "id": "q1",
-        "title": "How often do your project estimates turn out accurate?",
-        "helper": "Be honest — this helps us calibrate the AI team for your reality",
+        "title": "How often are your project time estimates correct?",
+        "helper": "Please be honest. This helps us set up the AI team for your needs.",
         "type": "single_choice",
         "options": [
-          { "id": "q1_o1", "label": "Usually nail it (80%+ accuracy)" },
-          { "id": "q1_o2", "label": "About half the time — coin flip" },
-          { "id": "q1_o3", "label": "Often off — usually underestimate" },
-          { "id": "q1_o4", "label": "Often off — usually overestimate" }
+          { "id": "q1_o1", "label": "Most of the time correct (80% or more)" },
+          { "id": "q1_o2", "label": "About half the time" },
+          { "id": "q1_o3", "label": "Often wrong — I usually guess too low" },
+          { "id": "q1_o4", "label": "Often wrong — I usually guess too high" }
         ]
       },
       {
         "id": "q2",
-        "title": "Think of the last project where your estimate was way off. What went wrong?",
-        "helper": "Specific failures reveal patterns we can fix with AI",
+        "title": "Think of your last project where the estimate was very wrong. What happened?",
+        "helper": "Your past mistakes help us understand patterns and fix them with AI.",
         "type": "single_choice",
         "options": [
-          { "id": "q2_o1", "label": "Client hid key requirements until later" },
-          { "id": "q2_o2", "label": "Tech turned out way more complex" },
-          { "id": "q2_o3", "label": "Team velocity was slower than expected" },
-          { "id": "q2_o4", "label": "I just didn't factor in enough unknowns" }
+          { "id": "q2_o1", "label": "Client shared important details too late" },
+          { "id": "q2_o2", "label": "The work was much harder than expected" },
+          { "id": "q2_o3", "label": "The team worked slower than I thought" },
+          { "id": "q2_o4", "label": "I did not think about possible problems" }
         ]
       },
       {
         "id": "q3",
-        "title": "When timelines start to slip, what do you feel first?",
-        "helper": "Emotional reactions reveal decision patterns under uncertainty",
+        "title": "When deadlines start getting delayed, what do you feel first?",
+        "helper": "Your feelings show how you make decisions when things are unclear.",
         "type": "single_choice",
         "options": [
-          { "id": "q3_o1", "label": "Irritation — the plan should've worked" },
-          { "id": "q3_o2", "label": "Calm — we'll just recalc and move on" },
-          { "id": "q3_o3", "label": "Guilt — I underestimated risks" },
-          { "id": "q3_o4", "label": "Neutral — that's normal in projects" }
+          { "id": "q3_o1", "label": "Annoyed — the plan should have worked" },
+          { "id": "q3_o2", "label": "Calm — I will just recalculate and continue" },
+          { "id": "q3_o3", "label": "Guilty — I did not think about the risks" },
+          { "id": "q3_o4", "label": "Normal — this happens in projects" }
         ]
       },
       {
         "id": "q4",
-        "title": "What blocks accurate estimates most often?",
-        "helper": "Pinpoints your uncertainty hotspot",
+        "title": "What makes it hard to give correct estimates most often?",
+        "helper": "This helps us find your biggest area of uncertainty.",
         "type": "single_choice",
         "options": [
-          { "id": "q4_o1", "label": "Unclear or changing requirements" },
-          { "id": "q4_o2", "label": "Technical complexity & unknowns" },
-          { "id": "q4_o3", "label": "Stakeholder pressure to lowball" },
-          { "id": "q4_o4", "label": "No reliable historical data" }
+          { "id": "q4_o1", "label": "Requirements are unclear or keep changing" },
+          { "id": "q4_o2", "label": "Technical work is very complex" },
+          { "id": "q4_o3", "label": "Pressure from others to give lower estimates" },
+          { "id": "q4_o4", "label": "No past data to compare with" }
         ]
       },
       {
         "id": "q5",
-        "title": "What happens when you deliver an estimate that turns out wrong?",
-        "helper": "Understanding consequences helps us prioritize the right AI safeguards",
+        "title": "What happens when your estimate turns out to be wrong?",
+        "helper": "Knowing the consequences helps us create the right AI protection for you.",
         "type": "single_choice",
         "options": [
-          { "id": "q5_o1", "label": "Lose client trust / future deals" },
-          { "id": "q5_o2", "label": "Team burns out from crunch" },
-          { "id": "q5_o3", "label": "Have to cut scope / quality" },
-          { "id": "q5_o4", "label": "Look unprofessional to stakeholders" }
+          { "id": "q5_o1", "label": "Client loses trust or future work is lost" },
+          { "id": "q5_o2", "label": "Team gets tired from working too hard" },
+          { "id": "q5_o3", "label": "Have to reduce features or quality" },
+          { "id": "q5_o4", "label": "Look bad in front of important people" }
         ]
       },
       {
         "id": "q6",
-        "title": "What have you tried to improve estimation accuracy?",
-        "helper": "Knowing what hasn't worked helps us avoid repeating it",
+        "title": "What have you tried to make your estimates better?",
+        "helper": "Knowing what did not work helps us not repeat the same mistakes.",
         "type": "multiple_choice",
         "max_selections": 3,
         "options": [
-          { "id": "q6_o1", "label": "Read books / took courses on estimation" },
-          { "id": "q6_o2", "label": "Built templates & processes" },
-          { "id": "q6_o3", "label": "Got more people involved in estimating" },
-          { "id": "q6_o4", "label": "Used third-party estimation tools" },
-          { "id": "q6_o5", "label": "Nothing formal — no time/resources" }
+          { "id": "q6_o1", "label": "Read books or took courses about estimation" },
+          { "id": "q6_o2", "label": "Created templates and step-by-step processes" },
+          { "id": "q6_o3", "label": "Asked more people to help with estimates" },
+          { "id": "q6_o4", "label": "Used software tools for estimation" },
+          { "id": "q6_o5", "label": "Nothing planned — no time or resources" }
         ]
       },
       {
         "id": "q7",
-        "title": "What matters most in your ideal estimate?",
-        "helper": "Trade-off between speed, accuracy, persuasion, and protection",
+        "title": "What is most important in your ideal estimate?",
+        "helper": "Choose between speed, accuracy, convincing others, or protecting the team.",
         "type": "single_choice",
         "options": [
-          { "id": "q7_o1", "label": "Speed — give a solid ballpark fast" },
-          { "id": "q7_o2", "label": "Accuracy — I'd rather take longer and be precise" },
-          { "id": "q7_o3", "label": "Buy-in — persuade clients & stakeholders" },
-          { "id": "q7_o4", "label": "Safety — protect team from overcommitment" }
-        ]
-      },
-      {
-        "id": "q8",
-        "title": "With an AI expert team at your fingertips, what would you delegate first?",
-        "helper": "Reveals your highest-tension area and AI agent priority",
-        "type": "single_choice",
-        "options": [
-          { "id": "q8_o1", "label": "Validation & error-checking my numbers" },
-          { "id": "q8_o2", "label": "Objective benchmarks & comps" },
-          { "id": "q8_o3", "label": "Client-ready justification & presentation" },
-          { "id": "q8_o4", "label": "Just make it faster end-to-end" }
+          { "id": "q7_o1", "label": "Speed — give a good estimate quickly" },
+          { "id": "q7_o2", "label": "Accuracy — I prefer to take more time and be exact" },
+          { "id": "q7_o3", "label": "Agreement — convince clients and stakeholders" },
+          { "id": "q7_o4", "label": "Safety — protect the team from too much work" }
         ]
       }
     ],

@@ -52,238 +52,252 @@
   "questions": [
     {
       "id": "q1",
-      "title": "How often do your project estimates turn out accurate?",
-      "helper": "Be honest — this helps us calibrate the AI team for your reality",
+      "title": "How often are your project time estimates correct?",
+      "title_ru": "Как часто ваши оценки сроков проекта оказываются правильными?",
+      "helper": "Please be honest. This helps us set up the AI team for your needs.",
+      "helper_ru": "Пожалуйста, будьте честны. Это поможет нам настроить команду AI под ваши потребности.",
       "type": "single_choice",
       "options": [
-        { 
-          "id": "q1_o1", 
-          "label": "Usually nail it (80%+ accuracy)", 
-          "weights": { "analyst": 2, "protector": 1 } 
+        {
+          "id": "q1_o1",
+          "label": "Most of the time correct (80% or more)",
+          "label_ru": "Почти всегда правильные (80% или больше)",
+          "weights": { "analyst": 2, "protector": 1 }
         },
-        { 
-          "id": "q1_o2", 
-          "label": "About half the time — coin flip", 
-          "weights": { "negotiator": 2, "visionary": 1 } 
+        {
+          "id": "q1_o2",
+          "label": "About half the time",
+          "label_ru": "Примерно в половине случаев",
+          "weights": { "negotiator": 2, "visionary": 1 }
         },
-        { 
-          "id": "q1_o3", 
-          "label": "Often off — usually underestimate", 
-          "weights": { "visionary": 2, "negotiator": 1 } 
+        {
+          "id": "q1_o3",
+          "label": "Often wrong — I usually guess too low",
+          "label_ru": "Часто неправильные — я обычно называю слишком короткие сроки",
+          "weights": { "visionary": 2, "negotiator": 1 }
         },
-        { 
-          "id": "q1_o4", 
-          "label": "Often off — usually overestimate", 
-          "weights": { "protector": 2, "analyst": 1 } 
+        {
+          "id": "q1_o4",
+          "label": "Often wrong — I usually guess too high",
+          "label_ru": "Часто неправильные — я обычно называю слишком долгие сроки",
+          "weights": { "protector": 2, "analyst": 1 }
         }
       ]
     },
 
     {
       "id": "q2",
-      "title": "Think of the last project where your estimate was way off. What went wrong?",
-      "helper": "Specific failures reveal patterns we can fix with AI",
+      "title": "Think of your last project where the estimate was very wrong. What happened?",
+      "title_ru": "Вспомните последний проект, где оценка была очень неточной. Что произошло?",
+      "helper": "Your past mistakes help us understand patterns and fix them with AI.",
+      "helper_ru": "Ваши прошлые ошибки помогают нам увидеть закономерности и исправить их с помощью AI.",
       "type": "single_choice",
       "options": [
-        { 
-          "id": "q2_o1", 
-          "label": "Client hid key requirements until later", 
-          "weights": { "negotiator": 2, "protector": 1 } 
+        {
+          "id": "q2_o1",
+          "label": "Client shared important details too late",
+          "label_ru": "Клиент сообщил важные детали слишком поздно",
+          "weights": { "negotiator": 2, "protector": 1 }
         },
-        { 
-          "id": "q2_o2", 
-          "label": "Tech turned out way more complex", 
-          "weights": { "analyst": 2, "visionary": 1 } 
+        {
+          "id": "q2_o2",
+          "label": "The work was much harder than expected",
+          "label_ru": "Работа оказалась намного сложнее, чем ожидалось",
+          "weights": { "analyst": 2, "visionary": 1 }
         },
-        { 
-          "id": "q2_o3", 
-          "label": "Team velocity was slower than expected", 
-          "weights": { "protector": 2, "analyst": 1 } 
+        {
+          "id": "q2_o3",
+          "label": "The team worked slower than I thought",
+          "label_ru": "Команда работала медленнее, чем я думал",
+          "weights": { "protector": 2, "analyst": 1 }
         },
-        { 
-          "id": "q2_o4", 
-          "label": "I just didn't factor in enough unknowns", 
-          "weights": { "visionary": 2 } 
+        {
+          "id": "q2_o4",
+          "label": "I did not think about possible problems",
+          "label_ru": "Я не подумал о возможных проблемах",
+          "weights": { "visionary": 2 }
         }
       ]
     },
 
     {
       "id": "q3",
-      "title": "When timelines start to slip, what do you feel first?",
-      "helper": "Emotional reactions reveal decision patterns under uncertainty",
+      "title": "When deadlines start getting delayed, what do you feel first?",
+      "title_ru": "Когда сроки начинают срываться, что вы чувствуете в первую очередь?",
+      "helper": "Your feelings show how you make decisions when things are unclear.",
+      "helper_ru": "Ваши чувства показывают, как вы принимаете решения в неопределенных ситуациях.",
       "type": "single_choice",
       "options": [
-        { 
-          "id": "q3_o1", 
-          "label": "Irritation — the plan should've worked", 
-          "weights": { "protector": 2, "analyst": 1 } 
+        {
+          "id": "q3_o1",
+          "label": "Annoyed — the plan should have worked",
+          "label_ru": "Раздражение — план должен был сработать",
+          "weights": { "protector": 2, "analyst": 1 }
         },
-        { 
-          "id": "q3_o2", 
-          "label": "Calm — we'll just recalc and move on", 
-          "weights": { "analyst": 2 } 
+        {
+          "id": "q3_o2",
+          "label": "Calm — I will just recalculate and continue",
+          "label_ru": "Спокойствие — я просто пересчитаю и продолжу",
+          "weights": { "analyst": 2 }
         },
-        { 
-          "id": "q3_o3", 
-          "label": "Guilt — I underestimated risks", 
-          "weights": { "protector": 2, "negotiator": 1 } 
+        {
+          "id": "q3_o3",
+          "label": "Guilty — I did not think about the risks",
+          "label_ru": "Вина — я не учел риски",
+          "weights": { "protector": 2, "negotiator": 1 }
         },
-        { 
-          "id": "q3_o4", 
-          "label": "Neutral — that's normal in projects", 
-          "weights": { "visionary": 2 } 
+        {
+          "id": "q3_o4",
+          "label": "Normal — this happens in projects",
+          "label_ru": "Нормально — так бывает в проектах",
+          "weights": { "visionary": 2 }
         }
       ]
     },
 
     {
       "id": "q4",
-      "title": "What blocks accurate estimates most often?",
-      "helper": "Pinpoints your uncertainty hotspot",
+      "title": "What makes it hard to give correct estimates most often?",
+      "title_ru": "Что чаще всего мешает дать правильную оценку?",
+      "helper": "This helps us find your biggest area of uncertainty.",
+      "helper_ru": "Это помогает нам найти вашу главную зону неопределенности.",
       "type": "single_choice",
       "options": [
-        { 
-          "id": "q4_o1", 
-          "label": "Unclear or changing requirements", 
-          "weights": { "negotiator": 2, "analyst": 1, "protector": 1 } 
+        {
+          "id": "q4_o1",
+          "label": "Requirements are unclear or keep changing",
+          "label_ru": "Требования непонятны или постоянно меняются",
+          "weights": { "negotiator": 2, "analyst": 1, "protector": 1 }
         },
-        { 
-          "id": "q4_o2", 
-          "label": "Technical complexity & unknowns", 
-          "weights": { "analyst": 2, "visionary": 1 } 
+        {
+          "id": "q4_o2",
+          "label": "Technical work is very complex",
+          "label_ru": "Техническая работа очень сложная",
+          "weights": { "analyst": 2, "visionary": 1 }
         },
-        { 
-          "id": "q4_o3", 
-          "label": "Stakeholder pressure to lowball", 
-          "weights": { "negotiator": 2, "protector": 1 } 
+        {
+          "id": "q4_o3",
+          "label": "Pressure from others to give lower estimates",
+          "label_ru": "Давление от других дать более низкие оценки",
+          "weights": { "negotiator": 2, "protector": 1 }
         },
-        { 
-          "id": "q4_o4", 
-          "label": "No reliable historical data", 
-          "weights": { "analyst": 2, "protector": 1 } 
+        {
+          "id": "q4_o4",
+          "label": "No past data to compare with",
+          "label_ru": "Нет прошлых данных для сравнения",
+          "weights": { "analyst": 2, "protector": 1 }
         }
       ]
     },
 
     {
       "id": "q5",
-      "title": "What happens when you deliver an estimate that turns out wrong?",
-      "helper": "Understanding consequences helps us prioritize the right AI safeguards",
+      "title": "What happens when your estimate turns out to be wrong?",
+      "title_ru": "Что происходит, когда ваша оценка оказывается неправильной?",
+      "helper": "Knowing the consequences helps us create the right AI protection for you.",
+      "helper_ru": "Понимание последствий помогает нам создать правильную AI-защиту для вас.",
       "type": "single_choice",
       "options": [
-        { 
-          "id": "q5_o1", 
-          "label": "Lose client trust / future deals", 
-          "weights": { "negotiator": 2, "protector": 1 } 
+        {
+          "id": "q5_o1",
+          "label": "Client loses trust or future work is lost",
+          "label_ru": "Клиент теряет доверие или будущая работа теряется",
+          "weights": { "negotiator": 2, "protector": 1 }
         },
-        { 
-          "id": "q5_o2", 
-          "label": "Team burns out from crunch", 
-          "weights": { "protector": 2, "analyst": 1 } 
+        {
+          "id": "q5_o2",
+          "label": "Team gets tired from working too hard",
+          "label_ru": "Команда устает от слишком тяжелой работы",
+          "weights": { "protector": 2, "analyst": 1 }
         },
-        { 
-          "id": "q5_o3", 
-          "label": "Have to cut scope / quality", 
-          "weights": { "visionary": 2, "negotiator": 1 } 
+        {
+          "id": "q5_o3",
+          "label": "Have to reduce features or quality",
+          "label_ru": "Приходится уменьшать функции или качество",
+          "weights": { "visionary": 2, "negotiator": 1 }
         },
-        { 
-          "id": "q5_o4", 
-          "label": "Look unprofessional to stakeholders", 
-          "weights": { "negotiator": 2, "analyst": 1 } 
+        {
+          "id": "q5_o4",
+          "label": "Look bad in front of important people",
+          "label_ru": "Выглядеть плохо перед важными людьми",
+          "weights": { "negotiator": 2, "analyst": 1 }
         }
       ]
     },
 
     {
       "id": "q6",
-      "title": "What have you tried to improve estimation accuracy?",
-      "helper": "Knowing what hasn't worked helps us avoid repeating it",
+      "title": "What have you tried to make your estimates better?",
+      "title_ru": "Что вы пробовали, чтобы улучшить свои оценки?",
+      "helper": "Knowing what did not work helps us not repeat the same mistakes.",
+      "helper_ru": "Знание того, что не сработало, помогает нам не повторять те же ошибки.",
       "type": "multiple_choice",
       "max_selections": 3,
       "options": [
-        { 
-          "id": "q6_o1", 
-          "label": "Read books / took courses on estimation", 
-          "weights": { "analyst": 1, "protector": 1 } 
+        {
+          "id": "q6_o1",
+          "label": "Read books or took courses about estimation",
+          "label_ru": "Читал книги или проходил курсы об оценке",
+          "weights": { "analyst": 1, "protector": 1 }
         },
-        { 
-          "id": "q6_o2", 
-          "label": "Built templates & processes", 
-          "weights": { "analyst": 2, "protector": 1 } 
+        {
+          "id": "q6_o2",
+          "label": "Created templates and step-by-step processes",
+          "label_ru": "Создал шаблоны и пошаговые процессы",
+          "weights": { "analyst": 2, "protector": 1 }
         },
-        { 
-          "id": "q6_o3", 
-          "label": "Got more people involved in estimating", 
-          "weights": { "negotiator": 2, "protector": 1 } 
+        {
+          "id": "q6_o3",
+          "label": "Asked more people to help with estimates",
+          "label_ru": "Попросил больше людей помочь с оценками",
+          "weights": { "negotiator": 2, "protector": 1 }
         },
-        { 
-          "id": "q6_o4", 
-          "label": "Used third-party estimation tools", 
-          "weights": { "analyst": 1, "visionary": 1 } 
+        {
+          "id": "q6_o4",
+          "label": "Used software tools for estimation",
+          "label_ru": "Использовал программные инструменты для оценки",
+          "weights": { "analyst": 1, "visionary": 1 }
         },
-        { 
-          "id": "q6_o5", 
-          "label": "Nothing formal — no time/resources", 
-          "weights": { "visionary": 2 } 
+        {
+          "id": "q6_o5",
+          "label": "Nothing planned — no time or resources",
+          "label_ru": "Ничего специального — нет времени или ресурсов",
+          "weights": { "visionary": 2 }
         }
       ]
     },
 
     {
       "id": "q7",
-      "title": "What matters most in your ideal estimate?",
-      "helper": "Trade-off between speed, accuracy, persuasion, and protection",
+      "title": "What is most important in your ideal estimate?",
+      "title_ru": "Что самое важное в вашей идеальной оценке?",
+      "helper": "Choose between speed, accuracy, convincing others, or protecting the team.",
+      "helper_ru": "Выберите между скоростью, точностью, убеждением других или защитой команды.",
       "type": "single_choice",
       "options": [
-        { 
-          "id": "q7_o1", 
-          "label": "Speed — give a solid ballpark fast", 
-          "weights": { "visionary": 2 } 
+        {
+          "id": "q7_o1",
+          "label": "Speed — give a good estimate quickly",
+          "label_ru": "Скорость — дать хорошую оценку быстро",
+          "weights": { "visionary": 2 }
         },
-        { 
-          "id": "q7_o2", 
-          "label": "Accuracy — I'd rather take longer and be precise", 
-          "weights": { "analyst": 2, "protector": 1 } 
+        {
+          "id": "q7_o2",
+          "label": "Accuracy — I prefer to take more time and be exact",
+          "label_ru": "Точность — я предпочитаю потратить больше времени и быть точным",
+          "weights": { "analyst": 2, "protector": 1 }
         },
-        { 
-          "id": "q7_o3", 
-          "label": "Buy-in — persuade clients & stakeholders", 
-          "weights": { "negotiator": 2 } 
+        {
+          "id": "q7_o3",
+          "label": "Agreement — convince clients and stakeholders",
+          "label_ru": "Согласие — убедить клиентов и заинтересованных лиц",
+          "weights": { "negotiator": 2 }
         },
-        { 
-          "id": "q7_o4", 
-          "label": "Safety — protect team from overcommitment", 
-          "weights": { "protector": 2, "negotiator": 1 } 
-        }
-      ]
-    },
-
-    {
-      "id": "q8",
-      "title": "With an AI expert team at your fingertips, what would you delegate first?",
-      "helper": "Reveals your highest-tension area and AI agent priority",
-      "type": "single_choice",
-      "options": [
-        { 
-          "id": "q8_o1", 
-          "label": "Validation & error-checking my numbers", 
-          "weights": { "analyst": 2, "protector": 1 } 
-        },
-        { 
-          "id": "q8_o2", 
-          "label": "Objective benchmarks & comps", 
-          "weights": { "analyst": 1, "protector": 1, "negotiator": 1 } 
-        },
-        { 
-          "id": "q8_o3", 
-          "label": "Client-ready justification & presentation", 
-          "weights": { "negotiator": 2 } 
-        },
-        { 
-          "id": "q8_o4", 
-          "label": "Just make it faster end-to-end", 
-          "weights": { "visionary": 2 } 
+        {
+          "id": "q7_o4",
+          "label": "Safety — protect the team from too much work",
+          "label_ru": "Безопасность — защитить команду от слишком большой работы",
+          "weights": { "protector": 2, "negotiator": 1 }
         }
       ]
     }
@@ -299,15 +313,6 @@
           "q7_o2": "analyst",
           "q7_o3": "negotiator",
           "q7_o4": "protector"
-        }
-      },
-      {
-        "question_id": "q8",
-        "mapping": {
-          "q8_o4": "visionary",
-          "q8_o1": "analyst",
-          "q8_o3": "negotiator",
-          "q8_o2": "protector"
         }
       }
     ],
@@ -340,10 +345,9 @@
       { "question": "q4", "emotion": "Pain (systemic)",    "intensity": 8 },
       { "question": "q5", "emotion": "Fear (consequences)", "intensity": 9 },
       { "question": "q6", "emotion": "Frustration (failed attempts)", "intensity": 8 },
-      { "question": "q7", "emotion": "Clarity (priorities)", "intensity": 5 },
-      { "question": "q8", "emotion": "Hope (solution)",     "intensity": 4 }
+      { "question": "q7", "emotion": "Clarity (priorities)", "intensity": 5 }
     ],
-    "notes": "Peak pain at Q5, then Q6 reinforces 'nothing else worked', Q7-Q8 provide relief and agency"
+    "notes": "Peak pain at Q5, then Q6 reinforces 'nothing else worked', Q7 provides relief and clarity"
   },
 
   "exampleEvaluationPseudocode": [
@@ -416,11 +420,10 @@ Intensity
 8 |              ●Q4         ●Q6 (frustration)
 7 |        ●Q3
 6 |   ●Q2
-5 |                                        ●Q7
-4 |                                             ●Q8 (hope)
+5 |                                        ●Q7 (clarity)
 3 | ●Q1
   +--------------------------------------------------→ Flow
-    acknowledge → pain → fear → frustration → hope
+    acknowledge → pain → fear → frustration → clarity
 ```
 
 ### Манипулятивные триггеры:
@@ -430,7 +433,7 @@ Intensity
 | **Социальное доказательство** | Result template | "Join 1,200+ Visionaries..." |
 | **Страх потери** (loss aversion) | Q5 | "Lose client trust / deals" |
 | **Якорение на проблеме** | Q1-Q6 | 6 вопросов усиливают боль |
-| **Контраст** (pain → relief) | Q6 → Q7-Q8 | "Nothing worked" → "AI can help" |
+| **Контраст** (pain → relief) | Q6 → Q7 | "Nothing worked" → "What matters most?" |
 | **Специфичность** | Q2 | "Last project" = конкретная память |
 | **Эмпатическое зеркало** | Q3 | "What do you FEEL?" |
 | **Презумпция неизбежности** | Q3, Q5 | "WHEN timelines slip", "WHEN wrong" |
@@ -443,9 +446,9 @@ Intensity
 
 ```javascript
 {
-  "completion_rate": ">85%",  // 8 вопросов, но эмоциональный крючок сильный
-  "time_to_complete": "2-3 min",
-  "CTA_click_rate": ">40%",   // после 8 вопросов + персональный результат
+  "completion_rate": ">85%",  // 7 вопросов, но эмоциональный крючок сильный
+  "time_to_complete": "1.5-2 min",
+  "CTA_click_rate": ">40%",   // после 7 вопросов + персональный результат
   "perceived_empathy": ">8/10",  // "они меня понимают"
   "perceived_urgency": ">7/10",  // "мне нужна помощь сейчас"
 }
@@ -453,8 +456,8 @@ Intensity
 
 ### A/B тесты (рекомендации):
 
-1. **Variant A**: Текущая структура (8 вопросов)
-2. **Variant B**: Сократить до 6 (убрать Q6, Q7) для higher completion rate
+1. **Variant A**: Текущая структура (7 вопросов)
+2. **Variant B**: Сократить до 5 (убрать Q6, Q7) для higher completion rate
 3. **Variant C**: Добавить social proof в хелперы ("73% PMs underestimate by 40%+")
 
 ---
