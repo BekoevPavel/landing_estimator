@@ -6,7 +6,7 @@
 import { useState, useCallback } from "react";
 import { stripeService } from "../services/stripe.service";
 import type { PaymentStatus } from "../types/stripe.types";
-import { isDevelopmentMode } from "../config/env.config";
+// import { isDevelopmentMode } from "../config/env.config"; // Temporarily disabled for testing
 
 export interface UsePaymentOptions {
   onSuccess?: () => void;
@@ -60,15 +60,15 @@ export function usePayment(options: UsePaymentOptions = {}): UsePaymentReturn {
       setError(null);
 
       try {
-        // В dev режиме (порт 3000) используем мок
-        if (isDevelopmentMode()) {
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-          setClientSecret("demo_mode_no_real_payment");
-          setStatus("processing");
-          return;
-        }
+        // TEMPORARILY DISABLED: Dev mode mock (to test real Stripe form)
+        // if (isDevelopmentMode()) {
+        //   await new Promise((resolve) => setTimeout(resolve, 1000));
+        //   setClientSecret("demo_mode_no_real_payment");
+        //   setStatus("processing");
+        //   return;
+        // }
 
-        // В остальных случаях используем реальный API
+        // Use real Stripe API (even in dev mode)
         const secret = await stripeService.createPaymentIntent({
           amount,
           planName,

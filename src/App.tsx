@@ -10,8 +10,8 @@ import PricingSection from "./components/PricingSection";
 import FoundersCircleScreen from "./components/FoundersCircleScreen";
 import TestStripePayment from "./components/TestStripePayment";
 import PostHogDebugPanel from "./components/PostHogDebugPanel";
-import { Button } from "./components/ui/button";
-import { FlaskConical } from "lucide-react";
+// import { Button } from "./components/ui/button"; // Unused after hiding test button
+// import { FlaskConical } from "lucide-react"; // Unused after hiding test button
 import { QuizResult } from "./types/quiz.types";
 import { isDevelopmentMode } from "./config/env.config";
 
@@ -74,13 +74,43 @@ export default function App() {
         </div>
       )}
 
-      {/* Кнопка для открытия тестового режима Stripe - только в DEV режиме */}
-      {isDevMode && !showTestMode && currentStep !== "waitlist" && (
+      {/* Secure Checkout Badge - SMALLER size for mobile, only on pricing page */}
+      {currentStep === "pricing" && (
+        <div
+          style={{
+            position: 'fixed',
+            bottom: '0',
+            right: '0',
+            width: '180px',
+            height: '70px',
+            zIndex: 9999999,
+            pointerEvents: 'none',
+            background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.98) 0%, rgba(168, 85, 247, 0.98) 100%)',
+            backdropFilter: 'blur(12px)',
+            borderTopLeftRadius: '16px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 -4px 20px rgba(139, 92, 246, 0.4)',
+          }}
+        >
+          <div className="flex items-center gap-2">
+            <span className="text-lg">🔒</span>
+            <div className="flex flex-col">
+              <span className="text-white text-xs font-bold">Secure Checkout</span>
+              <span className="text-white/70 text-[10px]">Powered by Stripe</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* HIDDEN: Test Stripe button - not needed anymore */}
+      {/* {isDevMode && !showTestMode && currentStep !== "waitlist" && (
         <Button
           onClick={() => setShowTestMode(true)}
           style={{
             position: 'fixed',
-            bottom: '1.5rem',  // 24px - оптимально для всех экранов
+            bottom: '1.5rem',
             right: '1.5rem',
             zIndex: 40
           }}
@@ -91,7 +121,7 @@ export default function App() {
           <FlaskConical className="mr-2 h-5 w-5" />
           Тест Stripe
         </Button>
-      )}
+      )} */}
 
       {/* Тестовое окно Stripe */}
       {showTestMode && (
