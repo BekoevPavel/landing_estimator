@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "../../ui/button";
 import { GRADIENTS, GRADIENT_TEXT } from "../../../constants/gradients";
 import { fadeInUpWithDelay } from "../../../constants/animations";
+import { trackLandingCTAClick, trackHowItWorksClick } from "../../../analytics/events";
 
 interface LandingHeroSectionProps {
   onStartTest: () => void;
@@ -49,7 +50,10 @@ export function LandingHeroSection({ onStartTest }: LandingHeroSectionProps) {
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
         >
           <Button
-            onClick={onStartTest}
+            onClick={() => {
+              trackLandingCTAClick('hero');
+              onStartTest();
+            }}
             size="lg"
             className="px-8 py-6 rounded-2xl bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-primary/50 transition-all duration-300"
           >
@@ -61,6 +65,7 @@ export function LandingHeroSection({ onStartTest }: LandingHeroSectionProps) {
             size="lg"
             className="px-8 py-6 rounded-2xl"
             onClick={() => {
+              trackHowItWorksClick();
               document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" });
             }}
           >

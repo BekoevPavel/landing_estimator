@@ -7,12 +7,15 @@
 import { motion } from "motion/react";
 import { useTranslation } from "react-i18next";
 import { Globe } from "lucide-react";
+import { trackLanguageChange } from "../analytics/events";
 
 export function LanguageSwitcher() {
   const { i18n } = useTranslation();
 
   const toggleLanguage = () => {
+    const oldLang = i18n.language;
     const newLang = i18n.language === "en" ? "ru" : "en";
+    trackLanguageChange(oldLang, newLang);
     i18n.changeLanguage(newLang);
   };
 

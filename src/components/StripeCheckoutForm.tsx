@@ -3,6 +3,7 @@ import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
 import { googleSheetsService } from "../services/googleSheets";
+import { trackPurchase } from "../services/gtm.service";
 
 interface StripeCheckoutFormProps {
   onSuccess: () => void;
@@ -40,7 +41,20 @@ export default function StripeCheckoutForm({ onSuccess, onError, email, planName
         onError(error.message || "Payment failed");
         setIsProcessing(false);
       } else {
-        // Payment successful - send data to Google Sheets
+        // Payment successful!
+
+        // 1. Send conversion event to Google Tag Manager
+        if (amount && planName) {
+          trackPurchase({
+            value: amount,
+            currency: 'USD',
+            email: email,
+            planName: planName,
+            variant: variant || 'A',
+          });
+        }
+
+        // 2. Send data to Google Sheets for internal tracking
         if (email && planName && amount) {
           try {
             await googleSheetsService.appendRow({
@@ -67,12 +81,14 @@ export default function StripeCheckoutForm({ onSuccess, onError, email, planName
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <PaymentElement />
-      
+      <div className="p-4 bg-card/30 border border-border rounded-xl">
+        <PaymentElement className="mb-4" />
+      </div>
+
       <Button
         type="submit"
         disabled={!stripe || isProcessing}
-        className="w-full rounded-xl bg-gradient-to-r from-primary to-accent"
+        className="w-full h-12 rounded-xl bg-gradient-to-r from-primary to-accent font-semibold text-base mt-6"
       >
         {isProcessing ? (
           <>

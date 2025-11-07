@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "motion/react";
 import { useTranslation } from "react-i18next";
 import {
@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { QuizResult } from "../types/quiz.types";
+import { trackResultsViewed, trackContinueToPricing } from "../analytics/events";
 
 interface ResultScreenProps {
   result: QuizResult;
@@ -34,6 +35,11 @@ export default function ResultScreen({
   onContinue,
 }: ResultScreenProps) {
   const { t } = useTranslation();
+
+  // Track results viewed
+  useEffect(() => {
+    trackResultsViewed();
+  }, []);
 
   // Get localized archetype data
   const archetypeKey = result.primary_archetype;
@@ -209,7 +215,10 @@ export default function ResultScreen({
           className="text-center"
         >
           <Button
-            onClick={onContinue}
+            onClick={() => {
+              trackContinueToPricing();
+              onContinue();
+            }}
             size="lg"
             className="px-8 py-6 rounded-2xl bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-primary/50 transition-all duration-300"
           >

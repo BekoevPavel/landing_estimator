@@ -5,10 +5,15 @@
 
 /**
  * Проверяет, работает ли приложение в dev режиме
- * Dev режим = Vite dev server на порту 3000 (без Netlify Dev)
+ * Dev режим = любой localhost (включая Netlify Dev на 8888)
  */
 export const isDevelopmentMode = (): boolean => {
-  return window.location.port === "3000";
+  return (
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1" ||
+    window.location.port === "3000" ||
+    window.location.port === "8888"
+  );
 };
 
 /**

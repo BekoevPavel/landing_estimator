@@ -14,6 +14,7 @@ import { STRIPE_KEYS, STRIPE_APPEARANCE_DARK } from "../../config/stripe.config"
 import { isDevelopmentMode } from "../../config/env.config";
 import type { PricingPlan } from "../../config/pricing.ab-test";
 import { googleSheetsService } from "../../services/googleSheets";
+import { trackPurchase } from "../../services/gtm.service";
 
 // Инициализация Stripe
 const stripePromise = loadStripe(STRIPE_KEYS.publishableKey);
@@ -70,19 +71,20 @@ export function CheckoutForm({
       )}
 
       {/* Email Input */}
-      <div>
-        <label className="text-sm mb-2 block">Email Address</label>
+      <div className="mb-6">
+        <label className="text-sm mb-2 block font-medium">Email Address</label>
         <Input
           type="email"
           placeholder="you@company.com"
           value={email}
           onChange={(e) => handleEmailChange(e.target.value)}
-          className="rounded-xl"
+          className="rounded-xl h-12"
         />
       </div>
 
-      {/* Dev Mode Simulation */}
-      {clientSecret &&
+      {/* Dev Mode Simulation - Only visible in development */}
+      {isDevMode &&
+        clientSecret &&
         email &&
         clientSecret === "demo_mode_no_real_payment" && (
           <div className="space-y-4">
@@ -105,7 +107,16 @@ export function CheckoutForm({
             </div>
             <Button
               onClick={async () => {
-                // Send data to Google Sheets even in dev mode
+                // 1. Send conversion event to Google Tag Manager
+                trackPurchase({
+                  value: actualPrice,
+                  currency: 'USD',
+                  email: email,
+                  planName: selectedPlan.name,
+                  variant: abTestVariant,
+                });
+
+                // 2. Send data to Google Sheets even in dev mode
                 if (email) {
                   try {
                     await googleSheetsService.appendRow({

@@ -13,6 +13,7 @@ import PostHogDebugPanel from "./components/PostHogDebugPanel";
 import { Button } from "./components/ui/button";
 import { FlaskConical } from "lucide-react";
 import { QuizResult } from "./types/quiz.types";
+import { isDevelopmentMode } from "./config/env.config";
 
 type Step = "landing" | "hero" | "quiz" | "result" | "pricing" | "waitlist";
 
@@ -21,9 +22,10 @@ export default function App() {
   // TODO: Change back to "landing" for production
   const [currentStep, setCurrentStep] = useState("landing" as Step); // <-- PRODUCTION MODE
   // const [currentStep, setCurrentStep] = useState("pricing" as Step); // <-- TESTING MODE
-  
+
   const [showTestMode, setShowTestMode] = useState(false);
   const [quizResult, setQuizResult] = useState<QuizResult | null>(null);
+  const isDevMode = isDevelopmentMode();
 
   // Проверяем URL параметры при загрузке - возврат со Stripe
   useEffect(() => {
@@ -52,35 +54,35 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-hidden">
-      {/* PostHog Debug Panel - только в DEV режиме */}
-      {import.meta.env.DEV && <PostHogDebugPanel />}
+      {/* PostHog Debug Panel (A/B test helper) - только в DEV режиме */}
+      {isDevMode && <PostHogDebugPanel />}
 
       {/* Header - показываем на всех экранах кроме landing и waitlist (founders screen) */}
       {currentStep !== "landing" && currentStep !== "waitlist" && <Header onLogoClick={handleLogoClick} />}
-      
+
       {/* Language Switcher - Правый верхний угол (UX best practice) */}
       {currentStep !== "waitlist" && (
-        <div 
-          style={{ 
-            position: 'fixed', 
+        <div
+          style={{
+            position: 'fixed',
             top: '1.5rem',  // 24px - оптимально для всех экранов
-            right: '1.5rem', 
-            zIndex: 50 
+            right: '1.5rem',
+            zIndex: 50
           }}
         >
           <LanguageSwitcher />
         </div>
       )}
-      
-      {/* Кнопка для открытия тестового режима */}
-      {!showTestMode && currentStep !== "waitlist" && (
+
+      {/* Кнопка для открытия тестового режима Stripe - только в DEV режиме */}
+      {isDevMode && !showTestMode && currentStep !== "waitlist" && (
         <Button
           onClick={() => setShowTestMode(true)}
-          style={{ 
-            position: 'fixed', 
+          style={{
+            position: 'fixed',
             bottom: '1.5rem',  // 24px - оптимально для всех экранов
-            right: '1.5rem', 
-            zIndex: 40 
+            right: '1.5rem',
+            zIndex: 40
           }}
           className="shadow-lg"
           size="lg"

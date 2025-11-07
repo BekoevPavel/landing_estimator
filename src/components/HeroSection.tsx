@@ -5,6 +5,7 @@ import { Sparkles, Users, Zap } from "lucide-react";
 import { Button } from "./ui/button";
 import { GRADIENTS, GRADIENT_TEXT } from "../constants/gradients";
 import { fadeInUpWithDelay } from "../constants/animations";
+import { trackQuizStarted } from "../analytics/events";
 
 interface HeroSectionProps {
   onStart: () => void;
@@ -68,7 +69,10 @@ export default function HeroSection({ onStart }: HeroSectionProps) {
           className="mb-12"
         >
           <Button
-            onClick={onStart}
+            onClick={() => {
+              trackQuizStarted();
+              onStart();
+            }}
             size="lg"
             className="px-8 py-6 rounded-2xl bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-primary/50 transition-all duration-300"
           >
