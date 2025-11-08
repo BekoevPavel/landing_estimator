@@ -4,10 +4,11 @@
  * Handles all GTM dataLayer events for tracking conversions
  */
 
-// Extend Window interface to include dataLayer
+// Extend Window interface to include dataLayer and gtag
 declare global {
   interface Window {
     dataLayer: any[];
+    gtag?: (...args: any[]) => void;
   }
 }
 
@@ -55,6 +56,17 @@ export const trackPurchase = (params: {
     plan: params.planName,
     variant: params.variant,
   });
+
+  // Also send conversion directly to Google Ads gtag
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', 'conversion', {
+      'send_to': 'AW-17653593916/c5_ZCNavirsbELzu8eFB',
+      'value': params.value,
+      'currency': params.currency || 'USD',
+      'transaction_id': params.transactionId || `txn_${Date.now()}`
+    });
+    console.log('🎯 [Google Ads] Conversion event sent to AW-17653593916');
+  }
 };
 
 /**
