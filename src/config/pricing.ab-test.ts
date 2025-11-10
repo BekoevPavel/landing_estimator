@@ -5,8 +5,8 @@ import type { LucideIcon } from "lucide-react";
 /**
  * A/B Test конфигурация для ценообразования
  *
- * Variant A: Baseline ($22/$65/$150)
- * Variant B: Aggressive India Pricing ($18/$49/$120)
+ * Variant A: Baseline ($5/$15/$50)
+ * Variant B: Aggressive India Pricing ($3/$9/$30)
  *
  * PostHog автоматически делает 50/50 split между вариантами
  *
@@ -41,8 +41,8 @@ const VARIANT_A: PricingPlan[] = [
     id: 'starter',
     name: 'Starter Pack',
     icon: Zap,
-    price: 22,
-    displayPrice: '$22',
+    price: 5,
+    displayPrice: '$5',
     period: '/project',
     description: 'Perfect for small projects',
     tokens: 500,
@@ -61,8 +61,8 @@ const VARIANT_A: PricingPlan[] = [
     id: 'professional',
     name: 'Professional Pack',
     icon: Crown,
-    price: 65,
-    displayPrice: '$65',
+    price: 15,
+    displayPrice: '$15',
     period: '/project',
     description: 'Most popular for complex projects',
     tokens: 1500,
@@ -85,8 +85,8 @@ const VARIANT_A: PricingPlan[] = [
     id: 'agency',
     name: 'Agency Pack',
     icon: Building2,
-    price: 150,
-    displayPrice: '$150',
+    price: 50,
+    displayPrice: '$50',
     period: '/project',
     description: 'For mission-critical estimates',
     tokens: 5000,
@@ -112,8 +112,8 @@ const VARIANT_B: PricingPlan[] = [
     id: 'starter',
     name: 'Starter Pack',
     icon: Zap,
-    price: 18,
-    displayPrice: '$18',
+    price: 3,
+    displayPrice: '$3',
     period: '/project',
     description: 'Perfect for small projects',
     tokens: 500,
@@ -132,14 +132,14 @@ const VARIANT_B: PricingPlan[] = [
     id: 'professional',
     name: 'Professional Pack',
     icon: Crown,
-    price: 49,
-    displayPrice: '$49',
+    price: 9,
+    displayPrice: '$9',
     period: '/project',
     description: 'Most popular for complex projects',
     tokens: 1500,
     highlighted: true,
     popular: true,
-    badge: '⭐ BEST VALUE - SAVE $16!',
+    badge: '⭐ BEST VALUE - SAVE $6!',
     features: [
       '1,500 tokens (never expire)',
       'All 8 AI agents',
@@ -156,8 +156,8 @@ const VARIANT_B: PricingPlan[] = [
     id: 'agency',
     name: 'Agency Pack',
     icon: Building2,
-    price: 120,
-    displayPrice: '$120',
+    price: 30,
+    displayPrice: '$30',
     period: '/project',
     description: 'For mission-critical estimates',
     tokens: 5000,
