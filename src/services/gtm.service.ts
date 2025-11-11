@@ -88,6 +88,29 @@ export const trackEmailCapture = (email: string) => {
 };
 
 /**
+ * Track quiz start conversion (Google Ads)
+ */
+export const trackQuizStart = () => {
+  if (typeof window === 'undefined') return;
+
+  // Send conversion directly to Google Ads gtag
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', 'conversion', {
+      'send_to': 'AW-17653593916/E89ZCJ227L0bELzu8eFB'
+    });
+    console.log('🎯 [Google Ads] Quiz Start conversion sent');
+  }
+
+  // Also push to GTM dataLayer for tracking
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'quiz_start',
+  });
+
+  console.log('🎯 [GTM] Quiz start event sent');
+};
+
+/**
  * Track custom events
  */
 export const trackCustomEvent = (eventName: string, params?: Record<string, any>) => {

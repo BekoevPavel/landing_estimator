@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useTranslation } from "react-i18next";
 import { ChevronRight, Loader2, Check } from "lucide-react";
@@ -7,6 +7,7 @@ import { Progress } from "./ui/progress";
 import { QUIZ_QUESTIONS } from "../data/quiz.data";
 import { calculateQuizResult } from "../services/quiz.service";
 import { QUIZ_CONSTANTS, ARCHETYPE_KEYS } from "../constants/quiz.constants";
+import { trackQuizStart } from "../services/gtm.service";
 import {
   QuizAnswer,
   QuizResult,
@@ -35,6 +36,11 @@ export default function QuizSection({ onComplete }: QuizSectionProps) {
   const [answers, setAnswers] = useState<QuizAnswer[]>([]);
   const [selectedMultiple, setSelectedMultiple] = useState<string[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
+
+  // Track quiz start conversion on mount
+  useEffect(() => {
+    trackQuizStart();
+  }, []);
 
   // Get localized questions
   const localizedQuestions = t("quiz.questions", {
