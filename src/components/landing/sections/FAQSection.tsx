@@ -9,7 +9,7 @@ export function FAQSection() {
   }>;
 
   return (
-    <section className="py-24 px-6">
+    <section id="faq" className="py-24 px-6">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="mb-4 text-4xl md:text-5xl">{t("landing.faq.title")}</h2>

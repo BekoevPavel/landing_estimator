@@ -1,9 +1,15 @@
 import { useTranslation } from "react-i18next";
-import { Zap, MessageSquare, Users } from "lucide-react";
+import { Zap, Mail } from "lucide-react";
+import { trackFooterLinkClick } from "../../../analytics/events";
 
-export function FooterSection() {
+interface FooterSectionProps {
+  onStartTest?: () => void;
+  onGoToPricing?: () => void;
+}
+
+export function FooterSection({ onStartTest, onGoToPricing }: FooterSectionProps) {
   const { t } = useTranslation();
-  
+
   const productLinks = t("landing.footer.product.links", { returnObjects: true }) as Array<{
     label: string;
     href: string;
@@ -12,10 +18,20 @@ export function FooterSection() {
     label: string;
     href: string;
   }>;
-  const companyLinks = t("landing.footer.company.links", { returnObjects: true }) as Array<{
-    label: string;
-    href: string;
-  }>;
+  const companyEmail = t("landing.footer.company.email") as string;
+
+  const handleLinkClick = (link: { label: string; href: string }, category: string) => {
+    // Track analytics
+    trackFooterLinkClick(link.label, category);
+
+    // Special handling for pricing link - go directly to pricing screen
+    if (link.label === "Pricing" || link.label === "Тарифы") {
+      if (onGoToPricing) {
+        onGoToPricing();
+      }
+    }
+    // Other links with anchors will work automatically
+  };
 
   return (
     <footer className="border-t border-border bg-card/50 backdrop-blur-xl">
@@ -34,51 +50,65 @@ export function FooterSection() {
           </div>
 
           <div>
-            <h4 className="mb-4">{t("landing.footer.product.title")}</h4>
+            <h4 className="mb-4 font-semibold">{t("landing.footer.product.title")}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               {productLinks.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="hover:text-foreground transition">{link.label}</a>
+                  {link.label === "Pricing" || link.label === "Тарифы" ? (
+                    <button
+                      onClick={() => handleLinkClick(link, "product")}
+                      className="hover:text-foreground transition text-left"
+                    >
+                      {link.label}
+                    </button>
+                  ) : (
+                    <a
+                      href={link.href}
+                      onClick={() => handleLinkClick(link, "product")}
+                      className="hover:text-foreground transition"
+                    >
+                      {link.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h4 className="mb-4">{t("landing.footer.resources.title")}</h4>
+            <h4 className="mb-4 font-semibold">{t("landing.footer.resources.title")}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               {resourcesLinks.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="hover:text-foreground transition">{link.label}</a>
+                  <a
+                    href={link.href}
+                    onClick={() => handleLinkClick(link, "resources")}
+                    className="hover:text-foreground transition"
+                  >
+                    {link.label}
+                  </a>
                 </li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h4 className="mb-4">{t("landing.footer.company.title")}</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              {companyLinks.map((link) => (
-                <li key={link.label}>
-                  <a href={link.href} className="hover:text-foreground transition">{link.label}</a>
-                </li>
-              ))}
-            </ul>
+            <h4 className="mb-4 font-semibold">{t("landing.footer.company.title")}</h4>
+            <a
+              href={`mailto:${companyEmail}`}
+              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition group"
+              onClick={() => trackFooterLinkClick("Email", "contact")}
+            >
+              <Mail className="w-4 h-4 group-hover:scale-110 transition-transform" />
+              <span className="break-all">{companyEmail}</span>
+            </a>
           </div>
         </div>
 
-        <div className="border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="border-t border-border pt-8 text-center">
           <p className="text-sm text-muted-foreground">
             {t("landing.footer.copyright")}
           </p>
-          <div className="flex items-center gap-4">
-            <a href="#" className="text-muted-foreground hover:text-foreground transition">
-              <MessageSquare className="w-5 h-5" />
-            </a>
-            <a href="#" className="text-muted-foreground hover:text-foreground transition">
-              <Users className="w-5 h-5" />
-            </a>
-          </div>
         </div>
       </div>
     </footer>

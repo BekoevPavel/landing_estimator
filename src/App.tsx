@@ -52,6 +52,10 @@ export default function App() {
     setCurrentStep("hero");
   };
 
+  const handleGoToPricing = () => {
+    setCurrentStep("pricing");
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground overflow-hidden">
       {/* PostHog Debug Panel (A/B test helper) - только в DEV режиме */}
@@ -130,7 +134,7 @@ export default function App() {
 
       <AnimatePresence mode="wait">
         {currentStep === "landing" && (
-          <LandingPage key="landing" onStartTest={handleStartTest} />
+          <LandingPage key="landing" onStartTest={handleStartTest} onGoToPricing={handleGoToPricing} />
         )}
         {currentStep === "hero" && (
           <div key="hero" className="pt-20">

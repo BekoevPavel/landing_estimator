@@ -127,6 +127,7 @@ export default function PricingSection({ onComplete }: PricingSectionProps) {
 
   return (
     <motion.section
+      id="pricing"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

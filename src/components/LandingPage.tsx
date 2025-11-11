@@ -9,11 +9,12 @@ import { FooterSection } from "./landing/sections/FooterSection";
 
 interface LandingPageProps {
   onStartTest: () => void;
+  onGoToPricing: () => void;
 }
 
 /**
  * Главная страница лендинга - композиция всех секций
- * 
+ *
  * Структура:
  * 1. Hero - приветственная секция с CTA
  * 2. Problems - почему оценка проектов болезненна
@@ -24,7 +25,7 @@ interface LandingPageProps {
  * 7. CTA - финальный призыв к действию
  * 8. Footer - подвал с навигацией
  */
-export default function LandingPage({ onStartTest }: LandingPageProps) {
+export default function LandingPage({ onStartTest, onGoToPricing }: LandingPageProps) {
   return (
     <div className="min-h-screen">
       <LandingHeroSection onStartTest={onStartTest} />
@@ -34,7 +35,7 @@ export default function LandingPage({ onStartTest }: LandingPageProps) {
       <TestimonialsSection />
       <FAQSection />
       <CTASection onStartTest={onStartTest} />
-      <FooterSection />
+      <FooterSection onStartTest={onStartTest} onGoToPricing={onGoToPricing} />
     </div>
   );
 }

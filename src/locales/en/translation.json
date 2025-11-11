@@ -290,29 +290,19 @@
       "product": {
         "title": "Product",
         "links": [
-          { "label": "How It Works", "href": "#" },
-          { "label": "Pricing", "href": "#" },
-          { "label": "Examples", "href": "#" },
-          { "label": "API (soon)", "href": "#" }
+          { "label": "How It Works", "href": "#how-it-works" },
+          { "label": "Pricing", "href": "#" }
         ]
       },
       "resources": {
         "title": "Resources",
         "links": [
-          { "label": "Blog", "href": "#" },
-          { "label": "Case Studies", "href": "#" },
-          { "label": "Guides", "href": "#" },
-          { "label": "FAQ", "href": "#" }
+          { "label": "FAQ", "href": "#faq" }
         ]
       },
       "company": {
-        "title": "Company",
-        "links": [
-          { "label": "About", "href": "#" },
-          { "label": "Contact", "href": "#" },
-          { "label": "Privacy Policy", "href": "#" },
-          { "label": "Terms of Service", "href": "#" }
-        ]
+        "title": "Contact",
+        "email": "estimatemyfast@gmail.com"
       },
       "copyright": "© 2025 EstimateFast. Made with AI ❤️ for humans"
     }
@@ -347,64 +337,26 @@
       },
       {
         "id": "q3",
-        "title": "When deadlines start getting delayed, what do you feel first?",
-        "helper": "Your feelings show how you make decisions when things are unclear.",
-        "type": "single_choice",
-        "options": [
-          { "id": "q3_o1", "label": "Annoyed — the plan should have worked" },
-          { "id": "q3_o2", "label": "Calm — I will just recalculate and continue" },
-          { "id": "q3_o3", "label": "Guilty — I did not think about the risks" },
-          { "id": "q3_o4", "label": "Normal — this happens in projects" }
-        ]
-      },
-      {
-        "id": "q4",
         "title": "What makes it hard to give correct estimates most often?",
         "helper": "This helps us find your biggest area of uncertainty.",
         "type": "single_choice",
         "options": [
-          { "id": "q4_o1", "label": "Requirements are unclear or keep changing" },
-          { "id": "q4_o2", "label": "Technical work is very complex" },
-          { "id": "q4_o3", "label": "Pressure from others to give lower estimates" },
-          { "id": "q4_o4", "label": "No past data to compare with" }
+          { "id": "q3_o1", "label": "Requirements are unclear or keep changing" },
+          { "id": "q3_o2", "label": "Technical work is very complex" },
+          { "id": "q3_o3", "label": "Pressure from others to give lower estimates" },
+          { "id": "q3_o4", "label": "No past data to compare with" }
         ]
       },
       {
-        "id": "q5",
-        "title": "What happens when your estimate turns out to be wrong?",
-        "helper": "Knowing the consequences helps us create the right AI protection for you.",
-        "type": "single_choice",
-        "options": [
-          { "id": "q5_o1", "label": "Client loses trust or future work is lost" },
-          { "id": "q5_o2", "label": "Team gets tired from working too hard" },
-          { "id": "q5_o3", "label": "Have to reduce features or quality" },
-          { "id": "q5_o4", "label": "Look bad in front of important people" }
-        ]
-      },
-      {
-        "id": "q6",
-        "title": "What have you tried to make your estimates better?",
-        "helper": "Knowing what did not work helps us not repeat the same mistakes.",
-        "type": "multiple_choice",
-        "max_selections": 3,
-        "options": [
-          { "id": "q6_o1", "label": "Read books or took courses about estimation" },
-          { "id": "q6_o2", "label": "Created templates and step-by-step processes" },
-          { "id": "q6_o3", "label": "Asked more people to help with estimates" },
-          { "id": "q6_o4", "label": "Used software tools for estimation" },
-          { "id": "q6_o5", "label": "Nothing planned — no time or resources" }
-        ]
-      },
-      {
-        "id": "q7",
+        "id": "q4",
         "title": "What is most important in your ideal estimate?",
         "helper": "Choose between speed, accuracy, convincing others, or protecting the team.",
         "type": "single_choice",
         "options": [
-          { "id": "q7_o1", "label": "Speed — give a good estimate quickly" },
-          { "id": "q7_o2", "label": "Accuracy — I prefer to take more time and be exact" },
-          { "id": "q7_o3", "label": "Agreement — convince clients and stakeholders" },
-          { "id": "q7_o4", "label": "Safety — protect the team from too much work" }
+          { "id": "q4_o1", "label": "Speed — give a good estimate quickly" },
+          { "id": "q4_o2", "label": "Accuracy — I prefer to take more time and be exact" },
+          { "id": "q4_o3", "label": "Agreement — convince clients and stakeholders" },
+          { "id": "q4_o4", "label": "Safety — protect the team from too much work" }
         ]
       }
     ],
