@@ -38,6 +38,23 @@ export default function StripeCheckoutForm({ onSuccess, onError, email, planName
       });
 
       if (error) {
+        // Track failed payment attempt in Google Sheets
+        if (email && planName && amount) {
+          try {
+            await googleSheetsService.appendRow({
+              email,
+              timestamp: new Date().toISOString(),
+              amount,
+              planType: `${planName} (FAILED)`,
+              variant: `${variant || 'A'} - Error: ${error.message || 'Unknown error'}`,
+            });
+            console.log("✅ Failed payment attempt logged to Google Sheets");
+          } catch (sheetError) {
+            console.error("Failed to log failed payment to Google Sheets:", sheetError);
+            // Don't block the error flow if Google Sheets fails
+          }
+        }
+
         onError(error.message || "Payment failed");
         setIsProcessing(false);
       } else {
