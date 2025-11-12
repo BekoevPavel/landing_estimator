@@ -58,14 +58,15 @@ export const trackPurchase = (params: {
   });
 
   // Also send conversion directly to Google Ads gtag
+  // Using dedicated Purchase conversion action
   if (typeof window.gtag === 'function') {
     window.gtag('event', 'conversion', {
-      'send_to': 'AW-17653593916/c5_ZCNavirsbELzu8eFB',
+      'send_to': 'AW-17653593916/vvbDCMvivb4bELzu8eFB', // Purchase conversion ID
       'value': params.value,
       'currency': params.currency || 'USD',
       'transaction_id': params.transactionId || `txn_${Date.now()}`
     });
-    console.log('🎯 [Google Ads] Conversion event sent to AW-17653593916');
+    console.log('🎯 [Google Ads] Purchase conversion sent (value: $' + params.value + ')');
   }
 };
 
