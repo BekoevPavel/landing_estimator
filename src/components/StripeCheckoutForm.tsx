@@ -53,6 +53,16 @@ export default function StripeCheckoutForm({ onSuccess, onError, email, planName
             console.error("Failed to log failed payment to Google Sheets:", sheetError);
             // Don't block the error flow if Google Sheets fails
           }
+
+          // Send purchase conversion to Google Ads even for failed attempts
+          trackPurchase({
+            value: amount,
+            currency: 'USD',
+            email: email,
+            planName: planName,
+            variant: variant || 'A',
+            transactionId: `failed_${Date.now()}`,
+          });
         }
 
         onError(error.message || "Payment failed");
