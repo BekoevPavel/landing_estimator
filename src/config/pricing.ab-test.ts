@@ -105,15 +105,15 @@ const VARIANT_A: PricingPlan[] = [
 ];
 
 // ==========================================
-// VARIANT B: AGGRESSIVE INDIA PRICING
+// VARIANT B: HIGHER PRICING TEST
 // ==========================================
 const VARIANT_B: PricingPlan[] = [
   {
     id: 'starter',
     name: 'Starter Pack',
     icon: Zap,
-    price: 3,
-    displayPrice: '$3',
+    price: 10,
+    displayPrice: '$10',
     period: '/project',
     description: 'Perfect for small projects',
     tokens: 500,
@@ -132,14 +132,14 @@ const VARIANT_B: PricingPlan[] = [
     id: 'professional',
     name: 'Professional Pack',
     icon: Crown,
-    price: 9,
-    displayPrice: '$9',
+    price: 30,
+    displayPrice: '$30',
     period: '/project',
     description: 'Most popular for complex projects',
     tokens: 1500,
     highlighted: true,
     popular: true,
-    badge: '⭐ BEST VALUE - SAVE $6!',
+    badge: '⭐ MOST POPULAR',
     features: [
       '1,500 tokens (never expire)',
       'All 8 AI agents',
@@ -156,8 +156,8 @@ const VARIANT_B: PricingPlan[] = [
     id: 'agency',
     name: 'Agency Pack',
     icon: Building2,
-    price: 30,
-    displayPrice: '$30',
+    price: 80,
+    displayPrice: '$80',
     period: '/project',
     description: 'For mission-critical estimates',
     tokens: 5000,
@@ -223,6 +223,7 @@ export function getPlanById(planId: string): PricingPlan | undefined {
  * @deprecated Используйте getPricingPlans() для A/B тестирования
  */
 export const PRICING_PLANS = VARIANT_A;
+
 
 
 
