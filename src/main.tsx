@@ -1,4 +1,5 @@
 import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import "./index.css";
 import "./i18n"; // Инициализация i18n
@@ -7,5 +8,9 @@ import { initPostHog } from "./analytics/posthog.config"; // Инициализ�
 // Инициализируем PostHog для аналитики и A/B тестов
 initPostHog();
 
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
   

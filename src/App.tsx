@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { AnimatePresence } from "motion/react";
 import Header from "./components/Header";
 import { LanguageSwitcher } from "./components/LanguageSwitcher";
@@ -18,41 +19,58 @@ import { isDevelopmentMode } from "./config/env.config";
 type Step = "landing" | "hero" | "quiz" | "result" | "pricing" | "waitlist";
 
 export default function App() {
-  // 🧪 TEMPORARY: Start directly at pricing for Stripe testing
-  // TODO: Change back to "landing" for production
-  const [currentStep, setCurrentStep] = useState("landing" as Step); // <-- PRODUCTION MODE
-  // const [currentStep, setCurrentStep] = useState("pricing" as Step); // <-- TESTING MODE
-
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [currentStep, setCurrentStep] = useState("landing" as Step);
   const [showTestMode, setShowTestMode] = useState(false);
   const [quizResult, setQuizResult] = useState<QuizResult | null>(null);
   const isDevMode = isDevelopmentMode();
 
-  // Проверяем URL параметры при загрузке - возврат со Stripe
+  // Sync URL path with internal step state
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    const path = location.pathname;
+    const params = new URLSearchParams(location.search);
     const paymentStatus = params.get("payment");
-    
+
+    // Handle payment return from Stripe
     if (paymentStatus === "success" || paymentStatus === "canceled") {
       console.log("🎉 Smoke test complete! User returned from Stripe:", paymentStatus);
       console.log("📊 CONVERSION: User saw real Stripe checkout page");
-      
-      // Убираем параметры из URL
-      window.history.replaceState({}, document.title, window.location.pathname);
-      
-      // Показываем Founder's Circle экран
+
+      // Navigate to waitlist
+      navigate("/waitlist", { replace: true });
       setCurrentStep("waitlist");
+      return;
     }
-  }, []);
+
+    // Map URL path to step state
+    if (path === "/pricing") {
+      setCurrentStep("pricing");
+    } else if (path === "/waitlist") {
+      setCurrentStep("waitlist");
+    } else if (path === "/quiz") {
+      setCurrentStep("quiz");
+    } else if (path === "/hero") {
+      setCurrentStep("hero");
+    } else if (path === "/result") {
+      setCurrentStep("result");
+    } else if (path === "/") {
+      setCurrentStep("landing");
+    }
+  }, [location.pathname, location.search, navigate]);
 
   const handleLogoClick = () => {
+    navigate("/");
     setCurrentStep("landing");
   };
 
   const handleStartTest = () => {
+    navigate("/hero");
     setCurrentStep("hero");
   };
 
   const handleGoToPricing = () => {
+    navigate("/pricing");
     setCurrentStep("pricing");
   };
 
@@ -138,7 +156,7 @@ export default function App() {
         )}
         {currentStep === "hero" && (
           <div key="hero" className="pt-20">
-            <HeroSection onStart={() => setCurrentStep("quiz")} />
+            <HeroSection onStart={() => { navigate("/quiz"); setCurrentStep("quiz"); }} />
           </div>
         )}
         {currentStep === "quiz" && (
@@ -146,6 +164,7 @@ export default function App() {
             <QuizSection
               onComplete={(result) => {
                 setQuizResult(result);
+                navigate("/result");
                 setCurrentStep("result");
               }}
             />
@@ -155,13 +174,13 @@ export default function App() {
           <div key="result" className="pt-20">
             <ResultScreen
               result={quizResult}
-              onContinue={() => setCurrentStep("pricing")}
+              onContinue={() => { navigate("/pricing"); setCurrentStep("pricing"); }}
             />
           </div>
         )}
         {currentStep === "pricing" && (
           <div key="pricing" className="pt-20">
-            <PricingSection onComplete={() => setCurrentStep("waitlist")} />
+            <PricingSection onComplete={() => { navigate("/waitlist"); setCurrentStep("waitlist"); }} />
           </div>
         )}
         {currentStep === "waitlist" && (
