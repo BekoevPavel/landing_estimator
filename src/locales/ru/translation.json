@@ -297,7 +297,8 @@
       "resources": {
         "title": "Ресурсы",
         "links": [
-          { "label": "FAQ", "href": "#faq" }
+          { "label": "FAQ", "href": "#faq" },
+          { "label": "Условия использования", "href": "/terms" }
         ]
       },
       "company": {

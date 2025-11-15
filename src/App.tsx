@@ -11,12 +11,13 @@ import PricingSection from "./components/PricingSection";
 import FoundersCircleScreen from "./components/FoundersCircleScreen";
 import TestStripePayment from "./components/TestStripePayment";
 import PostHogDebugPanel from "./components/PostHogDebugPanel";
+import TermsPage from "./pages/TermsPage";
 // import { Button } from "./components/ui/button"; // Unused after hiding test button
 // import { FlaskConical } from "lucide-react"; // Unused after hiding test button
 import { QuizResult } from "./types/quiz.types";
 import { isDevelopmentMode } from "./config/env.config";
 
-type Step = "landing" | "hero" | "quiz" | "result" | "pricing" | "waitlist";
+type Step = "landing" | "hero" | "quiz" | "result" | "pricing" | "waitlist" | "terms";
 
 export default function App() {
   const navigate = useNavigate();
@@ -44,7 +45,9 @@ export default function App() {
     }
 
     // Map URL path to step state
-    if (path === "/pricing") {
+    if (path === "/terms") {
+      setCurrentStep("terms");
+    } else if (path === "/pricing") {
       setCurrentStep("pricing");
     } else if (path === "/waitlist") {
       setCurrentStep("waitlist");
@@ -187,6 +190,9 @@ export default function App() {
           <div key="waitlist">
             <FoundersCircleScreen />
           </div>
+        )}
+        {currentStep === "terms" && (
+          <TermsPage key="terms" />
         )}
       </AnimatePresence>
     </div>
