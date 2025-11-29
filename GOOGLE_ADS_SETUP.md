@@ -224,20 +224,7 @@ If payment attempts < 10:
 ## 📊 KEY METRICS TO TRACK
 
 ```
-Primary Metric:
-🎯 Payment Attempts (willingness to pay)
-   Goal: 10-15+ за $150
-
-Secondary Metrics:
-- Sign-ups: 30-50
-- Sign-up CR: 15-25%
-- Payment CR: 5-8% of sign-ups
-- CPC: $0.70-1.00
-- CTR: 2-5%
-
-If payment attempts > 15 за $150:
-= $10 per validated customer
-= Отличный результат для smoke test!
+hgh
 ```
 
 ---

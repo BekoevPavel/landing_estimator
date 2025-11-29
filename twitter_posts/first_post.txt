@@ -1,0 +1,48 @@
+How I unfrick my software project estimation process
+
+How often do you mess up your deadlines ?
+Why is estimation so nervous and stressed ?
+I'm already 6 years in Software Engineering. Almost Everyday I encounter with estimation process. I do investigate, do discover, I ask a ton of a questions for get more details about projects.
+I put all risks in final estimation.
+
+Sometimes we do estimate with my team and it shows better result in the end.
+
+But anyway sometimes I am messing up.
+It's stressed me.
+
+And... From the bottom of my heard I hate the estimation process.
+it's stress.
+if you overestimate you can lose your client or your job.
+if you underestimated you can do the same.
+
+Every time estimation takes peace of your reputation.
+I think people who consistently estimate some projects, tasks live less up the 15% then normal people caused by stress.
+
+That's why I decided to change this situation.
+I started to use ChatGPT like 'senior software engineer with 10 years old experience'.
+I put all what I knew about my project to him.
+And just ask to estimate.
+And it gave me some estimation. but it was not what I wanted to get. it was not realistic. And I keep asking him more and more details. Told him where was he wrong. And in maybe 6 hours I finally got it.
+
+When I worked in OutSource company that costs us all day and time of 3-4 people to do that.
+And It's was most better than nothing.
+
+But I did't stop with it. I supposed I can reduce even that time.
+How ?
+
+I took a little team for that. AI team.
+I created few Mobile Devs AI Agents(Flutter), few Backend Devs AI Agents, risk analyst, and agent orchestrator who watches all this show.
+Why I took two agent for each niche, two mobile dev, to backend dev ?
+of course reason is they have to argue each other, dispute, and say each other WTF, Why do you generate that ? Are you dump ?ext.
+And also I noticed sonnet 4.5 works much better then GPT-5. Gpt 5 sucks in software estimations.
+
+So and in the end what can I say.
+It works.
+Now they - generate for me brief. Each AI Agent generates specific questions in his niche.
+I just reply all questions, we do 2-3 such round and after that my AI team start to estimate.
+Now all this process takes me about 1 hour, perhaps I can do that faster, and even I know how,
+But for now, man, listen please carefully
+I really hope this post helps you and you can use the same way like me for skip your stress of estimations.
+
+But if you wanna skip even this steps (I understand it might costs you up to 2 weeks)
+You can just check out my AI Estimator (here)[link]
