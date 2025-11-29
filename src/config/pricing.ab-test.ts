@@ -31,6 +31,11 @@ export interface PricingPlan {
   popular?: boolean;
   gradient: string;
   borderGradient: string;
+  /**
+   * Paddle price ID for this plan
+   * Used when PAYMENT_PROVIDER is set to 'paddle'
+   */
+  paddlePriceId: string;
 }
 
 // ==========================================
@@ -56,6 +61,7 @@ const VARIANT_A: PricingPlan[] = [
     ],
     gradient: 'from-blue-500/20 to-cyan-500/20',
     borderGradient: 'from-blue-500 to-cyan-500',
+    paddlePriceId: 'pri_01kb843d5331ana8t0a8g2010g', // $5
   },
   {
     id: 'professional',
@@ -80,6 +86,7 @@ const VARIANT_A: PricingPlan[] = [
     ],
     gradient: 'from-purple-500/20 to-pink-500/20',
     borderGradient: 'from-purple-500 to-pink-500',
+    paddlePriceId: 'pri_01kb845pb30ww55997ms9rnr4f', // $15
   },
   {
     id: 'agency',
@@ -101,6 +108,7 @@ const VARIANT_A: PricingPlan[] = [
     ],
     gradient: 'from-orange-500/20 to-red-500/20',
     borderGradient: 'from-orange-500 to-red-500',
+    paddlePriceId: 'pri_01kb84727pqrersph1af1071j9', // $50
   },
 ];
 
@@ -127,6 +135,7 @@ const VARIANT_B: PricingPlan[] = [
     ],
     gradient: 'from-blue-500/20 to-cyan-500/20',
     borderGradient: 'from-blue-500 to-cyan-500',
+    paddlePriceId: 'pri_01kb844n77w7s0rq1pxq47jv4p', // $10
   },
   {
     id: 'professional',
@@ -151,6 +160,7 @@ const VARIANT_B: PricingPlan[] = [
     ],
     gradient: 'from-purple-500/20 to-pink-500/20',
     borderGradient: 'from-purple-500 to-pink-500',
+    paddlePriceId: 'pri_01kb846aqyhtvd6t3adpwz7sa0', // $30
   },
   {
     id: 'agency',
@@ -172,6 +182,7 @@ const VARIANT_B: PricingPlan[] = [
     ],
     gradient: 'from-orange-500/20 to-red-500/20',
     borderGradient: 'from-orange-500 to-red-500',
+    paddlePriceId: 'pri_01kb847ykxfy578n87mqq6ksk3', // $80
   },
 ];
 

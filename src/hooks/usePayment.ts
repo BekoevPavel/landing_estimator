@@ -1,10 +1,15 @@
 /**
- * Хук для управления процессом оплаты
+ * Хук для управления процессом оплаты (Stripe)
+ *
+ * IMPORTANT: This hook is Stripe-specific. When using Paddle as the payment
+ * provider, do NOT call createPayment() - Paddle handles its own checkout flow.
+ *
  * Инкапсулирует всю логику создания Payment Intent и обработки состояний
  */
 
 import { useState, useCallback } from "react";
 import { stripeService } from "../services/stripe.service";
+import { isPaddleProvider } from "../config/payment-provider.config";
 import type { PaymentStatus } from "../types/stripe.types";
 // import { isDevelopmentMode } from "../config/env.config"; // Temporarily disabled for testing
 
@@ -39,6 +44,16 @@ export function usePayment(options: UsePaymentOptions = {}): UsePaymentReturn {
 
   const createPayment = useCallback(
     async (amount: number, planName: string, email?: string) => {
+      // Guard: Do not create Stripe payment intents when Paddle is the active provider
+      // Paddle handles its own checkout flow independently
+      if (isPaddleProvider()) {
+        console.warn(
+          "[usePayment] createPayment called but Paddle is the active provider. " +
+          "Skipping Stripe payment intent creation. Paddle handles checkout independently."
+        );
+        return;
+      }
+
       // Валидация
       if (!stripeService.validateAmount(amount)) {
         const errorMsg = "Invalid amount. Please enter a number between 0.01 and 999999";
