@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation, Navigate } from "react-router-dom";
 import { AnimatePresence } from "motion/react";
 import Header from "./components/Header";
 import { LanguageSwitcher } from "./components/LanguageSwitcher";
@@ -12,12 +12,13 @@ import FoundersCircleScreen from "./components/FoundersCircleScreen";
 import TestStripePayment from "./components/TestStripePayment";
 import PostHogDebugPanel from "./components/PostHogDebugPanel";
 import TermsPage from "./pages/TermsPage";
+import PaddlePaymentPage from "./pages/PaddlePaymentPage";
 // import { Button } from "./components/ui/button"; // Unused after hiding test button
 // import { FlaskConical } from "lucide-react"; // Unused after hiding test button
 import { QuizResult } from "./types/quiz.types";
 import { isDevelopmentMode } from "./config/env.config";
 
-type Step = "landing" | "hero" | "quiz" | "result" | "pricing" | "waitlist" | "terms";
+type Step = "landing" | "hero" | "quiz" | "result" | "pricing" | "stripe_pricing" | "waitlist" | "terms";
 
 export default function App() {
   const navigate = useNavigate();
@@ -48,7 +49,9 @@ export default function App() {
     if (path === "/terms") {
       setCurrentStep("terms");
     } else if (path === "/pricing") {
-      setCurrentStep("pricing");
+      setCurrentStep("pricing"); // Paddle payment
+    } else if (path === "/stripe_pricing") {
+      setCurrentStep("stripe_pricing"); // Stripe payment (legacy)
     } else if (path === "/waitlist") {
       setCurrentStep("waitlist");
     } else if (path === "/quiz") {
@@ -99,8 +102,8 @@ export default function App() {
         </div>
       )}
 
-      {/* Secure Checkout Badge - SMALLER size for mobile, only on pricing page */}
-      {currentStep === "pricing" && (
+      {/* Secure Checkout Badge - SMALLER size for mobile, only on stripe pricing page */}
+      {currentStep === "stripe_pricing" && (
         <div
           style={{
             position: 'fixed',
@@ -182,7 +185,10 @@ export default function App() {
           </div>
         )}
         {currentStep === "pricing" && (
-          <div key="pricing" className="pt-20">
+          <PaddlePaymentPage key="pricing" />
+        )}
+        {currentStep === "stripe_pricing" && (
+          <div key="stripe_pricing" className="pt-20">
             <PricingSection onComplete={() => { navigate("/waitlist"); setCurrentStep("waitlist"); }} />
           </div>
         )}

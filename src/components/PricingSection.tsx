@@ -9,13 +9,14 @@ import { useTranslation } from "react-i18next";
 import { PricingCard } from "./pricing/PricingCard";
 import { CheckoutForm } from "./pricing/CheckoutForm";
 import { getPricingPlans, getPricingVariant, getPlanById } from "../config/pricing.ab-test";
-import { 
-  trackPricingViewed, 
-  trackPlanSelected, 
+import {
+  trackPricingViewed,
+  trackPlanSelected,
   trackPaymentAttempt,
-  trackTimeOnPricing 
+  trackTimeOnPricing
 } from "../analytics/events";
 import { usePayment } from "../hooks/usePayment";
+import { isPaddleProvider } from "../config/payment-provider.config";
 import { Alert, AlertDescription } from "./ui/alert";
 import { Button } from "./ui/button";
 import { ArrowLeft } from "lucide-react";
@@ -102,17 +103,24 @@ export default function PricingSection({ onComplete }: PricingSectionProps) {
   };
 
   // Создаём payment intent когда есть план и email
+  // IMPORTANT: Only create Stripe payment intent when using Stripe provider
+  // Paddle handles its own checkout flow and does not need a payment intent
   useEffect(() => {
+    // Skip payment intent creation for Paddle - it handles checkout independently
+    if (isPaddleProvider()) {
+      return;
+    }
+
     if (selectedPlan && email && showCheckout) {
-      console.log("💳 Creating payment intent for:", selectedPlan.name);
-      
+      console.log("💳 Creating Stripe payment intent for:", selectedPlan.name);
+
       // ВАЖНО: Используем цену из A/B теста!
       const abPlan = abTestPlans.find(p => p.id === selectedPlan.id);
       const price = abPlan?.price || selectedPlan.price;
-      
+
       // Track попытку оплаты
       trackPaymentAttempt(variant, selectedPlan.id, price);
-      
+
       payment.createPayment(price, selectedPlan.name, email);
     }
   }, [selectedPlan?.id, email, showCheckout]);

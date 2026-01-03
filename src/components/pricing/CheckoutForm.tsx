@@ -1,8 +1,11 @@
 /**
- * Компонент формы оформления заказа с Stripe
+ * Компонент формы оформления заказа
+ *
+ * Supports both Stripe (embedded) and Paddle (overlay) checkout flows.
+ * The active provider is controlled by PAYMENT_PROVIDER config flag.
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "motion/react";
 import { AlertCircle, Loader2 } from "lucide-react";
 import { Elements } from "@stripe/react-stripe-js";
@@ -10,19 +13,21 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import StripeCheckoutForm from "../StripeCheckoutForm";
+import PaddleCheckoutButton from "../PaddleCheckoutButton";
 import { STRIPE_KEYS, STRIPE_APPEARANCE_DARK } from "../../config/stripe.config";
+import { PAYMENT_PROVIDER, isPaddleProvider } from "../../config/payment-provider.config";
 import { isDevelopmentMode } from "../../config/env.config";
-import type { PricingPlan } from "../../config/pricing.ab-test";
+import type { PricingPlan, PricingVariant } from "../../config/pricing.ab-test";
 import { googleSheetsService } from "../../services/googleSheets";
 import { trackPurchase } from "../../services/gtm.service";
 
-// Инициализация Stripe
+// Инициализация Stripe (only loaded when using Stripe provider)
 const stripePromise = loadStripe(STRIPE_KEYS.publishableKey);
 
 interface CheckoutFormProps {
   selectedPlan: PricingPlan;
   actualPrice: number;
-  abTestVariant: string;
+  abTestVariant: PricingVariant;
   clientSecret: string | null;
   isLoading: boolean;
   error: string | null;
@@ -50,6 +55,7 @@ export function CheckoutForm({
   };
 
   const isDevMode = isDevelopmentMode();
+  const usePaddle = isPaddleProvider();
 
   return (
     <motion.div
@@ -57,9 +63,17 @@ export function CheckoutForm({
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6"
     >
+      {/* Payment Provider Debug (dev only) */}
+      {import.meta.env.DEV && (
+        <div className="p-2 bg-blue-500/10 border border-blue-500/20 rounded-lg text-center">
+          <span className="text-xs text-blue-400">
+            Payment Provider: <strong>{PAYMENT_PROVIDER.toUpperCase()}</strong>
+          </span>
+        </div>
+      )}
 
-      {/* Error Message */}
-      {error && (
+      {/* Error Message (only show for Stripe, Paddle handles its own errors) */}
+      {error && !usePaddle && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -82,8 +96,24 @@ export function CheckoutForm({
         />
       </div>
 
-      {/* Dev Mode Simulation - Only visible in development */}
-      {isDevMode &&
+      {/* ==================== PADDLE CHECKOUT ==================== */}
+      {usePaddle && email && (
+        <PaddleCheckoutButton
+          priceId={selectedPlan.paddlePriceId}
+          email={email}
+          planName={selectedPlan.name}
+          planId={selectedPlan.id}
+          amount={actualPrice}
+          variant={abTestVariant}
+          onSuccess={onPaymentSuccess}
+          onError={onPaymentError}
+        />
+      )}
+
+      {/* ==================== STRIPE CHECKOUT ==================== */}
+      {/* Dev Mode Simulation - Only visible in development when using Stripe */}
+      {!usePaddle &&
+        isDevMode &&
         clientSecret &&
         email &&
         clientSecret === "demo_mode_no_real_payment" && (
@@ -94,14 +124,14 @@ export function CheckoutForm({
               </p>
               <div className="text-sm space-y-1 text-muted-foreground">
                 <p>
-                  ✓ Plan: <span className="text-foreground">{selectedPlan.name}</span>
+                  Plan: <span className="text-foreground">{selectedPlan.name}</span>
                 </p>
                 <p>
-                  ✓ Amount:{" "}
+                  Amount:{" "}
                   <span className="text-foreground">{selectedPlan.displayPrice}</span>
                 </p>
                 <p>
-                  ✓ Email: <span className="text-foreground">{email}</span>
+                  Email: <span className="text-foreground">{email}</span>
                 </p>
               </div>
             </div>
@@ -126,22 +156,23 @@ export function CheckoutForm({
                       planType: selectedPlan.name,
                       variant: abTestVariant,
                     });
-                    console.log("✅ Dev mode: Data sent to Google Sheets");
-                  } catch (error) {
-                    console.error("Failed to save to Google Sheets:", error);
+                    console.log("Dev mode: Data sent to Google Sheets");
+                  } catch (sheetError) {
+                    console.error("Failed to save to Google Sheets:", sheetError);
                   }
                 }
                 onPaymentSuccess();
               }}
               className="w-full rounded-xl bg-gradient-to-r from-green-500 to-emerald-500"
             >
-              ✓ Simulate Payment Success (Dev Mode)
+              Simulate Payment Success (Dev Mode)
             </Button>
           </div>
         )}
 
       {/* Real Stripe Form */}
-      {clientSecret &&
+      {!usePaddle &&
+        clientSecret &&
         email &&
         clientSecret !== "demo_mode_no_real_payment" && (
           <Elements
@@ -162,8 +193,8 @@ export function CheckoutForm({
           </Elements>
         )}
 
-      {/* Loading State */}
-      {!clientSecret && email && isLoading && (
+      {/* Loading State (Stripe only - Paddle handles its own loading) */}
+      {!usePaddle && !clientSecret && email && isLoading && (
         <div className="text-center py-8">
           <Loader2 className="inline-block w-8 h-8 text-primary animate-spin" />
           <p className="mt-4 text-sm text-muted-foreground">
