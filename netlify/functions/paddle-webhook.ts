@@ -175,15 +175,52 @@ function getPlanFromPriceId(priceId: string, customData?: { plan?: string }): st
     return customData.plan;
   }
 
-  // Map price IDs to plans (you'll need to update these with your actual Paddle price IDs)
+  // Map price IDs to plans - production price IDs
   const priceIdToPlan: Record<string, string> = {
-    // Add your Paddle price IDs here
-    // 'pri_xxxxx': 'basic',
-    // 'pri_yyyyy': 'pro',
-    // 'pri_zzzzz': 'enterprise',
+    // Variant A prices
+    'pri_01kb843d5331ana8t0a8g2010g': 'basic',  // Starter $5
+    'pri_01kb845pb30ww55997ms9rnr4f': 'pro',    // Professional $15
+    'pri_01kb84727pqrersph1af107lj9': 'max',    // Max $50
+    // Variant B prices
+    'pri_01kb844n77w7s0rq1pxq47jv4p': 'basic',  // Starter $10
+    'pri_01kb846aqyhtvd6t3adpwz7sa0': 'pro',    // Professional $30
+    'pri_01kb847ykxfy578n87mqq6ksk3': 'max',    // Max $80
   };
 
   return priceIdToPlan[priceId] || 'pro'; // Default to 'pro' if not found
+}
+
+/**
+ * Fetch customer details from Paddle API
+ */
+async function fetchPaddleCustomer(customerId: string, apiKey: string): Promise<{ email: string; name?: string } | null> {
+  try {
+    console.log('🔍 Fetching customer from Paddle API:', customerId);
+
+    const response = await fetch(`https://api.paddle.com/customers/${customerId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      console.error('❌ Paddle API error:', response.status, await response.text());
+      return null;
+    }
+
+    const data = await response.json();
+    console.log('✅ Paddle customer data:', JSON.stringify(data, null, 2));
+
+    return {
+      email: data.data?.email,
+      name: data.data?.name,
+    };
+  } catch (error) {
+    console.error('❌ Failed to fetch customer from Paddle:', error);
+    return null;
+  }
 }
 
 /**
@@ -306,6 +343,7 @@ export const handler: Handler = async (event: HandlerEvent): Promise<HandlerResp
   // Check for required environment variables
   const resendApiKey = process.env.RESEND_API_KEY;
   const paddleWebhookSecret = process.env.PADDLE_WEBHOOK_SECRET;
+  const paddleApiKey = process.env.PADDLE_API_KEY;
   const mainAppUrl = process.env.VITE_MAIN_APP_URL || 'https://app.estimatefast.ink';
 
   if (!resendApiKey) {
@@ -314,6 +352,15 @@ export const handler: Handler = async (event: HandlerEvent): Promise<HandlerResp
       statusCode: 500,
       headers: CORS_HEADERS,
       body: JSON.stringify({ error: 'Email service not configured' }),
+    };
+  }
+
+  if (!paddleApiKey) {
+    console.error('❌ PADDLE_API_KEY not configured');
+    return {
+      statusCode: 500,
+      headers: CORS_HEADERS,
+      body: JSON.stringify({ error: 'Paddle API not configured' }),
     };
   }
 
@@ -365,13 +412,13 @@ export const handler: Handler = async (event: HandlerEvent): Promise<HandlerResp
   const transaction = payload.data;
 
   // Try to find customer email from multiple possible locations in Paddle payload
-  const customerEmail =
+  let customerEmail =
     transaction.customer?.email ||
     transaction.billing_details?.email ||
     transaction.checkout?.customer?.email ||
     transaction.custom_data?.email;
 
-  const customerName =
+  let customerName =
     transaction.customer?.name ||
     transaction.billing_details?.name ||
     transaction.checkout?.customer?.name;
@@ -381,9 +428,21 @@ export const handler: Handler = async (event: HandlerEvent): Promise<HandlerResp
   console.log('  - transaction.billing_details?.email:', transaction.billing_details?.email);
   console.log('  - transaction.checkout?.customer?.email:', transaction.checkout?.customer?.email);
   console.log('  - transaction.custom_data?.email:', transaction.custom_data?.email);
+  console.log('  - transaction.customer_id:', transaction.customer_id);
+
+  // If email not in payload, fetch from Paddle API using customer_id
+  if (!customerEmail && transaction.customer_id) {
+    console.log('📡 Email not in payload, fetching from Paddle API...');
+    const paddleCustomer = await fetchPaddleCustomer(transaction.customer_id, paddleApiKey);
+    if (paddleCustomer?.email) {
+      customerEmail = paddleCustomer.email;
+      customerName = paddleCustomer.name || customerName;
+      console.log('✅ Got email from Paddle API:', customerEmail);
+    }
+  }
 
   if (!customerEmail) {
-    console.error('❌ No customer email found in webhook payload');
+    console.error('❌ No customer email found in webhook payload or Paddle API');
     console.error('Full transaction data:', JSON.stringify(transaction, null, 2));
     return {
       statusCode: 400,
@@ -392,7 +451,7 @@ export const handler: Handler = async (event: HandlerEvent): Promise<HandlerResp
     };
   }
 
-  console.log('👤 Customer email found:', customerEmail);
+  console.log('👤 Customer email:', customerEmail);
 
   // Get plan from first item's price ID or custom_data
   const plan = transaction.items?.[0]
