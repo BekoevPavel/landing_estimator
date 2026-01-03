@@ -89,8 +89,19 @@ interface PaddleItem {
 interface PaddleTransactionData {
   id: string;
   status: string;
-  customer_id: string;
-  customer: PaddleCustomer;
+  customer_id?: string;
+  customer?: PaddleCustomer;
+  // Paddle may include customer info at different levels
+  billing_details?: {
+    email?: string;
+    name?: string;
+  };
+  checkout?: {
+    customer?: {
+      email?: string;
+      name?: string;
+    };
+  };
   items: PaddleItem[];
   currency_code: string;
   details?: {
@@ -100,6 +111,7 @@ interface PaddleTransactionData {
   };
   custom_data?: {
     plan?: string;
+    email?: string; // We can pass email in custom_data
   };
 }
 
@@ -351,10 +363,28 @@ export const handler: Handler = async (event: HandlerEvent): Promise<HandlerResp
   }
 
   const transaction = payload.data;
-  const customer = transaction.customer;
 
-  if (!customer?.email) {
-    console.error('❌ No customer email in webhook payload');
+  // Try to find customer email from multiple possible locations in Paddle payload
+  const customerEmail =
+    transaction.customer?.email ||
+    transaction.billing_details?.email ||
+    transaction.checkout?.customer?.email ||
+    transaction.custom_data?.email;
+
+  const customerName =
+    transaction.customer?.name ||
+    transaction.billing_details?.name ||
+    transaction.checkout?.customer?.name;
+
+  console.log('🔍 Looking for customer email in payload...');
+  console.log('  - transaction.customer?.email:', transaction.customer?.email);
+  console.log('  - transaction.billing_details?.email:', transaction.billing_details?.email);
+  console.log('  - transaction.checkout?.customer?.email:', transaction.checkout?.customer?.email);
+  console.log('  - transaction.custom_data?.email:', transaction.custom_data?.email);
+
+  if (!customerEmail) {
+    console.error('❌ No customer email found in webhook payload');
+    console.error('Full transaction data:', JSON.stringify(transaction, null, 2));
     return {
       statusCode: 400,
       headers: CORS_HEADERS,
@@ -362,7 +392,7 @@ export const handler: Handler = async (event: HandlerEvent): Promise<HandlerResp
     };
   }
 
-  console.log('👤 Customer:', customer.email);
+  console.log('👤 Customer email found:', customerEmail);
 
   // Get plan from first item's price ID or custom_data
   const plan = transaction.items?.[0]
@@ -375,7 +405,7 @@ export const handler: Handler = async (event: HandlerEvent): Promise<HandlerResp
   const authTokenSecret = process.env.AUTH_TOKEN_SECRET;
   let token: string | null = null;
   if (authTokenSecret) {
-    token = createEmailToken(customer.email, plan, authTokenSecret);
+    token = createEmailToken(customerEmail, plan, authTokenSecret);
     console.log('🔑 Auth token generated for email');
   } else {
     console.log('⚠️ AUTH_TOKEN_SECRET not set, email will have manual login link only');
@@ -385,8 +415,8 @@ export const handler: Handler = async (event: HandlerEvent): Promise<HandlerResp
   const resend = new Resend(resendApiKey);
   const emailSent = await sendWelcomeEmail(
     resend,
-    customer.email,
-    customer.name,
+    customerEmail,
+    customerName,
     plan,
     mainAppUrl,
     token
