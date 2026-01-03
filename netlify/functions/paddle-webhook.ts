@@ -16,6 +16,45 @@ import type { Handler, HandlerEvent, HandlerResponse } from '@netlify/functions'
 import { Resend } from 'resend';
 import crypto from 'crypto';
 
+// Token expiry time (24 hours in seconds) - longer for email links
+const TOKEN_EXPIRY_SECONDS = 86400;
+
+/**
+ * Base64url encode (URL-safe base64 without padding)
+ */
+function base64UrlEncode(data: string): string {
+  return Buffer.from(data)
+    .toString('base64')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=/g, '');
+}
+
+/**
+ * Create HMAC-SHA256 signature as hex string
+ */
+function createSignature(payload: string, secret: string): string {
+  return crypto.createHmac('sha256', secret).update(payload).digest('hex');
+}
+
+/**
+ * Create a signed token for email login link
+ */
+function createEmailToken(email: string, plan: string, secret: string): string {
+  const now = Math.floor(Date.now() / 1000);
+  const payload = {
+    email,
+    plan,
+    exp: now + TOKEN_EXPIRY_SECONDS,
+  };
+
+  const payloadString = JSON.stringify(payload);
+  const signature = createSignature(payloadString, secret);
+  const tokenContent = `${payloadString}.${signature}`;
+
+  return base64UrlEncode(tokenContent);
+}
+
 // CORS headers
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -143,10 +182,12 @@ async function sendWelcomeEmail(
   email: string,
   customerName: string | undefined,
   plan: string,
-  appUrl: string
+  appUrl: string,
+  token: string | null
 ): Promise<boolean> {
   const planDisplayName = PLAN_NAMES[plan] || plan;
-  const loginUrl = `${appUrl}/auth/login`;
+  const manualLoginUrl = `${appUrl}/auth/login`;
+  const autoLoginUrl = token ? `${appUrl}/auth?token=${encodeURIComponent(token)}` : manualLoginUrl;
   const firstName = customerName?.split(' ')[0] || 'there';
 
   try {
@@ -172,14 +213,14 @@ async function sendWelcomeEmail(
 
   <div style="background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); border-radius: 12px; padding: 30px; text-align: center; margin: 30px 0;">
     <p style="color: white; margin: 0 0 20px 0; font-size: 18px;">Click below to access your account:</p>
-    <a href="${loginUrl}" style="display: inline-block; background: white; color: #2563eb; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 16px;">
+    <a href="${autoLoginUrl}" style="display: inline-block; background: white; color: #2563eb; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 16px;">
       Go to EstimateFast
     </a>
   </div>
 
-  <p>Or copy this link into your browser:</p>
+  <p style="color: #6b7280; font-size: 14px;">If the button above doesn't work, you can log in manually:</p>
   <p style="background: #f3f4f6; padding: 12px; border-radius: 6px; word-break: break-all; font-family: monospace; font-size: 14px;">
-    ${loginUrl}
+    <a href="${manualLoginUrl}" style="color: #2563eb;">${manualLoginUrl}</a>
   </p>
 
   <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
@@ -201,7 +242,10 @@ Hey ${firstName}!
 Thank you for subscribing to EstimateFast ${planDisplayName}! Your payment was successful and your account is now ready.
 
 Click here to access your account:
-${loginUrl}
+${autoLoginUrl}
+
+If the link above doesn't work, you can log in manually at:
+${manualLoginUrl}
 
 If you have any questions, just reply to this email. We're here to help!
 
@@ -322,6 +366,16 @@ export const handler: Handler = async (event: HandlerEvent): Promise<HandlerResp
 
   console.log('📋 Plan:', plan);
 
+  // Generate auth token for auto-login link
+  const authTokenSecret = process.env.AUTH_TOKEN_SECRET;
+  let token: string | null = null;
+  if (authTokenSecret) {
+    token = createEmailToken(customer.email, plan, authTokenSecret);
+    console.log('🔑 Auth token generated for email');
+  } else {
+    console.log('⚠️ AUTH_TOKEN_SECRET not set, email will have manual login link only');
+  }
+
   // Send welcome email
   const resend = new Resend(resendApiKey);
   const emailSent = await sendWelcomeEmail(
@@ -329,7 +383,8 @@ export const handler: Handler = async (event: HandlerEvent): Promise<HandlerResp
     customer.email,
     customer.name,
     plan,
-    mainAppUrl
+    mainAppUrl,
+    token
   );
 
   if (!emailSent) {
