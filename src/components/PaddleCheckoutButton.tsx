@@ -8,7 +8,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Loader2, CreditCard, AlertCircle } from 'lucide-react';
 import { Button } from './ui/button';
-import { PADDLE_CONFIG, PADDLE_CHECKOUT_SETTINGS } from '../config/paddle.config';
+import {
+  PADDLE_CONFIG,
+  PADDLE_CHECKOUT_SETTINGS,
+  MAIN_APP_URL,
+  TOKEN_ENDPOINT,
+  getAuthPlanType,
+  type PaddlePlanId,
+} from '../config/paddle.config';
 import { googleSheetsService } from '../services/googleSheets';
 import { trackPurchase } from '../services/gtm.service';
 import {
@@ -121,6 +128,12 @@ export default function PaddleCheckoutButton({
 
         if (!isMounted) return;
 
+        // Set sandbox environment BEFORE Initialize (required for sandbox mode)
+        if (PADDLE_CONFIG.environment === 'sandbox') {
+          paddle.Environment.set('sandbox');
+          console.log('Paddle environment set to SANDBOX');
+        }
+
         // Initialize Paddle with event callback
         paddle.Initialize({
           token: PADDLE_CONFIG.clientToken,
@@ -199,6 +212,50 @@ export default function PaddleCheckoutButton({
   );
 
   /**
+   * Generate auth token and redirect to main app
+   */
+  const generateTokenAndRedirect = useCallback(
+    async (customerEmail: string): Promise<void> => {
+      try {
+        // Get auth plan type from plan ID
+        const authPlanType = getAuthPlanType(planId as PaddlePlanId);
+
+        console.log('🔐 Generating auth token...', { email: customerEmail, plan: authPlanType });
+
+        const response = await fetch(TOKEN_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: customerEmail,
+            plan: authPlanType,
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to generate auth token');
+        }
+
+        const { token } = await response.json();
+        console.log('✅ Auth token generated successfully');
+
+        // Redirect to main app with token
+        const redirectUrl = `${MAIN_APP_URL}/auth?token=${encodeURIComponent(token)}`;
+        console.log('🚀 Redirecting to:', redirectUrl);
+
+        window.location.href = redirectUrl;
+      } catch (error) {
+        console.error('❌ Token generation failed:', error);
+        // Still call onSuccess even if token generation fails
+        // The user can be authenticated through other means
+        setError('Payment successful but redirect failed. Please contact support.');
+        onSuccess();
+      }
+    },
+    [planId, onSuccess]
+  );
+
+  /**
    * Handle successful checkout completion
    */
   const handleCheckoutCompleted = useCallback(
@@ -207,6 +264,8 @@ export default function PaddleCheckoutButton({
       console.log('Payment successful!', event.data);
 
       const transactionId = event.data?.transaction?.id || `paddle_${Date.now()}`;
+      // Get customer email from Paddle event data
+      const customerEmail = event.data?.customer?.email || email;
 
       try {
         // 1. Track analytics - PostHog
@@ -217,14 +276,14 @@ export default function PaddleCheckoutButton({
           transactionId,
           value: amount,
           currency: 'USD',
-          email,
+          email: customerEmail,
           planName,
           variant,
         });
 
         // 3. Log to Google Sheets
         await googleSheetsService.appendRow({
-          email,
+          email: customerEmail,
           timestamp: new Date().toISOString(),
           amount,
           planType: `${planName} (Paddle)`,
@@ -236,10 +295,12 @@ export default function PaddleCheckoutButton({
         console.error('Tracking error (non-blocking):', trackingError);
       }
 
+      // Generate token and redirect to main app
+      await generateTokenAndRedirect(customerEmail);
+
       setStatus('success');
-      onSuccess();
     },
-    [variant, planId, amount, email, planName, onSuccess]
+    [variant, planId, amount, email, planName, generateTokenAndRedirect]
   );
 
   /**

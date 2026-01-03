@@ -81,7 +81,7 @@ export default function TermsPage() {
                 <ul className="list-disc list-inside text-muted-foreground space-y-2 mb-4">
                   <li>Starter Pack: $5-$10 (one-time payment)</li>
                   <li>Professional Pack: $15-$30 (one-time payment)</li>
-                  <li>Agency Pack: $50-$80 (one-time payment)</li>
+                  <li>Max Pack: $50-$80 (one-time payment)</li>
                 </ul>
                 <p className="text-muted-foreground mb-4">
                   <strong>Payment Processing:</strong> Payments are processed securely through Stripe or Paddle.
