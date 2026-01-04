@@ -34,7 +34,7 @@ const MAIN_APP_URL = isDev
 const PLAN_TYPE_MAP: Record<string, string> = {
   starter: 'basic',
   professional: 'pro',
-  agency: 'max',
+  max: 'max',
 };
 
 declare global {

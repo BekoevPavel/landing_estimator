@@ -51,7 +51,7 @@ const PRICE_IDS = isDev ? SANDBOX_PRICE_IDS : PRODUCTION_PRICE_IDS;
 export type PricingVariant = 'A' | 'B';
 
 export interface PricingPlan {
-  id: 'starter' | 'professional' | 'agency';
+  id: 'starter' | 'professional' | 'max';
   name: string;
   icon: LucideIcon;
   price: number;
@@ -123,7 +123,7 @@ const VARIANT_A: PricingPlan[] = [
     paddlePriceId: PRICE_IDS.professionalA, // $15
   },
   {
-    id: 'agency',
+    id: 'max',
     name: 'Max Pack',
     icon: Building2,
     price: 50,
@@ -197,7 +197,7 @@ const VARIANT_B: PricingPlan[] = [
     paddlePriceId: PRICE_IDS.professionalB, // $30
   },
   {
-    id: 'agency',
+    id: 'max',
     name: 'Max Pack',
     icon: Building2,
     price: 80,

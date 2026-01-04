@@ -88,17 +88,6 @@ export const trackTimeOnPricing = (
   console.log(`⏱️ [Analytics] Time on pricing - ${seconds}s - Variant ${variant}`);
 };
 
-/**
- * Пользователь связался для Agency плана
- */
-export const trackAgencyContact = (variant: PricingVariant) => {
-  posthog.capture('agency_contact_clicked', {
-    variant,
-  });
-
-  console.log(`📞 [Analytics] Agency contact - Variant ${variant}`);
-};
-
 // ==================== LANDING PAGE EVENTS ====================
 
 /**

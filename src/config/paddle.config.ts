@@ -80,12 +80,12 @@ const SANDBOX_PRICE_IDS = {
   variantA: {
     starter: 'pri_01kb9zcgbhrh4c9gtke0ppspq4',     // $5
     professional: 'pri_01kb9zdn868qm2wjt8rswtjxb1', // $15
-    agency: 'pri_01kb9zezvwpjzb2f8xwc4ay7bv',      // $50 (Max plan)
+    max: 'pri_01kb9zezvwpjzb2f8xwc4ay7bv',         // $50
   },
   variantB: {
     starter: 'pri_01kb9zd3yxap1x24w00gjefhqk',     // $10
     professional: 'pri_01kb9zed3v16wsecwtfqefk6sd', // $30
-    agency: 'pri_01kb9zfng1mamqdak665qtf62c',      // $80 (Max plan)
+    max: 'pri_01kb9zfng1mamqdak665qtf62c',         // $80
   },
 };
 
@@ -96,12 +96,12 @@ const PRODUCTION_PRICE_IDS = {
   variantA: {
     starter: 'pri_01kb843d5331ana8t0a8g2010g',     // $5
     professional: 'pri_01kb845pb30ww55997ms9rnr4f', // $15
-    agency: 'pri_01kb84727pqrersph1af1071j9',      // $50 (Max plan) - fixed typo
+    max: 'pri_01kb84727pqrersph1af1071j9',         // $50
   },
   variantB: {
     starter: 'pri_01kb844n77w7s0rq1pxq47jv4p',     // $10
     professional: 'pri_01kb846aqyhtvd6t3adpwz7sa0', // $30
-    agency: 'pri_01kb847ykxfy578n87mqq6ksk3',      // $80 (Max plan)
+    max: 'pri_01kb847ykxfy578n87mqq6ksk3',         // $80
   },
 };
 
@@ -119,7 +119,7 @@ export type PaddlePlanId = keyof typeof PADDLE_PRICE_IDS.variantA;
 /**
  * Get the Paddle price ID for a specific plan and variant
  *
- * @param planId - The plan identifier (starter, professional, agency)
+ * @param planId - The plan identifier (starter, professional, max)
  * @param variant - The A/B test variant (A or B)
  * @returns The corresponding Paddle price ID
  */
@@ -176,7 +176,7 @@ export const PADDLE_VALIDATION = {
 export const PLAN_TYPE_MAPPING = {
   starter: 'basic',
   professional: 'pro',
-  agency: 'max',
+  max: 'max',
 } as const;
 
 export type AuthPlanType = (typeof PLAN_TYPE_MAPPING)[keyof typeof PLAN_TYPE_MAPPING];
