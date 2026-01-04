@@ -161,7 +161,17 @@ export default function PaddlePaymentPage() {
               const planId = selectedPlanRef.current?.id || 'starter';
 
               console.log('✅ Checkout completed!', { customerEmail, planId });
-              handlePaymentSuccess(customerEmail, planId);
+
+              // Wait for Paddle overlay to fully close before making token request
+              // This prevents the request from being interrupted when overlay closes
+              setTimeout(() => {
+                handlePaymentSuccess(customerEmail, planId);
+              }, 500);
+            }
+
+            // Also handle checkout.closed event as backup
+            if (event.name === 'checkout.closed') {
+              console.log('🔒 Checkout overlay closed');
             }
           },
         });
