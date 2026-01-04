@@ -41,7 +41,7 @@ const PRODUCTION_PRICE_IDS = {
   starterB: 'pri_01kb844n77w7s0rq1pxq47jv4p',     // $10
   professionalA: 'pri_01kb845pb30ww55997ms9rnr4f', // $15
   professionalB: 'pri_01kb846aqyhtvd6t3adpwz7sa0', // $30
-  maxA: 'pri_01kb84727pqrersph1af1071j9',         // $50 (fixed typo: 1071j9 not 107lj9)
+  maxA: 'pri_01kb84727pqrersph1af107lj9',         // $50
   maxB: 'pri_01kb847ykxfy578n87mqq6ksk3',         // $80
 };
 

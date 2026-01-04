@@ -96,7 +96,7 @@ const PRODUCTION_PRICE_IDS = {
   variantA: {
     starter: 'pri_01kb843d5331ana8t0a8g2010g',     // $5
     professional: 'pri_01kb845pb30ww55997ms9rnr4f', // $15
-    agency: 'pri_01kb84727pqrersph1af1071j9',      // $50 (Max plan) - fixed typo
+    agency: 'pri_01kb84727pqrersph1af107lj9',      // $50 (Max plan)
   },
   variantB: {
     starter: 'pri_01kb844n77w7s0rq1pxq47jv4p',     // $10

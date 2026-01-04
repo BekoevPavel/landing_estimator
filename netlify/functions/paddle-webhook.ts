@@ -180,7 +180,7 @@ function getPlanFromPriceId(priceId: string, customData?: { plan?: string }): st
     // Variant A prices
     'pri_01kb843d5331ana8t0a8g2010g': 'basic',  // Starter $5
     'pri_01kb845pb30ww55997ms9rnr4f': 'pro',    // Professional $15
-    'pri_01kb84727pqrersph1af1071j9': 'max',    // Max $50 (fixed typo)
+    'pri_01kb84727pqrersph1af107lj9': 'max',    // Max $50
     // Variant B prices
     'pri_01kb844n77w7s0rq1pxq47jv4p': 'basic',  // Starter $10
     'pri_01kb846aqyhtvd6t3adpwz7sa0': 'pro',    // Professional $30
