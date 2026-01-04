@@ -7,7 +7,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sparkles, Check, Loader2, Lock, ArrowLeft } from 'lucide-react';
+import { Sparkles, Check, Loader2, Lock, ArrowLeft, Mail } from 'lucide-react';
 import { getPricingPlans, type PricingPlan } from '../config/pricing.ab-test';
 import { Button } from '../components/ui/button';
 
@@ -75,6 +75,8 @@ export default function PaddlePaymentPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
   const [redirecting, setRedirecting] = useState(false);
+  const [showEmailFallback, setShowEmailFallback] = useState(false);
+  const [customerEmailForFallback, setCustomerEmailForFallback] = useState('');
 
   // Refs to track current email and plan for event callback
   const emailRef = useRef(email);
@@ -92,34 +94,51 @@ export default function PaddlePaymentPage() {
   // Get pricing plans from A/B test config
   const plans = getPricingPlans();
 
-  // Handle successful payment - generate token and redirect
+  // Handle successful payment - generate token and redirect with retry
   const handlePaymentSuccess = async (customerEmail: string, planId: string) => {
     setRedirecting(true);
+    setCustomerEmailForFallback(customerEmail);
     console.log('🎉 Payment successful! Generating auth token...');
 
-    try {
-      const authPlan = PLAN_TYPE_MAP[planId] || 'basic';
+    const authPlan = PLAN_TYPE_MAP[planId] || 'basic';
+    const maxRetries = 3;
+    let lastError: Error | null = null;
 
-      const response = await fetch(TOKEN_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: customerEmail, plan: authPlan }),
-      });
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        console.log(`🔄 Token generation attempt ${attempt}/${maxRetries}...`);
 
-      if (!response.ok) {
-        throw new Error('Failed to generate token');
+        const response = await fetch(TOKEN_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: customerEmail, plan: authPlan }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const { token } = await response.json();
+        console.log('✅ Token generated, redirecting to main app...');
+
+        // Redirect to main app with token
+        window.location.href = `${MAIN_APP_URL}/auth?token=${encodeURIComponent(token)}`;
+        return; // Success - exit function
+      } catch (error) {
+        lastError = error as Error;
+        console.error(`❌ Attempt ${attempt} failed:`, error);
+
+        // Wait before retry (exponential backoff)
+        if (attempt < maxRetries) {
+          await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+        }
       }
-
-      const { token } = await response.json();
-      console.log('✅ Token generated, redirecting to main app...');
-
-      // Redirect to main app with token
-      window.location.href = `${MAIN_APP_URL}/auth?token=${encodeURIComponent(token)}`;
-    } catch (error) {
-      console.error('❌ Token generation failed:', error);
-      setRedirecting(false);
-      alert('Payment successful but redirect failed. Please contact support.');
     }
+
+    // All retries failed - show email fallback screen
+    console.error('❌ All token generation attempts failed:', lastError);
+    setRedirecting(false);
+    setShowEmailFallback(true);
   };
 
   useEffect(() => {
@@ -197,6 +216,39 @@ export default function PaddlePaymentPage() {
       setIsProcessing(false);
     }
   };
+
+  // Show email fallback screen when redirect fails
+  if (showEmailFallback) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center px-6 py-12">
+        <div className="text-center max-w-md">
+          <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Check className="w-8 h-8 text-emerald-500" />
+          </div>
+          <h2 className="text-2xl font-bold mb-2">Payment Successful!</h2>
+          <p className="text-muted-foreground mb-6">
+            We've sent a welcome email to <strong className="text-foreground">{customerEmailForFallback}</strong> with your login link.
+          </p>
+          <div className="bg-card/50 backdrop-blur-xl border border-border rounded-2xl p-6 mb-6">
+            <div className="flex items-center gap-3 mb-3">
+              <Mail className="w-5 h-5 text-primary" />
+              <span className="font-medium">Check your inbox</span>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Click the link in the email to access your account. If you don't see it, check your spam folder.
+            </p>
+          </div>
+          <Button
+            onClick={() => window.location.href = `${MAIN_APP_URL}/auth/login`}
+            variant="outline"
+            className="w-full"
+          >
+            Go to Login Page
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   // Show redirecting screen
   if (redirecting) {
