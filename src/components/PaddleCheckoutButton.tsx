@@ -128,11 +128,9 @@ export default function PaddleCheckoutButton({
 
         if (!isMounted) return;
 
-        // Set sandbox environment BEFORE Initialize (required for sandbox mode)
-        if (PADDLE_CONFIG.environment === 'sandbox') {
-          paddle.Environment.set('sandbox');
-          console.log('Paddle environment set to SANDBOX');
-        }
+        // ALWAYS set environment BEFORE Initialize (required for BOTH sandbox AND production)
+        paddle.Environment.set(PADDLE_CONFIG.environment);
+        console.log(`Paddle environment set to: ${PADDLE_CONFIG.environment}`);
 
         // Initialize Paddle with event callback
         paddle.Initialize({
