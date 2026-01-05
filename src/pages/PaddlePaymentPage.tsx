@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, Check, Loader2, Lock, ArrowLeft, Mail } from 'lucide-react';
 import { getPricingPlans, type PricingPlan } from '../config/pricing.ab-test';
 import { Button } from '../components/ui/button';
+import { trackPurchase } from '../services/gtm.service';
 
 // Environment detection
 const isDev = import.meta.env.DEV && import.meta.env.VITE_PADDLE_ENV !== 'production';
@@ -159,8 +160,19 @@ export default function PaddlePaymentPage() {
             if (event.name === 'checkout.completed') {
               const customerEmail = event.data?.customer?.email || emailRef.current;
               const planId = selectedPlanRef.current?.id || 'starter';
+              const selectedPlanData = selectedPlanRef.current;
 
               console.log('✅ Checkout completed!', { customerEmail, planId });
+
+              // Track Google Ads conversion IMMEDIATELY (before redirect)
+              // This ensures the conversion is sent even if redirect happens fast
+              trackPurchase({
+                transactionId: `paddle_${Date.now()}`,
+                value: selectedPlanData?.price || 0,
+                currency: 'USD',
+                email: customerEmail,
+                planName: selectedPlanData?.name || planId,
+              });
 
               // Wait for Paddle overlay to fully close before making token request
               // This prevents the request from being interrupted when overlay closes
@@ -381,19 +393,21 @@ export default function PaddlePaymentPage() {
                 ))}
               </div>
 
-              {/* Test Card Info */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6 }}
-                className="mt-12 text-center"
-              >
-                <div className="inline-flex items-center gap-3 px-5 py-3 bg-card/50 border border-border rounded-full backdrop-blur-sm">
-                  <span className="text-muted-foreground text-sm">Test Card:</span>
-                  <code className="text-violet-400 font-mono font-medium">4242 4242 4242 4242</code>
-                </div>
-                <p className="text-muted-foreground text-xs mt-2">Any future date • Any 3-digit CVC</p>
-              </motion.div>
+              {/* Test Card Info - Only show in dev/sandbox mode */}
+              {isDev && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6 }}
+                  className="mt-12 text-center"
+                >
+                  <div className="inline-flex items-center gap-3 px-5 py-3 bg-card/50 border border-border rounded-full backdrop-blur-sm">
+                    <span className="text-muted-foreground text-sm">Test Card:</span>
+                    <code className="text-violet-400 font-mono font-medium">4242 4242 4242 4242</code>
+                  </div>
+                  <p className="text-muted-foreground text-xs mt-2">Any future date • Any 3-digit CVC</p>
+                </motion.div>
+              )}
             </motion.div>
           ) : (
             // Checkout Form Screen

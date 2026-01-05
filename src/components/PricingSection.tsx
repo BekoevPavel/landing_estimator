@@ -201,6 +201,22 @@ export default function PricingSection({ onComplete }: PricingSectionProps) {
                   );
                 })}
               </div>
+
+              {/* Test Card Info - Only show in dev mode */}
+              {import.meta.env.DEV && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6 }}
+                  className="mt-12 text-center"
+                >
+                  <div className="inline-flex items-center gap-3 px-5 py-3 bg-card/50 border border-border rounded-full backdrop-blur-sm">
+                    <span className="text-muted-foreground text-sm">Test Card:</span>
+                    <code className="text-violet-400 font-mono font-medium">4242 4242 4242 4242</code>
+                  </div>
+                  <p className="text-muted-foreground text-xs mt-2">Any future date • Any 3-digit CVC</p>
+                </motion.div>
+              )}
             </motion.div>
           ) : (
             // Checkout Form Screen
