@@ -488,13 +488,15 @@ export default function PaddlePaymentPage() {
                 </div>
               </div>
 
-              {/* Test Card Reminder */}
-              <div className="mt-6 text-center">
-                <div className="inline-flex items-center gap-3 px-4 py-2 bg-card/50 border border-border rounded-full">
-                  <span className="text-muted-foreground text-sm">Test Card:</span>
-                  <code className="text-violet-400 font-mono text-sm">4242 4242 4242 4242</code>
+              {/* Test Card Reminder - Only show in dev/sandbox mode */}
+              {isDev && (
+                <div className="mt-6 text-center">
+                  <div className="inline-flex items-center gap-3 px-4 py-2 bg-card/50 border border-border rounded-full">
+                    <span className="text-muted-foreground text-sm">Test Card:</span>
+                    <code className="text-violet-400 font-mono text-sm">4242 4242 4242 4242</code>
+                  </div>
                 </div>
-              </div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
