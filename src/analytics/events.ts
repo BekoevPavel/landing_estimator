@@ -1,6 +1,13 @@
 import { posthog } from './posthog.config';
 import type { PricingVariant } from '../config/pricing.ab-test';
 
+// Extend Window interface for gtag
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
+
 /**
  * Centralized event tracking для аналитики
  * 
@@ -138,6 +145,14 @@ export const trackFooterLinkClick = (linkName: string, category: string) => {
 export const trackQuizStarted = () => {
   posthog.capture('quiz_started');
   console.log(`🎮 [Analytics] Quiz started`);
+
+  // Also send Google Ads conversion
+  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    window.gtag('event', 'conversion', {
+      'send_to': 'AW-17653593916/E89ZCJ227L0bELzu8eFB'
+    });
+    console.log('🎯 [Google Ads] Quiz Start conversion sent');
+  }
 };
 
 /**
