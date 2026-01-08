@@ -20,7 +20,7 @@ export default function HeroSection({ onStart }: HeroSectionProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen flex items-center justify-center relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden py-12"
     >
       {/* Gradient Background */}
       <div className={`absolute inset-0 ${GRADIENTS.hero}`} />
@@ -84,7 +84,7 @@ export default function HeroSection({ onStart }: HeroSectionProps) {
         {/* Visual Team Representation */}
         <motion.div
           {...fadeInUpWithDelay(0.6)}
-          className="mt-24 flex items-center justify-center gap-4"
+          className="mt-12 md:mt-24 flex items-center justify-center gap-4"
         >
           <div className="relative">
             {[0, 1, 2, 3, 4].map((i) => (

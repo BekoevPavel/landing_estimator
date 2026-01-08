@@ -78,6 +78,7 @@ export default function PaddlePaymentPage() {
   const [redirecting, setRedirecting] = useState(false);
   const [showEmailFallback, setShowEmailFallback] = useState(false);
   const [customerEmailForFallback, setCustomerEmailForFallback] = useState('');
+  const [emailError, setEmailError] = useState<string | null>(null);
 
   // Refs to track current email and plan for event callback
   const emailRef = useRef(email);
@@ -213,11 +214,40 @@ export default function PaddlePaymentPage() {
     setShowCheckout(false);
     setSelectedPlan(null);
     setEmail('');
+    setEmailError(null);
+  };
+
+  // Email validation helper - requires TLD of at least 2 chars (like .com, .io)
+  const isValidEmail = (value: string): boolean => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
+  };
+
+  const handleEmailBlur = () => {
+    if (email && !isValidEmail(email)) {
+      setEmailError('Please enter a valid email address');
+    } else {
+      setEmailError(null);
+    }
+  };
+
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    // Clear error when user starts typing again
+    if (emailError) {
+      setEmailError(null);
+    }
   };
 
   const handleCheckout = () => {
-    if (!window.Paddle || !email || !selectedPlan) return;
+    if (!window.Paddle || !selectedPlan) return;
 
+    // Validate email before proceeding
+    if (!email || !isValidEmail(email)) {
+      setEmailError('Please enter a valid email address');
+      return;
+    }
+
+    setEmailError(null);
     setIsProcessing(true);
 
     try {
@@ -225,7 +255,10 @@ export default function PaddlePaymentPage() {
         items: [{ priceId: selectedPlan.paddlePriceId, quantity: 1 }],
         customer: { email },
         settings: {
-          displayMode: 'overlay',
+          displayMode: 'inline',
+          frameTarget: 'paddle-checkout',  // Must match className (not id)
+          frameInitialHeight: 450,
+          frameStyle: 'width: 100%; min-width: 100%; background: transparent; border: none;',
           theme: 'dark',
           locale: 'en',
           allowLogout: false,
@@ -453,17 +486,23 @@ export default function PaddlePaymentPage() {
                 </div>
               )}
 
-              {/* Email Input & Pay Button */}
+              {/* Email Input & Inline Checkout */}
               <div className="bg-card/50 backdrop-blur-xl border border-border rounded-3xl p-8">
                 <div className="mb-6">
                   <label className="block text-sm font-medium mb-2">Email Address</label>
                   <input
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => handleEmailChange(e.target.value)}
+                    onBlur={handleEmailBlur}
                     placeholder="you@example.com"
-                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className={`w-full px-4 py-3 bg-background border rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all ${
+                      emailError ? 'border-red-500' : 'border-border'
+                    }`}
                   />
+                  {emailError && (
+                    <p className="mt-2 text-sm text-red-500">{emailError}</p>
+                  )}
                 </div>
 
                 <Button
@@ -474,12 +513,17 @@ export default function PaddlePaymentPage() {
                   {isProcessing ? (
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Opening Checkout...
+                      Loading Checkout...
                     </>
                   ) : (
-                    <>Pay {selectedPlan?.displayPrice}</>
+                    <>Continue to Payment</>
                   )}
                 </Button>
+
+                {/* Inline Paddle Checkout Container */}
+                <div
+                  className="paddle-checkout mt-6 min-h-[450px] rounded-xl overflow-hidden"
+                />
 
                 {/* Security Note */}
                 <div className="flex items-center justify-center gap-2 mt-4 text-muted-foreground text-xs">
