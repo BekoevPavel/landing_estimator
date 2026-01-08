@@ -11,16 +11,19 @@ import ruTranslation from "./locales/ru/translation.json";
 // Определение языка по умолчанию
 const DEFAULT_LANGUAGE = "en";
 
-// Получение сохраненного языка из localStorage или использование языка браузера
+// Always use English as default (language switcher is hidden)
+// To restore auto-detection, uncomment the browser language logic below
 const getInitialLanguage = (): string => {
-  const savedLanguage = localStorage.getItem("i18nextLng");
-  if (savedLanguage && ["en", "ru"].includes(savedLanguage)) {
-    return savedLanguage;
-  }
-  
-  // Определение языка браузера
-  const browserLanguage = navigator.language.split("-")[0];
-  return ["en", "ru"].includes(browserLanguage) ? browserLanguage : DEFAULT_LANGUAGE;
+  // Force English for now
+  return DEFAULT_LANGUAGE;
+
+  // Original auto-detection logic (commented out):
+  // const savedLanguage = localStorage.getItem("i18nextLng");
+  // if (savedLanguage && ["en", "ru"].includes(savedLanguage)) {
+  //   return savedLanguage;
+  // }
+  // const browserLanguage = navigator.language.split("-")[0];
+  // return ["en", "ru"].includes(browserLanguage) ? browserLanguage : DEFAULT_LANGUAGE;
 };
 
 i18n

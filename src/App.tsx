@@ -88,12 +88,13 @@ export default function App() {
       {/* Header - показываем на всех экранах кроме landing и waitlist (founders screen) */}
       {currentStep !== "landing" && currentStep !== "waitlist" && <Header onLogoClick={handleLogoClick} />}
 
-      {/* Language Switcher - Правый верхний угол (UX best practice) */}
+      {/* Language Switcher - Hidden for now, English is default */}
+      {/* To re-enable, uncomment the block below:
       {currentStep !== "waitlist" && (
         <div
           style={{
             position: 'fixed',
-            top: '1.5rem',  // 24px - оптимально для всех экранов
+            top: '1.5rem',
             right: '1.5rem',
             zIndex: 50
           }}
@@ -101,6 +102,7 @@ export default function App() {
           <LanguageSwitcher />
         </div>
       )}
+      */}
 
       {/* Secure Checkout Badge - SMALLER size for mobile, only on stripe pricing page */}
       {currentStep === "stripe_pricing" && (
