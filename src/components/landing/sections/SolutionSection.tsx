@@ -56,6 +56,33 @@ export function SolutionSection() {
             </p>
           </div>
 
+          {/* Video Demo Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={VIEWPORT_ONCE}
+            className="mb-16"
+          >
+            <div className="max-w-4xl mx-auto">
+              <div
+                className="relative rounded-2xl overflow-hidden bg-card/50 border border-border shadow-xl"
+                style={{ paddingBottom: '56.25%', height: 0 }}
+              >
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full border-0"
+                  src="https://www.youtube.com/embed/zwU42jqK_tg?rel=0"
+                  title="EstimateFast Demo Video"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+              <p className="text-center text-sm text-muted-foreground mt-4">
+                {t("landing.solution.videoCaption", { defaultValue: "See how EstimateFast works in 7 minutes" })}
+              </p>
+            </div>
+          </motion.div>
+
           {/* AI Agents Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {agents.map((agent, index) => {
